@@ -8,17 +8,19 @@
 
 import UIKit
 
+let windowsWidth = UIScreen.main.bounds.width
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         let screen = UIScreen.main.bounds        //获得设备尺寸
         window = UIWindow.init(frame: screen) //给“输出窗口“实例化并设置frame
         let vc = ViewController()
+//        let navi = UINavigationController.init(rootViewController: vc)
         window?.rootViewController = vc//将“输出窗口”的根视图设置为导航栏
         window?.makeKeyAndVisible()        
         
