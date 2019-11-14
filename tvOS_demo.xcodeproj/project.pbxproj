@@ -14,6 +14,8 @@
 		CB43AD0A233E0F510000A7F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB43AD09233E0F510000A7F1 /* Assets.xcassets */; };
 		CBF08596237ACF6300D685D1 /* ViuPlayerTabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF08595237ACF6300D685D1 /* ViuPlayerTabbarView.swift */; };
 		CBF08598237ACFB500D685D1 /* ViuPlayerTabbarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF08597237ACFB500D685D1 /* ViuPlayerTabbarModel.swift */; };
+		CBF452AF237D5669003C70F3 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF452AE237D5669003C70F3 /* UIColor+Extension.swift */; };
+		CBF452B1237D674F003C70F3 /* ViuPlayerTabbarConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF452B0237D674F003C70F3 /* ViuPlayerTabbarConfig.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +29,8 @@
 		CB43AD0B233E0F510000A7F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CBF08595237ACF6300D685D1 /* ViuPlayerTabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerTabbarView.swift; sourceTree = "<group>"; };
 		CBF08597237ACFB500D685D1 /* ViuPlayerTabbarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerTabbarModel.swift; sourceTree = "<group>"; };
+		CBF452AE237D5669003C70F3 /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		CBF452B0237D674F003C70F3 /* ViuPlayerTabbarConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerTabbarConfig.swift; sourceTree = "<group>"; };
 		F6807A08B93F6917F69A525B /* Pods-tvOS_demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tvOS_demo.release.xcconfig"; path = "Target Support Files/Pods-tvOS_demo/Pods-tvOS_demo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -72,6 +76,7 @@
 		CB43AD01233E0F4E0000A7F1 /* tvOS_demo */ = {
 			isa = PBXGroup;
 			children = (
+				CBF452AD237D564F003C70F3 /* Common */,
 				CBF08594237ACF2E00D685D1 /* ViuPlayerTabbarView */,
 				CB43AD02233E0F4E0000A7F1 /* AppDelegate.swift */,
 				CB43AD04233E0F4E0000A7F1 /* ViewController.swift */,
@@ -87,8 +92,17 @@
 			children = (
 				CBF08595237ACF6300D685D1 /* ViuPlayerTabbarView.swift */,
 				CBF08597237ACFB500D685D1 /* ViuPlayerTabbarModel.swift */,
+				CBF452B0237D674F003C70F3 /* ViuPlayerTabbarConfig.swift */,
 			);
 			path = ViuPlayerTabbarView;
+			sourceTree = "<group>";
+		};
+		CBF452AD237D564F003C70F3 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				CBF452AE237D5669003C70F3 /* UIColor+Extension.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		D573DAD9501BB8E46A571B7E /* Frameworks */ = {
@@ -213,10 +227,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBF452B1237D674F003C70F3 /* ViuPlayerTabbarConfig.swift in Sources */,
 				CBF08598237ACFB500D685D1 /* ViuPlayerTabbarModel.swift in Sources */,
 				CB43AD05233E0F4E0000A7F1 /* ViewController.swift in Sources */,
 				CB43AD03233E0F4E0000A7F1 /* AppDelegate.swift in Sources */,
 				CBF08596237ACF6300D685D1 /* ViuPlayerTabbarView.swift in Sources */,
+				CBF452AF237D5669003C70F3 /* UIColor+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

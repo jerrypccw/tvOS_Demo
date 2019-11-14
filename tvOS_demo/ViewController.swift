@@ -46,7 +46,6 @@ class ViewController: UIViewController {
         
         viuPlayerTabbar.hiddenTabbarView()
     }
-    
 }
 
 //MARK: presses event for Native Controller
