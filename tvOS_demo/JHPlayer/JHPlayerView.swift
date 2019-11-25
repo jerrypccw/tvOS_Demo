@@ -61,7 +61,7 @@ open class JHPlayerView: UIView {
     }
     open weak var delegate : JHPlayerViewDelegate?
     
-//    open var timeSlider = JHPlayerSlider()
+    open var timeSlider = JHPlayerSlider()
     open var loadingIndicator = JHPlayerLoadingIndicator()
     open var fullscreenButton : UIButton = UIButton(type: .custom)
     open var timeLabel : UILabel = UILabel()
@@ -147,7 +147,7 @@ open class JHPlayerView: UIView {
         playerLayer = AVPlayerLayer(player: self.jhPlayer?.player)
         layer.insertSublayer(self.playerLayer!, at: 0)
         updateDisplayerView(frame: self.bounds)
-//        timeSlider.isUserInteractionEnabled = jhPlayer?.mediaFormat != .m3u8
+        timeSlider.isUserInteractionEnabled = jhPlayer?.mediaFormat != .m3u8
         reloadGravity()
     }
     
@@ -192,7 +192,7 @@ open class JHPlayerView: UIView {
     ///   - bufferedDuration: buffer duration
     ///   - totalDuration: total duratiom
     open func bufferedDidChange(_ bufferedDuration: TimeInterval, totalDuration: TimeInterval) {
-//        timeSlider.setProgress(Float(bufferedDuration / totalDuration), animated: true)
+        timeSlider.setProgress(Float(bufferedDuration / totalDuration), animated: true)
     }
     
     /// player diration
@@ -222,7 +222,7 @@ open class JHPlayerView: UIView {
     open func reloadPlayerView() {
         playerLayer = AVPlayerLayer(player: nil)
 //        timeSlider.value = Float(0)
-//        timeSlider.setProgress(0, animated: false)
+        timeSlider.setProgress(0, animated: false)
         replayButton.isHidden = true
         isTimeSliding = false
         loadingIndicator.isHidden = false
@@ -641,20 +641,20 @@ extension JHPlayerView {
     
     internal func configurationReplayButton() {
         addSubview(self.replayButton)
-        let replayImage = JHPlayerUtils.imageResource("ic_replay")
-        replayButton.setImage(JHPlayerUtils.imageSize(image: replayImage!, scaledToSize: CGSize(width: 30, height: 30)), for: .normal)
-        replayButton.addTarget(self, action: #selector(onReplay(_:)), for: .touchUpInside)
-        replayButton.isHidden = true
+//        let replayImage = JHPlayerUtils.imageResource("ic_replay")
+//        replayButton.setImage(JHPlayerUtils.imageSize(image: replayImage!, scaledToSize: CGSize(width: 30, height: 30)), for: .normal)
+//        replayButton.addTarget(self, action: #selector(onReplay(_:)), for: .touchUpInside)
+//        replayButton.isHidden = true
     }
     
     internal func configurationTopView() {
         addSubview(topView)
         titleLabel.text = "this is a title."
         topView.addSubview(titleLabel)
-        let closeImage = JHPlayerUtils.imageResource("common_return_wihte")
-        closeButton.setImage(JHPlayerUtils.imageSize(image: closeImage!, scaledToSize: CGSize(width: 15, height: 20)), for: .normal)
-        closeButton.addTarget(self, action: #selector(onCloseView(_:)), for: .touchUpInside)
-        topView.addSubview(closeButton)
+//        let closeImage = JHPlayerUtils.imageResource("common_return_wihte")
+//        closeButton.setImage(JHPlayerUtils.imageSize(image: closeImage!, scaledToSize: CGSize(width: 15, height: 20)), for: .normal)
+//        closeButton.addTarget(self, action: #selector(onCloseView(_:)), for: .touchUpInside)
+//        topView.addSubview(closeButton)
     }
     
     internal func configurationBottomView() {
@@ -667,14 +667,14 @@ extension JHPlayerView {
         loadingIndicator.isHidden = false
         loadingIndicator.startAnimating()
         addSubview(loadingIndicator)
-//        bottomView.addSubview(timeSlider)
+        bottomView.addSubview(timeSlider)
         
-        let playImage = JHPlayerUtils.imageResource("video_play")
-        let pauseImage = JHPlayerUtils.imageResource("video_pause")
-        playButtion.setImage(JHPlayerUtils.imageSize(image: playImage!, scaledToSize: CGSize(width: 15, height: 15)), for: .normal)
-        playButtion.setImage(JHPlayerUtils.imageSize(image: pauseImage!, scaledToSize: CGSize(width: 15, height: 15)), for: .selected)
-        playButtion.addTarget(self, action: #selector(onPlayerButton(_:)), for: .touchUpInside)
-        bottomView.addSubview(playButtion)
+//        let playImage = JHPlayerUtils.imageResource("video_play")
+//        let pauseImage = JHPlayerUtils.imageResource("video_pause")
+//        playButtion.setImage(JHPlayerUtils.imageSize(image: playImage!, scaledToSize: CGSize(width: 15, height: 15)), for: .normal)
+//        playButtion.setImage(JHPlayerUtils.imageSize(image: pauseImage!, scaledToSize: CGSize(width: 15, height: 15)), for: .selected)
+//        playButtion.addTarget(self, action: #selector(onPlayerButton(_:)), for: .touchUpInside)
+//        bottomView.addSubview(playButtion)
         
         timeLabel.textAlignment = .center
         timeLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
@@ -682,12 +682,12 @@ extension JHPlayerView {
         timeLabel.text = "--:-- / --:--"
         bottomView.addSubview(timeLabel)
         
-        let enlargeImage = JHPlayerUtils.imageResource("ic_fullscreen")
-        let narrowImage = JHPlayerUtils.imageResource("ic_fullscreen_exit")
-        fullscreenButton.setImage(JHPlayerUtils.imageSize(image: enlargeImage!, scaledToSize: CGSize(width: 15, height: 15)), for: .normal)
-        fullscreenButton.setImage(JHPlayerUtils.imageSize(image: narrowImage!, scaledToSize: CGSize(width: 15, height: 15)), for: .selected)
-        fullscreenButton.addTarget(self, action: #selector(onFullscreen(_:)), for: .touchUpInside)
-        bottomView.addSubview(fullscreenButton)
+//        let enlargeImage = JHPlayerUtils.imageResource("ic_fullscreen")
+//        let narrowImage = JHPlayerUtils.imageResource("ic_fullscreen_exit")
+//        fullscreenButton.setImage(JHPlayerUtils.imageSize(image: enlargeImage!, scaledToSize: CGSize(width: 15, height: 15)), for: .normal)
+//        fullscreenButton.setImage(JHPlayerUtils.imageSize(image: narrowImage!, scaledToSize: CGSize(width: 15, height: 15)), for: .selected)
+//        fullscreenButton.addTarget(self, action: #selector(onFullscreen(_:)), for: .touchUpInside)
+//        bottomView.addSubview(fullscreenButton)
         
     }
     

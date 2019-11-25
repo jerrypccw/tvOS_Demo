@@ -15,10 +15,35 @@ class ViewController: UIViewController {
     // 播放器进度条
     let viuProgressView = ViuPlayerProgressView()
     
+    var jhPlayer : JHPlayer = {
+        let playeView = ViuPlayerView()
+        let playe = JHPlayer(playerView: playeView)
+        return playe
+    }()
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        jhPlayer.pause()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .yellow
+        
+        view.addSubview(jhPlayer.displayView)
+        
+        jhPlayer.backgroundMode = .proceed
+        jhPlayer.delegate = self
+        jhPlayer.displayView.delegate = self
+        
+        jhPlayer.displayView.translatesAutoresizingMaskIntoConstraints = false
+        jhPlayer.displayView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        jhPlayer.displayView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        jhPlayer.displayView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        jhPlayer.displayView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        setPlayerData()
         
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(swipe: )))
         swipeUp.direction = .up
@@ -56,6 +81,27 @@ class ViewController: UIViewController {
         viuPlayerTabbar.buttonModels = [model, model2, model3]
         
     }
+    
+    func setPlayerData() {
+        
+        if  let srt = Bundle.main.url(forResource: "Despacito Remix Luis Fonsi ft.Daddy Yankee Justin Bieber Lyrics [Spanish]", withExtension: "srt") {
+            let playerView = self.jhPlayer.displayView as! ViuPlayerView
+            playerView.setSubtitles(JHSubtitles(filePath: srt))
+        }
+        
+        let mp4File = JHPlayerUtils.fileResource("apple_tv_app_universal_search_part_01_sd", fileType: "mp4")
+        
+        guard let urlStr: String = mp4File else {
+            print("路径不存在")
+            return
+        }
+        
+        let url = URL.init(fileURLWithPath: urlStr)
+        
+        jhPlayer.replaceVideo(url)
+        jhPlayer.play()
+    }
+    
     
     @objc func swipeAction(swipe: UISwipeGestureRecognizer) {
         
@@ -151,9 +197,8 @@ extension ViewController {
                 if viuPlayerTabbar.isTabbarShow == true {
                     viuPlayerTabbar.hiddenTabbarView()
                 }
-                                
+                
                 viuProgressView.isHidden = !viuProgressView.isHidden
-                viuProgressView.timerStart()
                 
                 break
             default:
@@ -173,6 +218,43 @@ extension ViewController {
     
     override func pressesCancelled(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
         print("pressesCancelled  \(presses)")
+    }
+    
+}
+
+// MARK JHPlayerDelegate
+extension ViewController: JHPlayerDelegate {
+    func jhPlayer(_ player: JHPlayer, playerFailed error: JHPlayerError) {
+        print(error)
+    }
+    func jhPlayer(_ player: JHPlayer, stateDidChange state: JHPlayerState) {
+        print("player State ",state)
+        
+        if state == .playFinished {
+            let mp4File = JHPlayerUtils.fileResource("apple_tv_app_universal_search_part_01_sd", fileType: "mp4")
+            let url = URL.init(fileURLWithPath: mp4File!)
+            
+            jhPlayer.replaceVideo(url)
+            jhPlayer.play()
+        }
+    }
+    func jhPlayer(_ player: JHPlayer, bufferStateDidChange state: JHPlayerBufferstate) {
+        print("buffer State", state)
+    }
+    
+}
+
+// MARK JHPlayerViewDelegate
+extension ViewController: JHPlayerViewDelegate {
+    
+    func jhPlayerView(_ playerView: JHPlayerView, willFullscreen fullscreen: Bool) {
+    }
+    
+    func jhPlayerView(didTappedClose playerView: JHPlayerView) {
+        
+    }
+    func jhPlayerView(didDisplayControl playerView: JHPlayerView) {
+        
     }
     
 }
