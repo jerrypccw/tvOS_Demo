@@ -7,44 +7,95 @@
 //
 
 import UIKit
-import SnapKit
 
 class ViewController: UIViewController {
     
     // 播放器导航栏
     let viuPlayerTabbar = ViuPlayerTabbarView()
+    // 播放器进度条
+    let viuProgressView = ViuPlayerProgressView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .black
+        view.backgroundColor = .yellow
         
-        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(swipeDownAction(swipe: )))
-        swipeDown.direction = .down
-        view.addGestureRecognizer(swipeDown)
-        
-        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(swipeUpAction(swipe: )))
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(swipe: )))
         swipeUp.direction = .up
         view.addGestureRecognizer(swipeUp)
         
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(swipe: )))
+        swipeDown.direction = .down
+        view.addGestureRecognizer(swipeDown)
+        
         view.addSubview(viuPlayerTabbar)
+        view.addSubview(viuProgressView)
         
-        let model = ViuPlayerTabbarModel.init(buttonName: "abc")
-        let model2 = ViuPlayerTabbarModel.init(buttonName: "abcd")
-        let model3 = ViuPlayerTabbarModel.init(buttonName: "abcde")
-        let model4 = ViuPlayerTabbarModel.init(buttonName: "abcde")
-        viuPlayerTabbar.buttonModels = [model, model2, model3, model4]
+        viuProgressView.isHidden = true
+        viuProgressView.translatesAutoresizingMaskIntoConstraints = false
+        viuProgressView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 100).isActive = true
+        viuProgressView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -100).isActive = true
+        viuProgressView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        viuProgressView.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        
+        
+        let model = TabbarIntroductionModel()
+        model.buttonName = "简介"
+        model.imageUrl = ""
+        model.dramaTitle = "第15集 测试的播放器"
+        model.dramaDescription = "测试的播放器导航栏的简介 测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介"
+        
+        let model2 = TabbarCustomModel()
+        model2.buttonName = "字幕"
+        model2.customs += ["开", "关"]
+        
+        let model3 = TabbarSubtitleModel()
+        model3.buttonName = "语言"
+        model3.subtitles += ["中文", "英文"]
+        
+        viuPlayerTabbar.buttonModels = [model, model2, model3]
+        
+    }
+    
+    @objc func swipeAction(swipe: UISwipeGestureRecognizer) {
+        
+        print("swipeAction : \(swipe)")
+        
+        switch swipe.direction {
+        case .down:
+            print("swipeDownAction")
+            if viuPlayerTabbar.isTabbarShow == false {
+                viuPlayerTabbar.showTabbarView()
+            }
+            
+            
+            break
+        case .up:
+            print("swipeUpAction")
+            if viuPlayerTabbar.isTabbarShow == true {
+                viuPlayerTabbar.hiddenTabbarView()
+            }
+            break
+        default:
+            break
+        }
+    }
+}
 
+//MARK: UIGestureRecognizerDelegate
+extension ViewController: UIGestureRecognizerDelegate {
+    
+    // 添加多个手势的时候，需要使用UIGestureRecognizerDelegate方法，避免手势冲突
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
     
-    @objc func swipeDownAction(swipe: UISwipeGestureRecognizer) {
-        
-        viuPlayerTabbar.showTabbarView()
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
     
-    @objc func swipeUpAction(swipe: UISwipeGestureRecognizer) {
-        
-        viuPlayerTabbar.hiddenTabbarView()
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }
 
@@ -56,15 +107,22 @@ extension ViewController {
     ///   - presses: 按钮对象
     ///   - event: 按钮事件
     override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+        //        super.pressesBegan(presses, with: event)
         
         for press in presses {
             switch press.type {
             case .upArrow:
-                viuPlayerTabbar.hiddenTabbarView()
+                
+                if viuPlayerTabbar.isTabbarShow == false{
+                    viuPlayerTabbar.hiddenTabbarView()
+                }
                 
                 break
             case .downArrow:
-                viuPlayerTabbar.showTabbarView()
+                
+                if viuPlayerTabbar.isTabbarShow == false{
+                    viuPlayerTabbar.showTabbarView()
+                }
                 
                 break
             case .leftArrow:
@@ -75,17 +133,28 @@ extension ViewController {
                 break
             case .select:
                 
+                
                 break
             case .menu:
-                viuPlayerTabbar.hiddenTabbarView()
+                
+                let model = TabbarIntroductionModel()
+                model.buttonName = "简介"
+                model.imageUrl = ""
+                model.dramaTitle = "第15集 测试的播放器"
+                model.dramaDescription = "测试的播放器导航栏的简介 测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介"
+                
+                viuPlayerTabbar.buttonModels = [model]
                 
                 break
             case .playPause:
                 
-                let model = ViuPlayerTabbarModel.init(buttonName: "abc")
-                let model1 = ViuPlayerTabbarModel.init(buttonName: "abcd")
-                let model2 = ViuPlayerTabbarModel.init(buttonName: "abcd")
-                viuPlayerTabbar.buttonModels = [model, model1, model2]
+                if viuPlayerTabbar.isTabbarShow == true {
+                    viuPlayerTabbar.hiddenTabbarView()
+                }
+                                
+                viuProgressView.isHidden = !viuProgressView.isHidden
+                viuProgressView.timerStart()
+                
                 break
             default:
                 print("pressesBegan default")
@@ -105,5 +174,5 @@ extension ViewController {
     override func pressesCancelled(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
         print("pressesCancelled  \(presses)")
     }
-
+    
 }

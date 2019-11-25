@@ -3,34 +3,62 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		01851DC59840B02F6E036996 /* Pods_tvOS_demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 444E4028BA38B8DACFB31BAE /* Pods_tvOS_demo.framework */; };
+		CB1FD06F2387968800A74369 /* ViuPlayerProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1FD06E2387968800A74369 /* ViuPlayerProgressView.swift */; };
 		CB43AD03233E0F4E0000A7F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB43AD02233E0F4E0000A7F1 /* AppDelegate.swift */; };
 		CB43AD05233E0F4E0000A7F1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB43AD04233E0F4E0000A7F1 /* ViewController.swift */; };
 		CB43AD08233E0F4E0000A7F1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB43AD06233E0F4E0000A7F1 /* Main.storyboard */; };
 		CB43AD0A233E0F510000A7F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB43AD09233E0F510000A7F1 /* Assets.xcassets */; };
+		CB4651AE238B8B3400078AF1 /* JHPlayerUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651A5238B8B3400078AF1 /* JHPlayerUtils.swift */; };
+		CB4651AF238B8B3400078AF1 /* JHPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651A6238B8B3400078AF1 /* JHPlayer.swift */; };
+		CB4651B0238B8B3400078AF1 /* JHPlayerLoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651A7238B8B3400078AF1 /* JHPlayerLoadingIndicator.swift */; };
+		CB4651B1238B8B3400078AF1 /* JHPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651A8238B8B3400078AF1 /* JHPlayerView.swift */; };
+		CB4651B2238B8B3400078AF1 /* Timer+JHPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651A9238B8B3400078AF1 /* Timer+JHPlayer.swift */; };
+		CB4651B3238B8B3400078AF1 /* JHPlayerSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651AA238B8B3400078AF1 /* JHPlayerSlider.swift */; };
+		CB4651B4238B8B3400078AF1 /* JHSubtitles.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651AB238B8B3400078AF1 /* JHSubtitles.swift */; };
+		CB4651B5238B8B3400078AF1 /* JHPlayerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651AC238B8B3400078AF1 /* JHPlayerError.swift */; };
+		CB4651B6238B8B3400078AF1 /* UIButton+JHPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651AD238B8B3400078AF1 /* UIButton+JHPlayer.swift */; };
 		CBF08596237ACF6300D685D1 /* ViuPlayerTabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF08595237ACF6300D685D1 /* ViuPlayerTabbarView.swift */; };
 		CBF08598237ACFB500D685D1 /* ViuPlayerTabbarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF08597237ACFB500D685D1 /* ViuPlayerTabbarModel.swift */; };
 		CBF452AF237D5669003C70F3 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF452AE237D5669003C70F3 /* UIColor+Extension.swift */; };
 		CBF452B1237D674F003C70F3 /* ViuPlayerTabbarConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF452B0237D674F003C70F3 /* ViuPlayerTabbarConfig.swift */; };
+		CBF452B3237D8ED6003C70F3 /* ViuPlayerTabbarIntroductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF452B2237D8ED6003C70F3 /* ViuPlayerTabbarIntroductionView.swift */; };
+		CBF452B7237E9FE4003C70F3 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF452B6237E9FE4003C70F3 /* CustomLabel.swift */; };
+		CBF452B923811F76003C70F3 /* ViuPlayerTabbarSubtitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF452B823811F76003C70F3 /* ViuPlayerTabbarSubtitleView.swift */; };
+		CBF452BB238133F0003C70F3 /* ViuPlayerTabbarCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF452BA238133F0003C70F3 /* ViuPlayerTabbarCustomView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		00D7CD0CC39DF68E57E203F8 /* Pods-tvOS_demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tvOS_demo.debug.xcconfig"; path = "Target Support Files/Pods-tvOS_demo/Pods-tvOS_demo.debug.xcconfig"; sourceTree = "<group>"; };
 		444E4028BA38B8DACFB31BAE /* Pods_tvOS_demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_tvOS_demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB1FD06E2387968800A74369 /* ViuPlayerProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerProgressView.swift; sourceTree = "<group>"; };
 		CB43ACFF233E0F4E0000A7F1 /* tvOS_demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tvOS_demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB43AD02233E0F4E0000A7F1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CB43AD04233E0F4E0000A7F1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		CB43AD07233E0F4E0000A7F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CB43AD09233E0F510000A7F1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CB43AD0B233E0F510000A7F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CB4651A5238B8B3400078AF1 /* JHPlayerUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JHPlayerUtils.swift; sourceTree = "<group>"; };
+		CB4651A6238B8B3400078AF1 /* JHPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JHPlayer.swift; sourceTree = "<group>"; };
+		CB4651A7238B8B3400078AF1 /* JHPlayerLoadingIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JHPlayerLoadingIndicator.swift; sourceTree = "<group>"; };
+		CB4651A8238B8B3400078AF1 /* JHPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JHPlayerView.swift; sourceTree = "<group>"; };
+		CB4651A9238B8B3400078AF1 /* Timer+JHPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Timer+JHPlayer.swift"; sourceTree = "<group>"; };
+		CB4651AA238B8B3400078AF1 /* JHPlayerSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JHPlayerSlider.swift; sourceTree = "<group>"; };
+		CB4651AB238B8B3400078AF1 /* JHSubtitles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JHSubtitles.swift; sourceTree = "<group>"; };
+		CB4651AC238B8B3400078AF1 /* JHPlayerError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JHPlayerError.swift; sourceTree = "<group>"; };
+		CB4651AD238B8B3400078AF1 /* UIButton+JHPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+JHPlayer.swift"; sourceTree = "<group>"; };
 		CBF08595237ACF6300D685D1 /* ViuPlayerTabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerTabbarView.swift; sourceTree = "<group>"; };
 		CBF08597237ACFB500D685D1 /* ViuPlayerTabbarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerTabbarModel.swift; sourceTree = "<group>"; };
 		CBF452AE237D5669003C70F3 /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		CBF452B0237D674F003C70F3 /* ViuPlayerTabbarConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerTabbarConfig.swift; sourceTree = "<group>"; };
+		CBF452B2237D8ED6003C70F3 /* ViuPlayerTabbarIntroductionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerTabbarIntroductionView.swift; sourceTree = "<group>"; };
+		CBF452B6237E9FE4003C70F3 /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
+		CBF452B823811F76003C70F3 /* ViuPlayerTabbarSubtitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerTabbarSubtitleView.swift; sourceTree = "<group>"; };
+		CBF452BA238133F0003C70F3 /* ViuPlayerTabbarCustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerTabbarCustomView.swift; sourceTree = "<group>"; };
 		F6807A08B93F6917F69A525B /* Pods-tvOS_demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tvOS_demo.release.xcconfig"; path = "Target Support Files/Pods-tvOS_demo/Pods-tvOS_demo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -55,6 +83,22 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		CB1FD06C238792B200A74369 /* TabbarModels */ = {
+			isa = PBXGroup;
+			children = (
+				CBF08597237ACFB500D685D1 /* ViuPlayerTabbarModel.swift */,
+			);
+			path = TabbarModels;
+			sourceTree = "<group>";
+		};
+		CB1FD06D238792C700A74369 /* TabbarConfig */ = {
+			isa = PBXGroup;
+			children = (
+				CBF452B0237D674F003C70F3 /* ViuPlayerTabbarConfig.swift */,
+			);
+			path = TabbarConfig;
+			sourceTree = "<group>";
+		};
 		CB43ACF6233E0F4E0000A7F1 = {
 			isa = PBXGroup;
 			children = (
@@ -76,6 +120,8 @@
 		CB43AD01233E0F4E0000A7F1 /* tvOS_demo */ = {
 			isa = PBXGroup;
 			children = (
+				CB4651B7238B8C6D00078AF1 /* Resource */,
+				CB4651A4238B8B3400078AF1 /* JHPlayer */,
 				CBF452AD237D564F003C70F3 /* Common */,
 				CBF08594237ACF2E00D685D1 /* ViuPlayerTabbarView */,
 				CB43AD02233E0F4E0000A7F1 /* AppDelegate.swift */,
@@ -87,12 +133,37 @@
 			path = tvOS_demo;
 			sourceTree = "<group>";
 		};
+		CB4651A4238B8B3400078AF1 /* JHPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				CB4651A5238B8B3400078AF1 /* JHPlayerUtils.swift */,
+				CB4651A6238B8B3400078AF1 /* JHPlayer.swift */,
+				CB4651A7238B8B3400078AF1 /* JHPlayerLoadingIndicator.swift */,
+				CB4651A8238B8B3400078AF1 /* JHPlayerView.swift */,
+				CB4651A9238B8B3400078AF1 /* Timer+JHPlayer.swift */,
+				CB4651AA238B8B3400078AF1 /* JHPlayerSlider.swift */,
+				CB4651AB238B8B3400078AF1 /* JHSubtitles.swift */,
+				CB4651AC238B8B3400078AF1 /* JHPlayerError.swift */,
+				CB4651AD238B8B3400078AF1 /* UIButton+JHPlayer.swift */,
+			);
+			path = JHPlayer;
+			sourceTree = "<group>";
+		};
+		CB4651B7238B8C6D00078AF1 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
 		CBF08594237ACF2E00D685D1 /* ViuPlayerTabbarView */ = {
 			isa = PBXGroup;
 			children = (
+				CB1FD06D238792C700A74369 /* TabbarConfig */,
+				CB1FD06C238792B200A74369 /* TabbarModels */,
+				CBF452B4237E8F96003C70F3 /* ItemViews */,
 				CBF08595237ACF6300D685D1 /* ViuPlayerTabbarView.swift */,
-				CBF08597237ACFB500D685D1 /* ViuPlayerTabbarModel.swift */,
-				CBF452B0237D674F003C70F3 /* ViuPlayerTabbarConfig.swift */,
+				CB1FD06E2387968800A74369 /* ViuPlayerProgressView.swift */,
 			);
 			path = ViuPlayerTabbarView;
 			sourceTree = "<group>";
@@ -101,8 +172,19 @@
 			isa = PBXGroup;
 			children = (
 				CBF452AE237D5669003C70F3 /* UIColor+Extension.swift */,
+				CBF452B6237E9FE4003C70F3 /* CustomLabel.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		CBF452B4237E8F96003C70F3 /* ItemViews */ = {
+			isa = PBXGroup;
+			children = (
+				CBF452B2237D8ED6003C70F3 /* ViuPlayerTabbarIntroductionView.swift */,
+				CBF452B823811F76003C70F3 /* ViuPlayerTabbarSubtitleView.swift */,
+				CBF452BA238133F0003C70F3 /* ViuPlayerTabbarCustomView.swift */,
+			);
+			path = ItemViews;
 			sourceTree = "<group>";
 		};
 		D573DAD9501BB8E46A571B7E /* Frameworks */ = {
@@ -124,7 +206,6 @@
 				CB43ACFB233E0F4E0000A7F1 /* Sources */,
 				CB43ACFC233E0F4E0000A7F1 /* Frameworks */,
 				CB43ACFD233E0F4E0000A7F1 /* Resources */,
-				ED92838BAB33F59124A5729D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -203,23 +284,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		ED92838BAB33F59124A5729D /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-tvOS_demo/Pods-tvOS_demo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-tvOS_demo/Pods-tvOS_demo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-tvOS_demo/Pods-tvOS_demo-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -228,11 +292,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				CBF452B1237D674F003C70F3 /* ViuPlayerTabbarConfig.swift in Sources */,
+				CB4651B5238B8B3400078AF1 /* JHPlayerError.swift in Sources */,
+				CBF452B923811F76003C70F3 /* ViuPlayerTabbarSubtitleView.swift in Sources */,
+				CB4651AE238B8B3400078AF1 /* JHPlayerUtils.swift in Sources */,
 				CBF08598237ACFB500D685D1 /* ViuPlayerTabbarModel.swift in Sources */,
 				CB43AD05233E0F4E0000A7F1 /* ViewController.swift in Sources */,
+				CB4651B4238B8B3400078AF1 /* JHSubtitles.swift in Sources */,
+				CB4651B3238B8B3400078AF1 /* JHPlayerSlider.swift in Sources */,
+				CB4651AF238B8B3400078AF1 /* JHPlayer.swift in Sources */,
+				CB4651B1238B8B3400078AF1 /* JHPlayerView.swift in Sources */,
 				CB43AD03233E0F4E0000A7F1 /* AppDelegate.swift in Sources */,
+				CB1FD06F2387968800A74369 /* ViuPlayerProgressView.swift in Sources */,
+				CBF452B3237D8ED6003C70F3 /* ViuPlayerTabbarIntroductionView.swift in Sources */,
+				CB4651B2238B8B3400078AF1 /* Timer+JHPlayer.swift in Sources */,
+				CB4651B6238B8B3400078AF1 /* UIButton+JHPlayer.swift in Sources */,
 				CBF08596237ACF6300D685D1 /* ViuPlayerTabbarView.swift in Sources */,
+				CBF452BB238133F0003C70F3 /* ViuPlayerTabbarCustomView.swift in Sources */,
 				CBF452AF237D5669003C70F3 /* UIColor+Extension.swift in Sources */,
+				CBF452B7237E9FE4003C70F3 /* CustomLabel.swift in Sources */,
+				CB4651B0238B8B3400078AF1 /* JHPlayerLoadingIndicator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

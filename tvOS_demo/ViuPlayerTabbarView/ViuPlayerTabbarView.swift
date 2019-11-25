@@ -8,16 +8,42 @@
 
 import UIKit
 
+//enum TabbarItemType: Int {
+//    case introduction = 100
+//    case subtitle
+//    case audioTrack
+//    case custom
+//}
+
 class ViuPlayerTabbarView: UIView {
     
     /// 焦点View
     var focusView: UIView?
     
+//    var itemType: TabbarItemType = .introduction
+    
     // 设置圆角并承载布局视图的view
     private lazy var btnFilletView = UIView()
     
     // 设置button居中布局视图
-    private lazy var btnBackgroundView = UIView()
+    private lazy var stackView: UIStackView = {
+        let view = UIStackView()
+        view.backgroundColor = .clear
+        view.axis = .horizontal;
+        view.distribution = .fillEqually;
+        view.spacing = ViuPlayerTabbarConfig.btnSpacing;
+        view.alignment = .center;
+        return view
+    }()
+    
+    // 简介
+    private lazy var introductionView = ViuPlayerTabbarIntroductionView()
+    
+    // 字幕语言
+    private lazy var subtitleView = ViuPlayerTabbarSubtitleView()
+    
+    // 双字幕
+    private lazy var customView = ViuPlayerTabbarCustomView()
     
     // tabbarModel 数组
     open var buttonModels : [ViuPlayerTabbarModel]? {
@@ -28,6 +54,10 @@ class ViuPlayerTabbarView: UIView {
             setupCategoryButton()
         }
     }
+    
+    
+    /// 只读属性，是否显示
+    private(set) var isTabbarShow: Bool = false
     
     /// 初始化赋值
     /// - Parameter frame: 坐标
@@ -41,7 +71,7 @@ class ViuPlayerTabbarView: UIView {
         self.init(frame: CGRect.zero)
         self.frame = CGRect.init(x: ViuPlayerTabbarConfig.zero,
                                  y: -ViuPlayerTabbarConfig.viewHeight,
-                                 width: ViuPlayerTabbarConfig.viewWidth,
+                                 width: ViuPlayerTabbarConfig.windowWidth,
                                  height: ViuPlayerTabbarConfig.viewHeight)
     }
     
@@ -55,7 +85,6 @@ class ViuPlayerTabbarView: UIView {
     private func setupSubviews() {
         
         backgroundColor = .clear
-        btnBackgroundView.backgroundColor = .clear
         
         btnFilletView.frame = CGRect.init(x: ViuPlayerTabbarConfig.filletSpacing,
                                           y: ViuPlayerTabbarConfig.filletY,
@@ -76,69 +105,114 @@ class ViuPlayerTabbarView: UIView {
                                      height: ViuPlayerTabbarConfig.lineHeight)
         
         btnFilletView.addSubview(lineView)
+        
+        
+        let introductionViewWidth = btnFilletView.frame.width -
+            ViuPlayerTabbarConfig.introductionSpacing * 2
+        let lineViewBottom = lineView.frame.maxY + 20
+        
+        // introductionView
+        introductionView.frame = CGRect.init(x: ViuPlayerTabbarConfig.introductionSpacing,
+                                             y:lineViewBottom,
+                                             width: introductionViewWidth,
+                                             height: ViuPlayerTabbarConfig.introductionHeight)
+        
+        // subtitleView
+        subtitleView.frame = CGRect.init(x: ViuPlayerTabbarConfig.introductionSpacing,
+                                         y: lineViewBottom,
+                                         width: introductionViewWidth,
+                                         height: ViuPlayerTabbarConfig.subtitleHeight)
+        
+        // customView
+        customView.frame = CGRect.init(x: ViuPlayerTabbarConfig.introductionSpacing,
+                                       y: lineViewBottom,
+                                       width: introductionViewWidth,
+                                       height: ViuPlayerTabbarConfig.subtitleHeight)
+    
     }
+
     
     /// 清除导航栏按钮
     private func removeCategoryButton() {
         
-        if btnBackgroundView.subviews.isEmpty == true {
+        if stackView.subviews.isEmpty == true {
             return
         }
         
-        for btn in btnBackgroundView.subviews {
+        for btn in stackView.subviews {
             btn.removeFromSuperview()
         }
         
-        btnBackgroundView.removeFromSuperview()
+        stackView.removeFromSuperview()
     }
     
     /// 设置导航栏按钮
     private func setupCategoryButton() {
         
-        btnFilletView.addSubview(btnBackgroundView)
+        btnFilletView.addSubview(stackView)
         
         let btnBackgroundImage = UIImage.init(imageLiteralResourceName: "navi_btn_background")
+        
+        // 记录循环中按钮的上一次宽度
+        var record: CGFloat = 0.0
         
         // 计算按钮的坐标设置
         buttonModels?.enumerated().forEach({ (offset, model) in
             
-            let btn = setupButton(name: model.buttonName, backgroundImage: btnBackgroundImage)
-            btn.tag = 100 + offset
+            if model.buttonName.isEmpty == true {
+                return
+            }
             
-            let strWidth: CGFloat = getStringWidth(str: btn.currentTitle ?? "",
-                                                   strFont: ViuPlayerTabbarConfig.btnFont,
-                                                   h: ViuPlayerTabbarConfig.btnFont)
-            let tmpWidth = strWidth + ViuPlayerTabbarConfig.btnSpacing
+            let btn = setupButton(name: model.buttonName, backgroundImage: btnBackgroundImage)
+            
+            let strWidth: CGFloat = ViuPlayerTabbarConfig.getStringWidth(str: btn.currentTitle ?? "", strFont: ViuPlayerTabbarConfig.btnFont, h: ViuPlayerTabbarConfig.btnFont)
+            
+            let tmpWidth = ViuPlayerTabbarConfig.btnSpacing + strWidth
             
             var btnWidth = ViuPlayerTabbarConfig.zero
-            if tmpWidth < ViuPlayerTabbarConfig.btnBackWidth {
-                btnWidth = ViuPlayerTabbarConfig.btnBackWidth
+            if tmpWidth < ViuPlayerTabbarConfig.btnMinWidth {
+                btnWidth = ViuPlayerTabbarConfig.btnMinWidth
             } else {
                 btnWidth = tmpWidth
             }
             
-            let x: CGFloat = CGFloat(offset) * (ViuPlayerTabbarConfig.btnSpacing + btnWidth)
+            let x: CGFloat = CGFloat(offset) * (ViuPlayerTabbarConfig.btnSpacing + btnWidth) + record
+            record = ViuPlayerTabbarConfig.btnSpacing + btnWidth
             
-            var btnBackgroundX: CGFloat = ViuPlayerTabbarConfig.zero
-            if offset == Int(ViuPlayerTabbarConfig.zero){
-                btnBackgroundX = (ViuPlayerTabbarConfig.filletWidth - btnWidth) / 2
+            let btnBackgroundX: CGFloat = (ViuPlayerTabbarConfig.filletWidth - btnWidth - x) / 2
+            
+            if model .isKind(of: TabbarIntroductionModel.self) {
+                introductionView.model = model as? TabbarIntroductionModel
+                btnFilletView.addSubview(introductionView)
+                stackView.addArrangedSubview(btn)
+                btn.tag = 100
+                
+            } else if model .isKind(of: TabbarSubtitleModel.self) {
+                subtitleView.model = model as? TabbarSubtitleModel
+                btnFilletView.addSubview(subtitleView)
+                stackView.addArrangedSubview(btn)
+                btn.tag = 102
+
+            } else if model .isKind(of: TabbarCustomModel.self) {
+                customView.model = model as? TabbarCustomModel
+                btnFilletView.addSubview(customView)
+                stackView.addArrangedSubview(btn)
+                btn.tag = 101
+
             } else {
-                btnBackgroundX = (ViuPlayerTabbarConfig.filletWidth - x - btnWidth) / 2
+                stackView.addArrangedSubview(btn)
+                btn.tag = 103
             }
             
-            
-            
-            btnBackgroundView.addSubview(btn)
-            
-            btn.frame = CGRect.init(x: x,
+            btn.frame = CGRect.init(x: 0,
                                     y: ViuPlayerTabbarConfig.btnY,
                                     width: btnWidth,
                                     height: ViuPlayerTabbarConfig.btnHeight)
             
-            btnBackgroundView.frame = CGRect.init(x: btnBackgroundX,
-                                                  y: ViuPlayerTabbarConfig.zero,
-                                                  width: x + btnWidth,
-                                                  height: ViuPlayerTabbarConfig.lineY)
+            stackView.frame = CGRect.init(x: btnBackgroundX,
+                                          y: ViuPlayerTabbarConfig.zero,
+                                          width: x + btnWidth,
+                                          height: ViuPlayerTabbarConfig.lineY)
         })
     }
     
@@ -174,7 +248,7 @@ class ViuPlayerTabbarView: UIView {
     /// 添加毛玻璃效果
     private func setupVisualEffectView() -> UIVisualEffectView {
         /// 创建一个模糊效果
-        let blurEffect = UIBlurEffect(style: .regular)
+        let blurEffect = UIBlurEffect(style: .light)
         /// 创建一个承载模糊效果的视图
         let blurView = UIVisualEffectView(effect: blurEffect)
         blurView.frame = CGRect(x: ViuPlayerTabbarConfig.zero,
@@ -189,7 +263,8 @@ class ViuPlayerTabbarView: UIView {
     /// - Parameter y: 设置视图的Y值
     private func animateTabbarAction(y: CGFloat) {
         
-        UIView.animate(withDuration: ViuPlayerTabbarConfig.AnimationTime, animations: { [weak self] in
+        UIView.animate(withDuration: ViuPlayerTabbarConfig.AnimationTime, delay: 0.0, options: .curveEaseInOut, animations: { [weak self] in
+             
             guard let strongSelf = self else {
                 return
             }
@@ -199,11 +274,13 @@ class ViuPlayerTabbarView: UIView {
             strongSelf.frame = frame
             
         }) { [weak self] (completion) in
+            
             guard let strongSelf = self else {
                 return
             }
             
-            strongSelf.updateFocusView(focusView: strongSelf.btnBackgroundView.subviews.first)
+            strongSelf.updateFocusView(focusView: strongSelf.stackView.subviews.first)
+            
         }
     }
     
@@ -222,36 +299,19 @@ class ViuPlayerTabbarView: UIView {
         })
     }
     
-    public func getStringWidth(str: String, strFont: CGFloat, h: CGFloat) -> CGFloat {
-        return getNormalStringSize(str: str, font: strFont, w: CGFloat.greatestFiniteMagnitude, h: h).width
-    }
-    
-    private func getNormalStringSize(str: String? = nil, attriStr: NSMutableAttributedString? = nil, font: CGFloat, w: CGFloat, h: CGFloat) -> CGSize {
-        if str != nil {
-            let strSize = (str! as NSString).boundingRect(with: CGSize(width: w, height: h), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: font)], context: nil).size
-            return strSize
-        }
-        
-        if attriStr != nil {
-            let strSize = attriStr!.boundingRect(with: CGSize(width: w, height: h), options: .usesLineFragmentOrigin, context: nil).size
-            return strSize
-        }
-        
-        return CGSize.zero
-    }
 }
 
 // MARK: public func
 extension ViuPlayerTabbarView {
     
     public func showTabbarView() {
-        
         animateTabbarAction(y: ViuPlayerTabbarConfig.zero)
+        isTabbarShow = true
     }
     
     public func hiddenTabbarView() {
-        
         animateTabbarAction(y: CGFloat(-ViuPlayerTabbarConfig.viewHeight))
+        isTabbarShow = false
     }
 }
 
@@ -266,8 +326,7 @@ extension ViuPlayerTabbarView {
             environments.append(focusView!)
         } else {
             environments = super.preferredFocusEnvironments
-        }
-        
+        }        
         return environments
     }
     
@@ -296,19 +355,34 @@ extension ViuPlayerTabbarView {
             print(button.tag)
             
             animateFilletHeightAction(height: CGFloat(ViuPlayerTabbarConfig.filletHeight))
+            
+            introductionView.showView()
+            subtitleView.hiddenView()
+            customView.hiddenView()
             break
         case 101:
             print(button.tag)
             
             animateFilletHeightAction(height: ViuPlayerTabbarConfig.filletOtherHeight)
+            
+            introductionView.hiddenView()
+            subtitleView.hiddenView()
+            customView.showView()
             break
         case 102:
             print(button.tag)
             
+            
+            subtitleView.showView()
+            customView.hiddenView()
+            introductionView.hiddenView()
             break
         case 103:
             print(button.tag)
             
+            subtitleView.hiddenView()
+            customView.hiddenView()
+            introductionView.hiddenView()
             break
         default:
             break

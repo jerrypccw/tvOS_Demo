@@ -8,8 +8,6 @@
 
 import UIKit
 
-let windowsWidth = UIScreen.main.bounds.width
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
