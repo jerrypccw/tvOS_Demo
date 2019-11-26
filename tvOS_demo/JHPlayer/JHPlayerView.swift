@@ -46,6 +46,11 @@ public enum JHPlayerViewPanGestureDirection: Int {
 
 open class JHPlayerView: UIView {
     
+    // 播放器导航栏
+    let viuPlayerTabbar = ViuPlayerTabbarView()
+    // 播放器进度条
+    let viuProgressView = ViuPlayerProgressView()
+    
     weak open var jhPlayer : JHPlayer?
     open var controlViewDuration : TimeInterval = 5.0  /// default 5.0
     open fileprivate(set) var playerLayer : AVPlayerLayer?
@@ -60,7 +65,6 @@ open class JHPlayerView: UIView {
     open weak var delegate : JHPlayerViewDelegate?
 
     open var loadingIndicator = JHPlayerLoadingIndicator()
-    open var timeLabel : UILabel = UILabel()
     
     fileprivate var timer : Timer = {
         let time = Timer()
@@ -139,13 +143,13 @@ open class JHPlayerView: UIView {
             loadingIndicator.stopAnimating()
         }
         
-        var current = formatSecondsToString((jhPlayer?.currentDuration)!)
-        if (jhPlayer?.totalDuration.isNaN)! {  // HLS
-            current = "00:00"
-        }
-        if state == .readyToPlay && !isTimeSliding {
-            timeLabel.text = "\(current + " / " +  (formatSecondsToString((jhPlayer?.totalDuration)!)))"
-        }
+//        var current = formatSecondsToString((jhPlayer?.currentDuration)!)
+//        if (jhPlayer?.totalDuration.isNaN)! {  // HLS
+//            current = "00:00"
+//        }
+//        if state == .readyToPlay && !isTimeSliding {
+//
+//        }
     }
     
     /// buffer duration
@@ -155,6 +159,8 @@ open class JHPlayerView: UIView {
     ///   - totalDuration: total duratiom
     open func bufferedDidChange(_ bufferedDuration: TimeInterval, totalDuration: TimeInterval) {
 //        timeSlider.setProgress(Float(bufferedDuration / totalDuration), animated: true)
+        print(Float(bufferedDuration / totalDuration))
+        viuProgressView.progressBar.setProgress(Float(bufferedDuration / totalDuration), animated: true)
     }
     
     /// player diration
@@ -168,8 +174,10 @@ open class JHPlayerView: UIView {
             current = "00:00"
         }
         if !isTimeSliding {
-            timeLabel.text = "\(current + " / " +  (formatSecondsToString(totalDuration)))"
-            //            timeSlider.value = Float(currentDuration / totalDuration)
+            viuProgressView.startTimeString = current
+            viuProgressView.endTimeString = formatSecondsToString(totalDuration - currentDuration)
+            
+            print("\(current) / \(formatSecondsToString(totalDuration - currentDuration))")
         }
     }
     
@@ -177,11 +185,46 @@ open class JHPlayerView: UIView {
         backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         configurationBottomView()
         
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(swipe: )))
+        swipeUp.direction = .up
+        addGestureRecognizer(swipeUp)
+        
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(swipe: )))
+        swipeDown.direction = .down
+        addGestureRecognizer(swipeDown)
+        
+        addSubview(viuPlayerTabbar)
+        addSubview(viuProgressView)
+        
+        viuProgressView.isHidden = true
+        viuProgressView.translatesAutoresizingMaskIntoConstraints = false
+        viuProgressView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 100).isActive = true
+        viuProgressView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -100).isActive = true
+        viuProgressView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        viuProgressView.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        
+        
+        let model = TabbarIntroductionModel()
+        model.buttonName = "简介"
+        model.imageUrl = ""
+        model.dramaTitle = "第15集 测试的播放器"
+        model.dramaDescription = "测试的播放器导航栏的简介 测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介"
+        
+        let model2 = TabbarCustomModel()
+        model2.buttonName = "字幕"
+        model2.customs += ["开", "关"]
+        
+        let model3 = TabbarSubtitleModel()
+        model3.buttonName = "语言"
+        model3.subtitles += ["中文", "英文"]
+        
+        viuPlayerTabbar.buttonModels = [model, model2, model3]
+        
     }
     
     open func reloadPlayerView() {
         playerLayer = AVPlayerLayer(player: nil)
-//        timeSlider.setProgress(0, animated: false)
+        viuProgressView.progressBar.setProgress(0, animated: false)
         isTimeSliding = false
         loadingIndicator.isHidden = false
         loadingIndicator.startAnimating()
@@ -288,12 +331,55 @@ extension JHPlayerView: UIGestureRecognizerDelegate {
         }
         return false
     }
+    
+    /// 遥控器按键事件
+    /// - Parameters:
+    ///   - presses: 按钮对象
+    ///   - event: 按钮事件
+    override open func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+        //        super.pressesBegan(presses, with: event)
+        
+        for press in presses {
+            switch press.type {
+            case .upArrow:
+            
+                break
+            case .downArrow:
+                
+                
+                break
+            case .leftArrow:
+                
+                break
+            case .rightArrow:
+                
+                break
+            case .select:
+                
+                break
+            case .menu:
+                
+                break
+            case .playPause:
+                
+                if viuPlayerTabbar.isTabbarShow == true {
+                    viuPlayerTabbar.hiddenTabbarView()
+                }
+
+                viuProgressView.isHidden = !viuProgressView.isHidden
+                
+                break
+            default:
+                print("pressesBegan default")
+                break
+            }
+        }
+    }
 }
 
 // MARK: - Event
 extension JHPlayerView {
-    
-    
+        
     internal func panGestureHorizontal(_ velocityX: CGFloat) -> TimeInterval {
         displayControlView(true)
         isTimeSliding = true
@@ -301,14 +387,42 @@ extension JHPlayerView {
         return TimeInterval.nan
     }
     
+    @objc func swipeAction(swipe: UISwipeGestureRecognizer) {
+           
+           print("swipeAction : \(swipe)")
+           
+           switch swipe.direction {
+           case .down:
+               print("swipeDownAction")
+               if viuPlayerTabbar.isTabbarShow == false {
+                   viuPlayerTabbar.showTabbarView()
+               }
+               
+               
+               break
+           case .up:
+               print("swipeUpAction")
+               if viuPlayerTabbar.isTabbarShow == true {
+                   viuPlayerTabbar.hiddenTabbarView()
+               }
+               break
+           default:
+               break
+           }
+       }
 }
 
 //MARK: - UI autoLayout
 extension JHPlayerView {
     
-    
     internal func configurationBottomView() {
         addSubview(bottomView)
+        
+        bottomView.translatesAutoresizingMaskIntoConstraints = false
+        bottomView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+        bottomView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        bottomView.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
+        bottomView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
         
         loadingIndicator.lineWidth = 1.0
         loadingIndicator.isHidden = false

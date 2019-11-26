@@ -8,19 +8,10 @@
 
 import UIKit
 
-//enum TabbarItemType: Int {
-//    case introduction = 100
-//    case subtitle
-//    case audioTrack
-//    case custom
-//}
-
 class ViuPlayerTabbarView: UIView {
     
     /// 焦点View
     var focusView: UIView?
-    
-//    var itemType: TabbarItemType = .introduction
     
     // 设置圆角并承载布局视图的view
     private lazy var btnFilletView = UIView()

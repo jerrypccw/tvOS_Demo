@@ -421,6 +421,8 @@ extension JHPlayer {
                     stopPlayerBuffering()
                     delegate?.jhPlayer(self, playerFailed: error)
                     displayView.playFailed(error)
+                default:
+                    break
                 }
                 
             } else if keyPath == #keyPath(AVPlayerItem.playbackBufferEmpty){

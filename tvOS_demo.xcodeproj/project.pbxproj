@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		01851DC59840B02F6E036996 /* Pods_tvOS_demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 444E4028BA38B8DACFB31BAE /* Pods_tvOS_demo.framework */; };
+		59CE2E70238CD0970028EC23 /* apple_tv_app_universal_search_part_01_sd.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 59CE2E6E238CD0970028EC23 /* apple_tv_app_universal_search_part_01_sd.mp4 */; };
+		59CE2E71238CD0970028EC23 /* Despacito Remix Luis Fonsi ft.Daddy Yankee Justin Bieber Lyrics [Spanish].srt in Resources */ = {isa = PBXBuildFile; fileRef = 59CE2E6F238CD0970028EC23 /* Despacito Remix Luis Fonsi ft.Daddy Yankee Justin Bieber Lyrics [Spanish].srt */; };
 		CB1FD06F2387968800A74369 /* ViuPlayerProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1FD06E2387968800A74369 /* ViuPlayerProgressView.swift */; };
 		CB43AD03233E0F4E0000A7F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB43AD02233E0F4E0000A7F1 /* AppDelegate.swift */; };
 		CB43AD05233E0F4E0000A7F1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB43AD04233E0F4E0000A7F1 /* ViewController.swift */; };
@@ -23,8 +25,6 @@
 		CB4651B5238B8B3400078AF1 /* JHPlayerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651AC238B8B3400078AF1 /* JHPlayerError.swift */; };
 		CB4651B6238B8B3400078AF1 /* UIButton+JHPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651AD238B8B3400078AF1 /* UIButton+JHPlayer.swift */; };
 		CB4651B9238BAA2B00078AF1 /* ViuPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651B8238BAA2B00078AF1 /* ViuPlayerView.swift */; };
-		CB4651BC238BBED000078AF1 /* apple_tv_app_universal_search_part_01_sd.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = CB4651BA238BBED000078AF1 /* apple_tv_app_universal_search_part_01_sd.mp4 */; };
-		CB4651BD238BBED000078AF1 /* Despacito Remix Luis Fonsi ft.Daddy Yankee Justin Bieber Lyrics [Spanish].srt in Resources */ = {isa = PBXBuildFile; fileRef = CB4651BB238BBED000078AF1 /* Despacito Remix Luis Fonsi ft.Daddy Yankee Justin Bieber Lyrics [Spanish].srt */; };
 		CBF08596237ACF6300D685D1 /* ViuPlayerTabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF08595237ACF6300D685D1 /* ViuPlayerTabbarView.swift */; };
 		CBF08598237ACFB500D685D1 /* ViuPlayerTabbarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF08597237ACFB500D685D1 /* ViuPlayerTabbarModel.swift */; };
 		CBF452AF237D5669003C70F3 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF452AE237D5669003C70F3 /* UIColor+Extension.swift */; };
@@ -38,6 +38,8 @@
 /* Begin PBXFileReference section */
 		00D7CD0CC39DF68E57E203F8 /* Pods-tvOS_demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tvOS_demo.debug.xcconfig"; path = "Target Support Files/Pods-tvOS_demo/Pods-tvOS_demo.debug.xcconfig"; sourceTree = "<group>"; };
 		444E4028BA38B8DACFB31BAE /* Pods_tvOS_demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_tvOS_demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		59CE2E6E238CD0970028EC23 /* apple_tv_app_universal_search_part_01_sd.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = apple_tv_app_universal_search_part_01_sd.mp4; sourceTree = "<group>"; };
+		59CE2E6F238CD0970028EC23 /* Despacito Remix Luis Fonsi ft.Daddy Yankee Justin Bieber Lyrics [Spanish].srt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Despacito Remix Luis Fonsi ft.Daddy Yankee Justin Bieber Lyrics [Spanish].srt"; sourceTree = "<group>"; };
 		CB1FD06E2387968800A74369 /* ViuPlayerProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerProgressView.swift; sourceTree = "<group>"; };
 		CB43ACFF233E0F4E0000A7F1 /* tvOS_demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tvOS_demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB43AD02233E0F4E0000A7F1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -55,8 +57,6 @@
 		CB4651AC238B8B3400078AF1 /* JHPlayerError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JHPlayerError.swift; sourceTree = "<group>"; };
 		CB4651AD238B8B3400078AF1 /* UIButton+JHPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+JHPlayer.swift"; sourceTree = "<group>"; };
 		CB4651B8238BAA2B00078AF1 /* ViuPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViuPlayerView.swift; sourceTree = "<group>"; };
-		CB4651BA238BBED000078AF1 /* apple_tv_app_universal_search_part_01_sd.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = apple_tv_app_universal_search_part_01_sd.mp4; sourceTree = "<group>"; };
-		CB4651BB238BBED000078AF1 /* Despacito Remix Luis Fonsi ft.Daddy Yankee Justin Bieber Lyrics [Spanish].srt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Despacito Remix Luis Fonsi ft.Daddy Yankee Justin Bieber Lyrics [Spanish].srt"; sourceTree = "<group>"; };
 		CBF08595237ACF6300D685D1 /* ViuPlayerTabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerTabbarView.swift; sourceTree = "<group>"; };
 		CBF08597237ACFB500D685D1 /* ViuPlayerTabbarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerTabbarModel.swift; sourceTree = "<group>"; };
 		CBF452AE237D5669003C70F3 /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
@@ -87,6 +87,15 @@
 				F6807A08B93F6917F69A525B /* Pods-tvOS_demo.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		59CE2E6D238CD0970028EC23 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				59CE2E6E238CD0970028EC23 /* apple_tv_app_universal_search_part_01_sd.mp4 */,
+				59CE2E6F238CD0970028EC23 /* Despacito Remix Luis Fonsi ft.Daddy Yankee Justin Bieber Lyrics [Spanish].srt */,
+			);
+			path = Resource;
 			sourceTree = "<group>";
 		};
 		CB1FD06C238792B200A74369 /* TabbarModels */ = {
@@ -127,7 +136,7 @@
 		CB43AD01233E0F4E0000A7F1 /* tvOS_demo */ = {
 			isa = PBXGroup;
 			children = (
-				CB4651B7238B8C6D00078AF1 /* Resource */,
+				59CE2E6D238CD0970028EC23 /* Resource */,
 				CB4651A4238B8B3400078AF1 /* JHPlayer */,
 				CBF452AD237D564F003C70F3 /* Common */,
 				CBF08594237ACF2E00D685D1 /* ViuPlayerTabbarView */,
@@ -155,15 +164,6 @@
 				CB4651AD238B8B3400078AF1 /* UIButton+JHPlayer.swift */,
 			);
 			path = JHPlayer;
-			sourceTree = "<group>";
-		};
-		CB4651B7238B8C6D00078AF1 /* Resource */ = {
-			isa = PBXGroup;
-			children = (
-				CB4651BA238BBED000078AF1 /* apple_tv_app_universal_search_part_01_sd.mp4 */,
-				CB4651BB238BBED000078AF1 /* Despacito Remix Luis Fonsi ft.Daddy Yankee Justin Bieber Lyrics [Spanish].srt */,
-			);
-			path = Resource;
 			sourceTree = "<group>";
 		};
 		CBF08594237ACF2E00D685D1 /* ViuPlayerTabbarView */ = {
@@ -265,8 +265,8 @@
 			files = (
 				CB43AD0A233E0F510000A7F1 /* Assets.xcassets in Resources */,
 				CB43AD08233E0F4E0000A7F1 /* Main.storyboard in Resources */,
-				CB4651BD238BBED000078AF1 /* Despacito Remix Luis Fonsi ft.Daddy Yankee Justin Bieber Lyrics [Spanish].srt in Resources */,
-				CB4651BC238BBED000078AF1 /* apple_tv_app_universal_search_part_01_sd.mp4 in Resources */,
+				59CE2E71238CD0970028EC23 /* Despacito Remix Luis Fonsi ft.Daddy Yankee Justin Bieber Lyrics [Spanish].srt in Resources */,
+				59CE2E70238CD0970028EC23 /* apple_tv_app_universal_search_part_01_sd.mp4 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

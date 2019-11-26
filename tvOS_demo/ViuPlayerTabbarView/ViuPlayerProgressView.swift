@@ -14,6 +14,18 @@ class ViuPlayerProgressView: UIView {
     lazy var startTime = UILabel()
     lazy var endTime = UILabel()
     
+    var startTimeString: String? {
+        didSet {
+            startTime.text = startTimeString
+        }
+    }
+    
+    var endTimeString: String? {
+        didSet {
+            endTime.text = "-" + (endTimeString ?? "00:00")
+        }
+    }
+    
     var second = 5.0
     
     /// 初始化赋值
@@ -37,8 +49,9 @@ class ViuPlayerProgressView: UIView {
     
     private func addSubviews() {
         
-        progressBar.backgroundColor = .green
         progressBar.progressViewStyle = .default
+        progressBar.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.7988548801)
+        progressBar.trackTintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.2964201627)
         progressBar.progress = 0.0
         
         addSubview(progressBar)
