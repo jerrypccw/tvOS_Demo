@@ -100,6 +100,7 @@
 		CB1FD06D238792C700A74369 /* TabbarConfig */ = {
 			isa = PBXGroup;
 			children = (
+				CBF452B6237E9FE4003C70F3 /* CustomLabel.swift */,
 				CBF452B0237D674F003C70F3 /* ViuPlayerTabbarConfig.swift */,
 			);
 			path = TabbarConfig;
@@ -181,7 +182,6 @@
 			isa = PBXGroup;
 			children = (
 				CBF452AE237D5669003C70F3 /* UIColor+Extension.swift */,
-				CBF452B6237E9FE4003C70F3 /* CustomLabel.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";

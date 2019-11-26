@@ -105,7 +105,6 @@ open class JHPlayer: NSObject {
     open fileprivate(set) var error : JHPlayerError
     
     fileprivate var seeking : Bool = false
-//    fileprivate var resourceLoaderManager = VGPlayerResourceLoaderManager()
     
     //
     open fileprivate(set) var player : AVPlayer? {
