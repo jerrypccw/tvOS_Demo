@@ -541,7 +541,7 @@ extension JHPlayerView {
         isTimeSliding = true
         timer.invalidate()
 //        let value = timeSlider.value
-        if let _ = jhPlayer?.currentDuration ,let totalDuration = jhPlayer?.totalDuration {
+        if let _ = jhPlayer?.currentDuration ,let _ = jhPlayer?.totalDuration {
 //            let sliderValue = (TimeInterval(value) *  totalDuration) + TimeInterval(velocityX) / 100.0 * (TimeInterval(totalDuration) / 400)
 //            timeSlider.setValue(Float(sliderValue/totalDuration), animated: true)
             return TimeInterval.nan //sliderValue
