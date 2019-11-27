@@ -264,15 +264,14 @@ class ViuPlayerTabbarView: UIView {
             frame.origin.y = y
             strongSelf.frame = frame
             
-        }) { [weak self] (completion) in
-            
-            guard let strongSelf = self else {
-                return
-            }
-            
-            strongSelf.updateFocusView(focusView: strongSelf.stackView.subviews.first)
-            
-        }
+        })
+//        { [weak self] (completion) in
+//            guard let strongSelf = self else {
+//                return
+//            }
+//
+//            strongSelf.updateFocusView(focusView: strongSelf.stackView.subviews.first)
+//        }
     }
     
     /// 动画效果
@@ -298,11 +297,13 @@ extension ViuPlayerTabbarView {
     public func showTabbarView() {
         animateTabbarAction(y: ViuPlayerTabbarConfig.zero)
         isTabbarShow = true
+        updateFocusView(focusView: stackView.subviews.first)
     }
     
     public func hiddenTabbarView() {
         animateTabbarAction(y: CGFloat(-ViuPlayerTabbarConfig.viewHeight))
         isTabbarShow = false
+        updateFocusView(focusView: nil)
     }
 }
 

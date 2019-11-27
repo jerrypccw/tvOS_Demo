@@ -26,7 +26,7 @@ class ViuPlayerProgressView: UIView {
         }
     }
     
-    var second = 5.0
+//    var second = 5.0
     
     /// 初始化赋值
     /// - Parameter frame: 坐标
@@ -62,9 +62,7 @@ class ViuPlayerProgressView: UIView {
         progressBar.heightAnchor.constraint(equalToConstant: 10).isActive = true
         progressBar.topAnchor.constraint(equalTo: self.topAnchor, constant: 20).isActive = true
         
-        let fiveMLater = Date().timeIntervalSinceNow
-        
-        startTime.text = ViuPlayerTabbarConfig.formatSecondsToString(fiveMLater)
+        startTime.text = "00:00"
         startTime.font = UIFont.boldSystemFont(ofSize: 30)
         startTime.textColor = .white
         addSubview(startTime)
@@ -74,7 +72,7 @@ class ViuPlayerProgressView: UIView {
         startTime.topAnchor.constraint(equalTo: progressBar.bottomAnchor, constant: 12).isActive = true
         startTime.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
-        endTime.text = ViuPlayerTabbarConfig.formatSecondsToString(fiveMLater)
+        endTime.text = "00:00"
         endTime.font = UIFont.boldSystemFont(ofSize: 30)
         endTime.textColor = .white
         addSubview(endTime)
@@ -85,25 +83,25 @@ class ViuPlayerProgressView: UIView {
         endTime.heightAnchor.constraint(equalToConstant: 30).isActive = true
     }
     
-    func timerStart() {
-        if self.isHidden == false {
-            DispatchQueue.main.asyncAfter(deadline: .now() + second) {
-                self.hiddenProgress()
-            }
-        }
-    }
+//    func timerStart() {
+//        if self.isHidden == false {
+//            DispatchQueue.main.asyncAfter(deadline: .now() + second) {
+//                self.hiddenProgress()
+//            }
+//        }
+//    }
     
-    func hiddenProgress() {
-        UIView.animate(withDuration: 0.25, animations: {
-            self.isHidden = true
-        })
-    }
-    
-    func showProgress() {
-        UIView.animate(withDuration: 0.25, animations: {
-            self.isHidden = false
-        })
-    }
+//    func hiddenProgress() {
+//        UIView.animate(withDuration: 0.25, animations: {
+//            self.isHidden = true
+//        })
+//    }
+//
+//    func showProgress() {
+//        UIView.animate(withDuration: 0.25, animations: {
+//            self.isHidden = false
+//        })
+//    }
     
     deinit {
         print("ViuPlayerProgressView deinit")

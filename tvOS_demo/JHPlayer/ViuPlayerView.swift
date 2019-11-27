@@ -11,16 +11,17 @@ import UIKit
 class ViuPlayerView: JHPlayerView {
     
     var subtitles : JHSubtitles?
-    let subtitlesLabel = UILabel()
+    let subtitlesLabel = CustomLabel()
     
     override func configurationUI() {
         super.configurationUI()
         
         subtitlesLabel.font = UIFont.boldSystemFont(ofSize: 48.0)
+        subtitlesLabel.verticalAlignment = .VerticalAlignmentBottom
         subtitlesLabel.numberOfLines = 0
         subtitlesLabel.textAlignment = .center
         subtitlesLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        subtitlesLabel.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.5031571062)
+//        subtitlesLabel.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.5031571062)
         subtitlesLabel.adjustsFontSizeToFitWidth = false
         self.insertSubview(subtitlesLabel, belowSubview: self.bottomView)
         
@@ -28,7 +29,7 @@ class ViuPlayerView: JHPlayerView {
         subtitlesLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         subtitlesLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         subtitlesLabel.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
-        subtitlesLabel.heightAnchor.constraint(equalToConstant: 160).isActive = true
+        subtitlesLabel.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
 
     }
     
