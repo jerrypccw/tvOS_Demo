@@ -10,27 +10,17 @@ import UIKit
 
 class ViuPlayerView: JHPlayerView {
     
-    var subtitles : JHSubtitles?
-    let subtitlesLabel = ViuCustomLabel()
+    var firstSubtitles : JHSubtitles?
+    let firstSubtitlesLabel = ViuCustomLabel()
+    
+    var secondSubtitles : JHSubtitles?
+    let secondSubtitlesLabel = ViuCustomLabel()
     
     override func configurationUI() {
         super.configurationUI()
         
-        subtitlesLabel.font = UIFont.boldSystemFont(ofSize: 48.0)
-        subtitlesLabel.verticalAlignment = .VerticalAlignmentBottom
-        subtitlesLabel.numberOfLines = 0
-        subtitlesLabel.textAlignment = .center
-        subtitlesLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-//        subtitlesLabel.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.5031571062)
-        subtitlesLabel.adjustsFontSizeToFitWidth = false
-        self.insertSubview(subtitlesLabel, belowSubview: self.bottomView)
-        
-        subtitlesLabel.translatesAutoresizingMaskIntoConstraints = false
-        subtitlesLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        subtitlesLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        subtitlesLabel.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
-        subtitlesLabel.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
-
+        setupFirstSubtitle()
+        setupSecondSubtitle()
     }
     
     override func playStateDidChange(_ state: JHPlayerState) {
@@ -51,16 +41,57 @@ class ViuPlayerView: JHPlayerView {
     
     override func playerDurationDidChange(_ currentDuration: TimeInterval, totalDuration: TimeInterval) {
         super.playerDurationDidChange(currentDuration, totalDuration: totalDuration)
-        if let sub = self.subtitles?.search(for: currentDuration) {
-            self.subtitlesLabel.isHidden = false
-            self.subtitlesLabel.text = sub.content
+        if let sub = self.firstSubtitles?.search(for: currentDuration) {
+            self.firstSubtitlesLabel.isHidden = false
+            self.firstSubtitlesLabel.text = sub.content
+            
+            self.secondSubtitlesLabel.isHidden = false
+            self.secondSubtitlesLabel.text = sub.content
+            
         } else {
-            self.subtitlesLabel.isHidden = true
+            self.firstSubtitlesLabel.isHidden = true            
+            self.secondSubtitlesLabel.isHidden = true
         }
     }
     
     open func setSubtitles(_ subtitles : JHSubtitles) {
-        self.subtitles = subtitles
+        self.firstSubtitles = subtitles
+        self.secondSubtitles = subtitles
     }
     
+    private func setupFirstSubtitle() {
+        
+        firstSubtitlesLabel.font = UIFont.boldSystemFont(ofSize: 48.0)
+        firstSubtitlesLabel.verticalAlignment = .VerticalAlignmentBottom
+        firstSubtitlesLabel.numberOfLines = 0
+        firstSubtitlesLabel.textAlignment = .center
+        firstSubtitlesLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        //        subtitlesLabel.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.5031571062)
+        firstSubtitlesLabel.adjustsFontSizeToFitWidth = false
+        self.insertSubview(firstSubtitlesLabel, belowSubview: self.bottomView)
+        
+        firstSubtitlesLabel.translatesAutoresizingMaskIntoConstraints = false
+        firstSubtitlesLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        firstSubtitlesLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        firstSubtitlesLabel.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
+        firstSubtitlesLabel.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
+    }
+    
+    private func setupSecondSubtitle() {
+        
+        secondSubtitlesLabel.font = UIFont.boldSystemFont(ofSize: 48.0)
+        secondSubtitlesLabel.verticalAlignment = .VerticalAlignmentTop
+        secondSubtitlesLabel.numberOfLines = 0
+        secondSubtitlesLabel.textAlignment = .center
+        secondSubtitlesLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        //        subtitlesLabel.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.5031571062)
+        secondSubtitlesLabel.adjustsFontSizeToFitWidth = false
+        self.insertSubview(secondSubtitlesLabel, belowSubview: self.bottomView)
+        
+        secondSubtitlesLabel.translatesAutoresizingMaskIntoConstraints = false
+        secondSubtitlesLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        secondSubtitlesLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        secondSubtitlesLabel.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
+        secondSubtitlesLabel.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
+    }
 }
