@@ -14,7 +14,7 @@ enum VerticalAlignment {
     case VerticalAlignmentBottom
 }
 
-class CustomLabel: UILabel {
+class ViuCustomLabel: UILabel {
 
     var verticalAlignment: VerticalAlignment {
         didSet {

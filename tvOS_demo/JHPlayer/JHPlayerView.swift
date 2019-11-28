@@ -46,6 +46,8 @@ public enum JHPlayerViewPanGestureDirection: Int {
 
 open class JHPlayerView: UIView {
 
+    /// 焦点View
+    var focusView: UIView?
     // 播放器导航栏
     let viuPlayerTabbar = ViuPlayerTabbarView()
     // 播放器进度条
@@ -103,6 +105,8 @@ open class JHPlayerView: UIView {
         timer.invalidate()
         playerLayer?.removeFromSuperlayer()
         NotificationCenter.default.removeObserver(self)
+        
+        print("JHPlayerView deinit")
     }
     
     open override func layoutSubviews() {
@@ -186,17 +190,6 @@ open class JHPlayerView: UIView {
         addSubview(viuPlayerTabbar)
         configurationBottomView()
         configurationViuProgressView()
-
-        
-//        tabbarSwipeUp = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(swipe: )))
-//        tabbarSwipeUp.direction = .up
-//        addGestureRecognizer(tabbarSwipeUp)
-//
-//        tabbarSwipeDown = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(swipe: )))
-//        tabbarSwipeDown.direction = .down
-//        addGestureRecognizer(tabbarSwipeDown)
-//
-//        tabbarSwipeUp.require(toFail: tabbarSwipeDown)
                 
         let model = TabbarIntroductionModel()
         model.buttonName = "简介"
@@ -213,6 +206,8 @@ open class JHPlayerView: UIView {
         model3.subtitles += ["中文", "英文"]
         
         viuPlayerTabbar.buttonModels = [model, model2, model3]
+        
+//        setupGestureRecognizer()
     }
     
     open func reloadPlayerView() {
@@ -224,17 +219,35 @@ open class JHPlayerView: UIView {
         reloadPlayerLayer()
     }
     
+//    private func setupGestureRecognizer() {
+//
+//        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(progressViewSwipeAction(swipe: )))
+//        swipeUp.direction = .up
+//        addGestureRecognizer(swipeUp)
+//
+//        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(progressViewSwipeAction(swipe: )))
+//        swipeDown.direction = .down
+//        addGestureRecognizer(swipeDown)
+//    }
+//
+//    @objc func progressViewSwipeAction(swipe: UISwipeGestureRecognizer) {
+//
+//        print("progresSwipeAction : \(swipe)")
+//
+//    }
+    
     /// control view display
     ///
     /// - Parameter display: is display
     open func displayControlView(_ isDisplay:Bool) {
         if isDisplay {
             displayControlAnimation()
+//            updateFocusView(focusView: bottomView)
         } else {
             hiddenControlAnimation()
+//            updateFocusView(focusView: nil)
         }
-    }
-    
+    }    
 }
 
 // MARK: - public
@@ -272,6 +285,14 @@ extension JHPlayerView {
         let sec = Int(seconds.truncatingRemainder(dividingBy: 60))
         let min = interval / 60
         return String(format: "%02d:%02d", min, sec)
+    }
+    
+    public func showTabbar() {
+        viuPlayerTabbar.showTabbarView()
+    }
+    
+    public func hiddenTabbar() {
+        viuPlayerTabbar.hiddenTabbarView()
     }
 }
 
@@ -322,39 +343,30 @@ extension JHPlayerView: UIGestureRecognizerDelegate {
     
 }
 
-// MARK: - Event
+// MARK: - focus view
 extension JHPlayerView {
-    
-//    internal func panGestureHorizontal(_ velocityX: CGFloat) -> TimeInterval {
-//        displayControlView(true)
-//        isTimeSliding = true
-//        timer.invalidate()
-//        return TimeInterval.nan
+
+    /// 重新定义focus view
+//    override open var preferredFocusEnvironments: [UIFocusEnvironment] {
+//        var environments = [UIFocusEnvironment]()
+//        
+//        if focusView != nil {
+//            environments.append(focusView!)
+//        } else {
+//            environments = super.preferredFocusEnvironments
+//        }
+//        return environments
+//    }
+//    
+//    /// 更新focus view
+//    ///
+//    /// - Parameter focusView: focus view
+//    func updateFocusView(focusView: UIView?) {
+//        self.focusView = focusView
+//        setNeedsFocusUpdate()
+//        updateFocusIfNeeded()
 //    }
     
-    @objc func swipeAction(swipe: UISwipeGestureRecognizer) {
-        
-        print("swipeAction : \(swipe)")
-        
-        switch swipe.direction {
-        case .down:
-            print("swipeDownAction")
-            if viuPlayerTabbar.isTabbarShow == false {
-                viuPlayerTabbar.showTabbarView()
-            }
-            
-            
-            break
-        case .up:
-            print("swipeUpAction")
-            if viuPlayerTabbar.isTabbarShow == true {
-                viuPlayerTabbar.hiddenTabbarView()
-            }
-            break
-        default:
-            break
-        }
-    }
 }
 
 //MARK: - UI autoLayout

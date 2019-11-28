@@ -72,6 +72,10 @@ class ViuPlayerTabbarView: UIView {
         setupSubviews()
     }
     
+    deinit {
+        print("ViuPlayerTabbarView deinit")
+    }
+    
     /// 辅助视图初始化
     private func setupSubviews() {
         

@@ -11,7 +11,7 @@ import UIKit
 class ViuPlayerView: JHPlayerView {
     
     var subtitles : JHSubtitles?
-    let subtitlesLabel = CustomLabel()
+    let subtitlesLabel = ViuCustomLabel()
     
     override func configurationUI() {
         super.configurationUI()

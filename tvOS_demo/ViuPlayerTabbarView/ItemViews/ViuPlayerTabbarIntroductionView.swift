@@ -12,7 +12,7 @@ class ViuPlayerTabbarIntroductionView: UIView {
     
     lazy var imageView: UIImageView = UIImageView()
     lazy var titleLabel: UILabel = UILabel()
-    lazy var descriptionLabel: CustomLabel = CustomLabel()
+    lazy var descriptionLabel: ViuCustomLabel = ViuCustomLabel()
     lazy var playTimeLabel: UILabel = UILabel()
     
     var model: TabbarIntroductionModel? {
