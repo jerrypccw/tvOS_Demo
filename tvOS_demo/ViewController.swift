@@ -10,10 +10,12 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    let btn = UIButton.init(type: .custom)
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let btn = UIButton.init(type: .custom)
+                
         btn.setTitle("play movie", for: .normal)
         btn.setTitle("play movie", for: .focused)
         btn.setTitleColor(.black, for: .normal)
@@ -26,11 +28,14 @@ class ViewController: UIViewController {
         btn.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         btn.widthAnchor.constraint(equalToConstant: 200).isActive = true
         btn.heightAnchor.constraint(equalToConstant: 80).isActive = true
+
+        
     }
     
     @objc func gotoPlayerVC() {
-//        navigationController?.pushViewController(ViuPlayerViewController(), animated: true)
-        self.present(ViuPlayerViewController(), animated: true, completion: nil)
+        navigationController?.pushViewController(ViuPlayerViewController(), animated: true)
+//        self.present(ViuPlayerViewController(), animated: true, completion: nil)
     }
+    
     
 }

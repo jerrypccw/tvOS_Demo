@@ -92,3 +92,78 @@ extension ViuPlayerTabbarConfig {
         return CGSize.zero
     }
 }
+
+extension Int{
+    //++前缀:先自增再执行表达示
+    static prefix func ++(num:inout Int) -> Int {
+        //输入输出参数num
+        num += 1
+        //返回加1后的数值
+        return num
+    }
+    //后缀++:先执行表达式后再自增
+    static postfix func ++(num:inout Int) -> Int {
+        //输入输出参数num
+        let temp = num
+        //num加1
+        num += 1
+        //返回加1前的数值
+        return temp
+    }
+    //--前缀:先自减再执行表达示
+    static prefix func --(num:inout Int) -> Int {
+        //输入输出参数num
+        num -= 1
+        //返回减1后的数值
+        return num
+    }
+    //后缀--:先执行表达式后再自减
+    static postfix func --(num:inout Int) -> Int {
+        //输入输出参数num
+        let temp = num
+        //num减1
+        num -= 1
+        //返回减1前的数值
+        return temp
+    }
+}
+
+func *(l: CGSize,r: CGFloat)-> CGSize {
+  return CGSize(width: r*l.width, height: r*l.height)
+}
+
+func /( l : CGSize, r: CGSize) -> CGSize {
+    return CGSize(width:l.width / r.width,height:     l.height / r.height)
+}
+
+func *(l: CGSize,r: CGSize)-> CGSize{
+    return CGSize(width: l.width * r.width, height:   l.height * r.height)
+}
+
+func -( l : CGSize, r: CGSize) -> CGSize {
+    return CGSize(width:l.width - r.width,height: l.height - r.height)
+}
+
+func -( l : CGPoint, r: CGPoint) -> CGPoint {
+      return  CGPoint(x: l.x - r.x, y: l.y - r.y)
+}
+
+extension CGSize {
+    var point: CGPoint {
+       return CGPoint(x: self.width, y: self.height) }
+}
+
+extension CGPoint {
+  
+  func length() -> CGFloat {
+    return sqrt(x*x + y*y)
+  }
+  
+  func normalized() -> CGPoint {
+    return CGPoint(x: self.x / length(), y: self.y / length())
+  }
+  
+  var angle: CGFloat {
+    return atan2(y, x)
+  }
+}

@@ -106,6 +106,8 @@ open class JHPlayer: NSObject {
     
     fileprivate var seeking : Bool = false
     
+    var imageGenerator: AVAssetImageGenerator?
+    
     //
     open fileprivate(set) var player : AVPlayer? {
         willSet{
@@ -175,7 +177,8 @@ open class JHPlayer: NSObject {
     
     deinit {
         removePlayerNotifations()
-        cleanPlayer()
+        removePlayerItemObservers()
+        cleanPlayer()        
         displayView.removeFromSuperview()
         NotificationCenter.default.removeObserver(self)
     }
@@ -295,7 +298,6 @@ extension JHPlayer {
             })
         }
     }
-    
 }
 
 //MARK: - private
@@ -317,6 +319,73 @@ extension JHPlayer {
         error.error = playerItem?.error
         error.extendedLogData = playerItem?.errorLog()?.extendedLogData()
         error.extendedLogDataStringEncoding = playerItem?.errorLog()?.extendedLogDataStringEncoding
+    }
+    
+    // 获取元数据的字幕信息
+    internal func loadMediaOption() {
+        let mc = AVMediaCharacteristic.legible
+        let mediaGourp = playerAsset!.mediaSelectionGroup(forMediaCharacteristic: mc)
+        
+        guard let gourp = mediaGourp else {
+            return
+        }
+        
+        for option in gourp.options {
+            if option.displayName == "English" {
+                // 显示选中的字幕
+                playerItem?.select(option, in: gourp)
+            }
+        }
+    }
+    
+    internal func generateThumbnails() {
+        
+        guard let asset = playerAsset else {
+            print("generateThumbnails asset error")
+            return
+        }
+        
+        imageGenerator = AVAssetImageGenerator.init(asset: asset)
+        imageGenerator?.maximumSize = CGSize(width: 200.0, height: 0.0)
+        
+        let duration: CMTime = asset.duration
+        var times:[NSValue] = []
+        let increment: CMTimeValue = duration.value / 20
+        var currentValue: CMTimeValue = CMTimeValue(2 * duration.timescale)
+        while currentValue <= duration.value {
+            let time: CMTime = CMTime.init(value: currentValue, timescale: duration.timescale)
+            times.append(NSValue(time: time))
+            currentValue += increment
+        }
+        
+        var imageCount = times.count
+        var images:[JHThumbnail] = []
+        
+        let handler: AVAssetImageGeneratorCompletionHandler = {
+            requestedTime, imageRef, actualTime, result, error in
+            
+            if result == .succeeded {
+                guard let cgImage =  imageRef else {
+                    return
+                }
+                let image: UIImage = UIImage.init(cgImage: cgImage)
+                let thumbnail: JHThumbnail = JHThumbnail()
+                thumbnail.image = image
+                thumbnail.time = actualTime
+                images.append(thumbnail)
+            } else {
+                print("generateThumbnails result error")
+            }
+                
+            if --imageCount == 0 {
+                DispatchQueue.main.async {
+                    let name = "JHThumbnailsGeneratedNotification"
+                    let nc: NotificationCenter = NotificationCenter.default
+                    nc.post(name: NSNotification.Name(rawValue: name), object: images)
+                }
+            }
+        }
+        imageGenerator?.generateCGImagesAsynchronously(forTimes: times, completionHandler: handler)
     }
 }
 
@@ -415,6 +484,11 @@ extension JHPlayer {
                     startPlayerBuffering()
                 case .readyToPlay:
                     bufferState = .readyToPlay
+                    // 获取元数据的字幕信息
+                    loadMediaOption()
+                    // 获取视频每帧的图片
+                    generateThumbnails()
+                    
                 case .failed:
                     state = .error
                     collectPlayerErrorLogEvent()

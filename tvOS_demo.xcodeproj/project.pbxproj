@@ -20,12 +20,12 @@
 		CB4651B0238B8B3400078AF1 /* JHPlayerLoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651A7238B8B3400078AF1 /* JHPlayerLoadingIndicator.swift */; };
 		CB4651B1238B8B3400078AF1 /* JHPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651A8238B8B3400078AF1 /* JHPlayerView.swift */; };
 		CB4651B2238B8B3400078AF1 /* Timer+JHPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651A9238B8B3400078AF1 /* Timer+JHPlayer.swift */; };
-		CB4651B3238B8B3400078AF1 /* JHPlayerSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651AA238B8B3400078AF1 /* JHPlayerSlider.swift */; };
 		CB4651B4238B8B3400078AF1 /* JHSubtitles.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651AB238B8B3400078AF1 /* JHSubtitles.swift */; };
 		CB4651B5238B8B3400078AF1 /* JHPlayerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651AC238B8B3400078AF1 /* JHPlayerError.swift */; };
-		CB4651B6238B8B3400078AF1 /* UIButton+JHPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651AD238B8B3400078AF1 /* UIButton+JHPlayer.swift */; };
 		CB4651B9238BAA2B00078AF1 /* ViuPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651B8238BAA2B00078AF1 /* ViuPlayerView.swift */; };
 		CB4CE960238FA4AD0046552E /* ViuPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4CE95F238FA4AD0046552E /* ViuPlayerViewController.swift */; };
+		CBA9AB752392847600093F21 /* hubblecast.m4v in Resources */ = {isa = PBXBuildFile; fileRef = CBA9AB742392847600093F21 /* hubblecast.m4v */; };
+		CBA9AB772392AD9D00093F21 /* JHThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA9AB762392AD9D00093F21 /* JHThumbnail.swift */; };
 		CBF08596237ACF6300D685D1 /* ViuPlayerTabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF08595237ACF6300D685D1 /* ViuPlayerTabbarView.swift */; };
 		CBF08598237ACFB500D685D1 /* ViuPlayerTabbarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF08597237ACFB500D685D1 /* ViuPlayerTabbarModel.swift */; };
 		CBF3C218238E7A7500A79EC3 /* test.srt in Resources */ = {isa = PBXBuildFile; fileRef = CBF3C217238E7A7500A79EC3 /* test.srt */; };
@@ -54,12 +54,12 @@
 		CB4651A7238B8B3400078AF1 /* JHPlayerLoadingIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JHPlayerLoadingIndicator.swift; sourceTree = "<group>"; };
 		CB4651A8238B8B3400078AF1 /* JHPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JHPlayerView.swift; sourceTree = "<group>"; };
 		CB4651A9238B8B3400078AF1 /* Timer+JHPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Timer+JHPlayer.swift"; sourceTree = "<group>"; };
-		CB4651AA238B8B3400078AF1 /* JHPlayerSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JHPlayerSlider.swift; sourceTree = "<group>"; };
 		CB4651AB238B8B3400078AF1 /* JHSubtitles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JHSubtitles.swift; sourceTree = "<group>"; };
 		CB4651AC238B8B3400078AF1 /* JHPlayerError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JHPlayerError.swift; sourceTree = "<group>"; };
-		CB4651AD238B8B3400078AF1 /* UIButton+JHPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+JHPlayer.swift"; sourceTree = "<group>"; };
 		CB4651B8238BAA2B00078AF1 /* ViuPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViuPlayerView.swift; sourceTree = "<group>"; };
 		CB4CE95F238FA4AD0046552E /* ViuPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerViewController.swift; sourceTree = "<group>"; };
+		CBA9AB742392847600093F21 /* hubblecast.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = hubblecast.m4v; sourceTree = "<group>"; };
+		CBA9AB762392AD9D00093F21 /* JHThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHThumbnail.swift; sourceTree = "<group>"; };
 		CBF08595237ACF6300D685D1 /* ViuPlayerTabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerTabbarView.swift; sourceTree = "<group>"; };
 		CBF08597237ACFB500D685D1 /* ViuPlayerTabbarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerTabbarModel.swift; sourceTree = "<group>"; };
 		CBF3C217238E7A7500A79EC3 /* test.srt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.srt; sourceTree = "<group>"; };
@@ -96,6 +96,7 @@
 		59CE2E6D238CD0970028EC23 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				CBA9AB742392847600093F21 /* hubblecast.m4v */,
 				CBF3C217238E7A7500A79EC3 /* test.srt */,
 				59CE2E6E238CD0970028EC23 /* apple_tv_app_universal_search_part_01_sd.mp4 */,
 				59CE2E6F238CD0970028EC23 /* Despacito Remix Luis Fonsi ft.Daddy Yankee Justin Bieber Lyrics [Spanish].srt */,
@@ -164,10 +165,9 @@
 				CB4651A7238B8B3400078AF1 /* JHPlayerLoadingIndicator.swift */,
 				CB4651A8238B8B3400078AF1 /* JHPlayerView.swift */,
 				CB4651A9238B8B3400078AF1 /* Timer+JHPlayer.swift */,
-				CB4651AA238B8B3400078AF1 /* JHPlayerSlider.swift */,
 				CB4651AB238B8B3400078AF1 /* JHSubtitles.swift */,
 				CB4651AC238B8B3400078AF1 /* JHPlayerError.swift */,
-				CB4651AD238B8B3400078AF1 /* UIButton+JHPlayer.swift */,
+				CBA9AB762392AD9D00093F21 /* JHThumbnail.swift */,
 			);
 			path = JHPlayer;
 			sourceTree = "<group>";
@@ -271,6 +271,7 @@
 			files = (
 				CB43AD0A233E0F510000A7F1 /* Assets.xcassets in Resources */,
 				CB43AD08233E0F4E0000A7F1 /* Main.storyboard in Resources */,
+				CBA9AB752392847600093F21 /* hubblecast.m4v in Resources */,
 				CBF3C218238E7A7500A79EC3 /* test.srt in Resources */,
 				59CE2E71238CD0970028EC23 /* Despacito Remix Luis Fonsi ft.Daddy Yankee Justin Bieber Lyrics [Spanish].srt in Resources */,
 				59CE2E70238CD0970028EC23 /* apple_tv_app_universal_search_part_01_sd.mp4 in Resources */,
@@ -316,14 +317,12 @@
 				CBF08598237ACFB500D685D1 /* ViuPlayerTabbarModel.swift in Sources */,
 				CB43AD05233E0F4E0000A7F1 /* ViewController.swift in Sources */,
 				CB4651B4238B8B3400078AF1 /* JHSubtitles.swift in Sources */,
-				CB4651B3238B8B3400078AF1 /* JHPlayerSlider.swift in Sources */,
 				CB4651AF238B8B3400078AF1 /* JHPlayer.swift in Sources */,
 				CB4651B1238B8B3400078AF1 /* JHPlayerView.swift in Sources */,
 				CB43AD03233E0F4E0000A7F1 /* AppDelegate.swift in Sources */,
 				CB1FD06F2387968800A74369 /* ViuPlayerProgressView.swift in Sources */,
 				CBF452B3237D8ED6003C70F3 /* ViuPlayerTabbarIntroductionView.swift in Sources */,
 				CB4651B2238B8B3400078AF1 /* Timer+JHPlayer.swift in Sources */,
-				CB4651B6238B8B3400078AF1 /* UIButton+JHPlayer.swift in Sources */,
 				CB4651B9238BAA2B00078AF1 /* ViuPlayerView.swift in Sources */,
 				CBF08596237ACF6300D685D1 /* ViuPlayerTabbarView.swift in Sources */,
 				CBF452BB238133F0003C70F3 /* ViuPlayerTabbarCustomView.swift in Sources */,
@@ -331,6 +330,7 @@
 				CBF452AF237D5669003C70F3 /* UIColor+Extension.swift in Sources */,
 				CBF452B7237E9FE4003C70F3 /* ViuCustomLabel.swift in Sources */,
 				CB4651B0238B8B3400078AF1 /* JHPlayerLoadingIndicator.swift in Sources */,
+				CBA9AB772392AD9D00093F21 /* JHThumbnail.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

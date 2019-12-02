@@ -13,6 +13,7 @@ class ViuPlayerProgressView: UIView {
     lazy var progressBar = UIProgressView()
     lazy var startTime = UILabel()
     lazy var endTime = UILabel()
+    lazy var progressLine = UIView()
     
     var startTimeString: String? {
         didSet {
@@ -81,6 +82,10 @@ class ViuPlayerProgressView: UIView {
         endTime.rightAnchor.constraint(equalTo: progressBar.rightAnchor).isActive = true
         endTime.topAnchor.constraint(equalTo: progressBar.bottomAnchor, constant: 12).isActive = true
         endTime.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        progressLine.backgroundColor = .purple
+        progressBar.addSubview(progressLine)
+        progressLine.frame = CGRect.init(x: 0, y: 0, width: 2, height: 10)
     }
     
 //    func timerStart() {

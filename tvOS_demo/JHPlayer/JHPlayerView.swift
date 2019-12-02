@@ -65,12 +65,12 @@ open class JHPlayerView: UIView {
         }
     }
     open weak var delegate : JHPlayerViewDelegate?
-    
+    open var panGestureDirection : JHPlayerViewPanGestureDirection = .horizontal
     open var loadingIndicator = JHPlayerLoadingIndicator()
     open var tabbarSwipeUp = UISwipeGestureRecognizer()
     open var tabbarSwipeDown = UISwipeGestureRecognizer()
     
-    fileprivate var timer : Timer = {
+    open var timer : Timer = {
         let time = Timer()
         return time
     }()
@@ -207,7 +207,17 @@ open class JHPlayerView: UIView {
         
         viuPlayerTabbar.buttonModels = [model, model2, model3]
         
-//        setupGestureRecognizer()
+        let name = "JHThumbnailsGeneratedNotification"
+        NotificationCenter.default.addObserver(self, selector: #selector(buildScrubber(noti:)), name: NSNotification.Name(rawValue: name), object: nil)
+    }
+    
+    @objc func buildScrubber(noti: Notification) {
+        
+        let array:[JHThumbnail] = noti.object as! [JHThumbnail]
+        
+        array.enumerated().forEach { (offset, object) in
+            print("array \(String(describing: object.image))")
+        }       
     }
     
     open func reloadPlayerView() {
@@ -218,23 +228,6 @@ open class JHPlayerView: UIView {
         loadingIndicator.startAnimating()
         reloadPlayerLayer()
     }
-    
-//    private func setupGestureRecognizer() {
-//
-//        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(progressViewSwipeAction(swipe: )))
-//        swipeUp.direction = .up
-//        addGestureRecognizer(swipeUp)
-//
-//        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(progressViewSwipeAction(swipe: )))
-//        swipeDown.direction = .down
-//        addGestureRecognizer(swipeDown)
-//    }
-//
-//    @objc func progressViewSwipeAction(swipe: UISwipeGestureRecognizer) {
-//
-//        print("progresSwipeAction : \(swipe)")
-//
-//    }
     
     /// control view display
     ///
@@ -349,7 +342,7 @@ extension JHPlayerView {
     /// 重新定义focus view
 //    override open var preferredFocusEnvironments: [UIFocusEnvironment] {
 //        var environments = [UIFocusEnvironment]()
-//        
+//
 //        if focusView != nil {
 //            environments.append(focusView!)
 //        } else {
@@ -357,7 +350,7 @@ extension JHPlayerView {
 //        }
 //        return environments
 //    }
-//    
+//
 //    /// 更新focus view
 //    ///
 //    /// - Parameter focusView: focus view
