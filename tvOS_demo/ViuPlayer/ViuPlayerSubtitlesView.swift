@@ -8,12 +8,12 @@
 
 import UIKit
 
-class ViuPlayerView: JHPlayerView {
+class ViuPlayerSubtitlesView: ViuPlayerView {
     
-    var firstSubtitles : JHSubtitles?
+    var firstSubtitles : ViuSubtitles?
     let firstSubtitlesLabel = ViuCustomLabel()
     
-    var secondSubtitles : JHSubtitles?
+    var secondSubtitles : ViuSubtitles?
     let secondSubtitlesLabel = ViuCustomLabel()
     
     override func configurationUI() {
@@ -23,7 +23,7 @@ class ViuPlayerView: JHPlayerView {
         setupSecondSubtitle()
     }
     
-    override func playStateDidChange(_ state: JHPlayerState) {
+    override func playStateDidChange(_ state: ViuPlayerState) {
         super.playStateDidChange(state)
         if state == .playing {
             
@@ -54,7 +54,7 @@ class ViuPlayerView: JHPlayerView {
         }
     }
     
-    open func setSubtitles(_ subtitles : JHSubtitles) {
+    open func setSubtitles(_ subtitles : ViuSubtitles) {
         self.firstSubtitles = subtitles
         self.secondSubtitles = subtitles
     }

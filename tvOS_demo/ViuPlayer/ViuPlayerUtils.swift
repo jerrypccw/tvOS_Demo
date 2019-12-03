@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public enum JHPlayerMediaFormat : String{
+public enum ViuPlayerMediaFormat : String{
     case unknown
     case mpeg4
     case m3u8
@@ -18,9 +18,9 @@ public enum JHPlayerMediaFormat : String{
     case error
 }
 
-class JHPlayerUtils: NSObject {
+class ViuPlayerUtils: NSObject {
     static public func playerBundle() -> Bundle {
-        return Bundle(for: JHPlayer.self)
+        return Bundle(for: ViuPlayer.self)
     }
     
     static public func fileResource(_ fileName: String, fileType: String) -> String? {
@@ -42,7 +42,7 @@ class JHPlayerUtils: NSObject {
         return newImage;
     }
     
-    static func decoderVideoFormat(_ URL: URL?) -> JHPlayerMediaFormat {
+    static func decoderVideoFormat(_ URL: URL?) -> ViuPlayerMediaFormat {
         if URL == nil {
             return .error
         }

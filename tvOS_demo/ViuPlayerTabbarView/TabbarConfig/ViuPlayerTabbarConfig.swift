@@ -93,6 +93,7 @@ extension ViuPlayerTabbarConfig {
     }
 }
 
+// 自增，自减扩展
 extension Int{
     //++前缀:先自增再执行表达示
     static prefix func ++(num:inout Int) -> Int {
@@ -127,6 +128,7 @@ extension Int{
         return temp
     }
 }
+
 
 func *(l: CGSize,r: CGFloat)-> CGSize {
   return CGSize(width: r*l.width, height: r*l.height)

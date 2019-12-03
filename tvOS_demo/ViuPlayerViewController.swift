@@ -10,9 +10,9 @@ import UIKit
 
 class ViuPlayerViewController: UIViewController{
     
-    var jhPlayer : JHPlayer = {
-        let playerView = ViuPlayerView()
-        let player = JHPlayer(playerView: playerView)
+    var viuPlayer : ViuPlayer = {
+        let playerView = ViuPlayerSubtitlesView()
+        let player = ViuPlayer(playerView: playerView)
         return player
     }()
     
@@ -32,7 +32,7 @@ class ViuPlayerViewController: UIViewController{
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        jhPlayer.pause()
+        viuPlayer.pause()
     }
     
     override func viewDidLoad() {
@@ -40,17 +40,17 @@ class ViuPlayerViewController: UIViewController{
         
         view.backgroundColor = .yellow
         
-        view.addSubview(jhPlayer.displayView)
+        view.addSubview(viuPlayer.displayView)
         
-        jhPlayer.backgroundMode = .proceed
-        jhPlayer.delegate = self
-        jhPlayer.displayView.delegate = self
+        viuPlayer.backgroundMode = .proceed
+        viuPlayer.delegate = self
+        viuPlayer.displayView.delegate = self
         
-        jhPlayer.displayView.translatesAutoresizingMaskIntoConstraints = false
-        jhPlayer.displayView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        jhPlayer.displayView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        jhPlayer.displayView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        jhPlayer.displayView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        viuPlayer.displayView.translatesAutoresizingMaskIntoConstraints = false
+        viuPlayer.displayView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        viuPlayer.displayView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        viuPlayer.displayView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        viuPlayer.displayView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
         setPlayerData()
         setupGestureRecognizer()
@@ -86,11 +86,11 @@ class ViuPlayerViewController: UIViewController{
     private func setPlayerData() {
         
         if  let srt = Bundle.main.url(forResource: "test", withExtension: "srt") {
-            let playerView = self.jhPlayer.displayView as! ViuPlayerView
-            playerView.setSubtitles(JHSubtitles(filePath: srt))
+            let playerView = self.viuPlayer.displayView as! ViuPlayerSubtitlesView
+            playerView.setSubtitles(ViuSubtitles(filePath: srt))
         }
         
-        let mp4File = JHPlayerUtils.fileResource("hubblecast", fileType: "m4v")
+        let mp4File = ViuPlayerUtils.fileResource("hubblecast", fileType: "m4v")
         
         guard let urlStr: String = mp4File else {
             print("路径不存在")
@@ -99,8 +99,8 @@ class ViuPlayerViewController: UIViewController{
         
         let url = URL.init(fileURLWithPath: urlStr)
         
-        jhPlayer.replaceVideo(url)
-        jhPlayer.play()
+        viuPlayer.replaceVideo(url)
+        viuPlayer.play()
     }
 }
 
@@ -114,15 +114,15 @@ extension ViuPlayerViewController {
         switch swipe.direction {
         case .down:
             print("swipeDownAction")
-            if jhPlayer.displayView.viuPlayerTabbar.isTabbarShow == false {
-                jhPlayer.displayView.showTabbar()
+            if viuPlayer.displayView.viuPlayerTabbar.isTabbarShow == false {
+                viuPlayer.displayView.showTabbar()
             }
                         
             break
         case .up:
             print("swipeUpAction")
-            if jhPlayer.displayView.viuPlayerTabbar.isTabbarShow == true {
-                jhPlayer.displayView.hiddenTabbar()
+            if viuPlayer.displayView.viuPlayerTabbar.isTabbarShow == true {
+                viuPlayer.displayView.hiddenTabbar()
             }
             break
         default:
@@ -132,16 +132,16 @@ extension ViuPlayerViewController {
     
     @objc func onPlayPauseTap(tap: UITapGestureRecognizer) {
 
-        switch jhPlayer.state {
+        switch viuPlayer.state {
         case .playFinished:
             break
         case .playing:
-            jhPlayer.pause()
-            jhPlayer.displayView.displayControlView(true)
+            viuPlayer.pause()
+            viuPlayer.displayView.displayControlView(true)
             break
         case .paused:
-            jhPlayer.play()
-            jhPlayer.displayView.displayControlView(false)
+            viuPlayer.play()
+            viuPlayer.displayView.displayControlView(false)
             break
         case .none:
             break
@@ -152,12 +152,12 @@ extension ViuPlayerViewController {
     
     @objc func onSelectTap(tap: UITapGestureRecognizer) {
 
-        if jhPlayer.displayView.viuPlayerTabbar.isTabbarShow == true {
-            jhPlayer.displayView.hiddenTabbar()
+        if viuPlayer.displayView.viuPlayerTabbar.isTabbarShow == true {
+            viuPlayer.displayView.hiddenTabbar()
         }
 
-        jhPlayer.displayView.isDisplayControl = !jhPlayer.displayView.isDisplayControl
-        jhPlayer.displayView.displayControlView(jhPlayer.displayView.isDisplayControl)
+        viuPlayer.displayView.isDisplayControl = !viuPlayer.displayView.isDisplayControl
+        viuPlayer.displayView.displayControlView(viuPlayer.displayView.isDisplayControl)
     }
     
 //    @objc func onTouchPan(pan: UIPanGestureRecognizer) {
@@ -171,27 +171,27 @@ extension ViuPlayerViewController {
 //            let x = abs(translation.x)
 //            let y = abs(translation.y)
 //            if x < y {
-//                jhPlayer.displayView.panGestureDirection = .vertical
+//                viuPlayer.displayView.panGestureDirection = .vertical
 //
 //            } else if x > y{
-//                guard jhPlayer.mediaFormat == .m3u8 else {
-//                    jhPlayer.displayView.panGestureDirection = .horizontal
+//                guard viuPlayer.mediaFormat == .m3u8 else {
+//                    viuPlayer.displayView.panGestureDirection = .horizontal
 //                    return
 //                }
 //            }
 //        case .changed:
-//            switch jhPlayer.displayView.panGestureDirection {
+//            switch viuPlayer.displayView.panGestureDirection {
 //            case .horizontal:
 //                  print("changed location: \(location)")
-//                  if jhPlayer.currentDuration == 0 { break }
+//                  if viuPlayer.currentDuration == 0 { break }
 //                  let _ = panGestureHorizontal(location.x)
 //            default:
 //                break
 //            }
 //        case .ended:
-//            switch jhPlayer.displayView.panGestureDirection {
+//            switch viuPlayer.displayView.panGestureDirection {
 //            case .horizontal:
-//                   jhPlayer.displayView.setupTimer()
+//                   viuPlayer.displayView.setupTimer()
 //            default:
 //                break
 //            }
@@ -201,10 +201,10 @@ extension ViuPlayerViewController {
 //    }
 //
     internal func panGestureHorizontal(_ velocityX: CGFloat) -> TimeInterval {
-        jhPlayer.displayView.displayControlView(true)
-        jhPlayer.displayView.timer.invalidate()
+        viuPlayer.displayView.displayControlView(true)
+        viuPlayer.displayView.timer.invalidate()
 //          let value = timeSlider.value
-//        if let _ = jhPlayer.currentDuration ,let totalDuration = jhPlayer.totalDuration {
+//        if let _ = viuPlayer.currentDuration ,let totalDuration = viuPlayer.totalDuration {
 //              let sliderValue = (TimeInterval(value) *  totalDuration) + TimeInterval(velocityX) / 100.0 * (TimeInterval(totalDuration) / 400)
 //              timeSlider.setValue(Float(sliderValue/totalDuration), animated: true)
 //
@@ -266,7 +266,7 @@ extension ViuPlayerViewController {
 //        touchBox.frame.origin = priorTouch
         
 //        let point = event?.allTouches?.first?.location(in: view)
-//        if jhPlayer.currentDuration == 0 { return }
+//        if viuPlayer.currentDuration == 0 { return }
 //        let _ = panGestureHorizontal(point!.x)
 //        print("touchesMoved \(point?.x)")
 
@@ -276,7 +276,7 @@ extension ViuPlayerViewController {
         super.touchesEnded(touches, with: event)
         
         print("touchesEnded")
-        jhPlayer.displayView.setupTimer()
+        viuPlayer.displayView.setupTimer()
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -302,12 +302,12 @@ extension ViuPlayerViewController {
 //                break
 //            case .select:
 //                print("select")
-//                if jhPlayer.displayView.viuPlayerTabbar.isTabbarShow == true {
-//                    jhPlayer.displayView.hiddenTabbar()
+//                if viuPlayer.displayView.viuPlayerTabbar.isTabbarShow == true {
+//                    viuPlayer.displayView.hiddenTabbar()
 //                }
 //
-//                jhPlayer.displayView.isDisplayControl = !jhPlayer.displayView.isDisplayControl
-//                jhPlayer.displayView.displayControlView(jhPlayer.displayView.isDisplayControl)
+//                viuPlayer.displayView.isDisplayControl = !viuPlayer.displayView.isDisplayControl
+//                viuPlayer.displayView.displayControlView(viuPlayer.displayView.isDisplayControl)
 //                break
 //            case .menu:
 //
@@ -315,16 +315,16 @@ extension ViuPlayerViewController {
 //            case .playPause:
 //                print("playPause")
 //
-//                switch jhPlayer.state {
+//                switch viuPlayer.state {
 //                case .playFinished:
 //                    break
 //                case .playing:
-//                    jhPlayer.pause()
-//                    jhPlayer.displayView.displayControlView(true)
+//                    viuPlayer.pause()
+//                    viuPlayer.displayView.displayControlView(true)
 //                    break
 //                case .paused:
-//                    jhPlayer.play()
-//                    jhPlayer.displayView.displayControlView(false)
+//                    viuPlayer.play()
+//                    viuPlayer.displayView.displayControlView(false)
 //                    break
 //                case .none:
 //                    break
@@ -354,38 +354,38 @@ extension ViuPlayerViewController {
     
 }
 
-// MARK JHPlayerDelegate
-extension ViuPlayerViewController: JHPlayerDelegate {
-    func jhPlayer(_ player: JHPlayer, playerFailed error: JHPlayerError) {
+// MARK viuPlayerDelegate
+extension ViuPlayerViewController: ViuPlayerDelegate {
+    func viuPlayer(_ player: ViuPlayer, playerFailed error: ViuPlayerError) {
         print(error)
     }
-    func jhPlayer(_ player: JHPlayer, stateDidChange state: JHPlayerState) {
+    func viuPlayer(_ player: ViuPlayer, stateDidChange state: ViuPlayerState) {
         print("player State ",state)
         
         if state == .playFinished {
-            let mp4File = JHPlayerUtils.fileResource("apple_tv_app_universal_search_part_01_sd", fileType: "mp4")
+            let mp4File = ViuPlayerUtils.fileResource("apple_tv_app_universal_search_part_01_sd", fileType: "mp4")
             let url = URL.init(fileURLWithPath: mp4File!)
             
-            jhPlayer.replaceVideo(url)
-            jhPlayer.play()
+            viuPlayer.replaceVideo(url)
+            viuPlayer.play()
         }
     }
-    func jhPlayer(_ player: JHPlayer, bufferStateDidChange state: JHPlayerBufferstate) {
+    func viuPlayer(_ player: ViuPlayer, bufferStateDidChange state: ViuPlayerBufferstate) {
         print("buffer State", state)
     }
     
 }
 
-// MARK JHPlayerViewDelegate
-extension ViuPlayerViewController: JHPlayerViewDelegate {
+// MARK viuPlayerViewDelegate
+extension ViuPlayerViewController: ViuPlayerViewDelegate {
     
-    func jhPlayerView(_ playerView: JHPlayerView, willFullscreen fullscreen: Bool) {
+    func viuPlayerView(_ playerView: ViuPlayerView, willFullscreen fullscreen: Bool) {
     }
     
-    func jhPlayerView(didTappedClose playerView: JHPlayerView) {
+    func viuPlayerView(didTappedClose playerView: ViuPlayerView) {
         
     }
-    func jhPlayerView(didDisplayControl playerView: JHPlayerView) {
+    func viuPlayerView(didDisplayControl playerView: ViuPlayerView) {
         
     }
 }

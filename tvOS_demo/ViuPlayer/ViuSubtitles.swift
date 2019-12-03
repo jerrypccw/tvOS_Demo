@@ -50,7 +50,7 @@ public struct subtitles: CustomStringConvertible {
     }
 }
 
-class JHSubtitles {
+class ViuSubtitles {
     
     open fileprivate(set) var subtitlesFormat : subtitlesFormat = .unknown
     // 存放字幕的字典  时间戳key 字幕value

@@ -10,7 +10,7 @@ import UIKit
 import Foundation
 import CoreMedia
 
-class JHThumbnail: NSObject {
+class ViuThumbnail: NSObject {
     
     var time: CMTime
     var image: UIImage

@@ -16,7 +16,7 @@ import AVFoundation
 /// - paused//暂停:
 /// - playFinished//播放完成:
 /// - error//异常:
-public enum JHPlayerState: Int {
+public enum ViuPlayerState: Int {
     case none               // default
     case playing            // 播放
     case paused             // 暂停
@@ -31,7 +31,7 @@ public enum JHPlayerState: Int {
 /// - buffering//正在缓冲:
 /// - stop//停止:
 /// - bufferFinished//缓冲完成:
-public enum JHPlayerBufferstate: Int {
+public enum ViuPlayerBufferstate: Int {
     case none           // default
     case readyToPlay    // 准备播放
     case buffering      // 正在缓冲
@@ -44,7 +44,7 @@ public enum JHPlayerBufferstate: Int {
 /// - resize//拉伸匹配范围:
 /// - resizeAspect//default:
 /// - resizeAspectFill//通过缩放填满层的范围区域:
-public enum JHVideoGravityMode: Int {
+public enum ViuVideoGravityMode: Int {
     case resize            // 拉伸匹配范围
     case resizeAspect      // default
     case resizeAspectFill  // 通过缩放填满层的范围区域
@@ -55,54 +55,54 @@ public enum JHVideoGravityMode: Int {
 /// - suspend//禁止:
 /// - autoPlayAndPaused//自动播放和暂停:
 /// - proceed//继续进行:
-public enum JHPlayerBackgroundMode: Int {
+public enum ViuPlayerBackgroundMode: Int {
     case suspend                // 禁止
     case autoPlayAndPaused      // 自动播放和暂停
     case proceed                // 继续进行
 }
 
-public protocol JHPlayerDelegate: NSObjectProtocol {
+public protocol ViuPlayerDelegate: NSObjectProtocol {
     // play state
-    func jhPlayer(_ player: JHPlayer, stateDidChange state: JHPlayerState)
+    func viuPlayer(_ player: ViuPlayer, stateDidChange state: ViuPlayerState)
     // playe Duration
-    func jhPlayer(_ player: JHPlayer, playerDurationDidChange currentDuration: TimeInterval, totalDuration: TimeInterval)
+    func viuPlayer(_ player: ViuPlayer, playerDurationDidChange currentDuration: TimeInterval, totalDuration: TimeInterval)
     // buffer state
-    func jhPlayer(_ player: JHPlayer, bufferStateDidChange state: JHPlayerBufferstate)
+    func viuPlayer(_ player: ViuPlayer, bufferStateDidChange state: ViuPlayerBufferstate)
     // buffered Duration
-    func jhPlayer(_ player: JHPlayer, bufferedDidChange bufferedDuration: TimeInterval, totalDuration: TimeInterval)
+    func viuPlayer(_ player: ViuPlayer, bufferedDidChange bufferedDuration: TimeInterval, totalDuration: TimeInterval)
     // play error
-    func jhPlayer(_ player: JHPlayer, playerFailed error: JHPlayerError)
+    func viuPlayer(_ player: ViuPlayer, playerFailed error: ViuPlayerError)
 }
 
 // MARK: - delegate methods optional
-public extension JHPlayerDelegate {
-    func jhPlayer(_ player: JHPlayer, stateDidChange state: JHPlayerState) {}
-    func jhPlayer(_ player: JHPlayer, playerDurationDidChange currentDuration: TimeInterval, totalDuration: TimeInterval) {}
-    func jhPlayer(_ player: JHPlayer, bufferStateDidChange state: JHPlayerBufferstate) {}
-    func jhPlayer(_ player: JHPlayer, bufferedDidChange bufferedDuration: TimeInterval, totalDuration: TimeInterval) {}
-    func jhPlayer(_ player: JHPlayer, playerFailed error: JHPlayerError) {}
+public extension ViuPlayerDelegate {
+    func viuPlayer(_ player: ViuPlayer, stateDidChange state: ViuPlayerState) {}
+    func viuPlayer(_ player: ViuPlayer, playerDurationDidChange currentDuration: TimeInterval, totalDuration: TimeInterval) {}
+    func viuPlayer(_ player: ViuPlayer, bufferStateDidChange state: ViuPlayerBufferstate) {}
+    func viuPlayer(_ player: ViuPlayer, bufferedDidChange bufferedDuration: TimeInterval, totalDuration: TimeInterval) {}
+    func viuPlayer(_ player: ViuPlayer, playerFailed error: ViuPlayerError) {}
 }
 
 
-open class JHPlayer: NSObject {
+open class ViuPlayer: NSObject {
     
     //
-    weak var delegate : JHPlayerDelegate?    
+    weak var delegate : ViuPlayerDelegate?
     //
-    var displayView : JHPlayerView
-    var gravityMode : JHVideoGravityMode = .resizeAspect
-    var backgroundMode : JHPlayerBackgroundMode = .autoPlayAndPaused
+    var displayView : ViuPlayerView
+    var gravityMode : ViuVideoGravityMode = .resizeAspect
+    var backgroundMode : ViuPlayerBackgroundMode = .autoPlayAndPaused
     var bufferInterval : TimeInterval = 2.0
     //
     private var timeObserver: Any?
     //
-    open fileprivate(set) var mediaFormat : JHPlayerMediaFormat
+    open fileprivate(set) var mediaFormat : ViuPlayerMediaFormat
     open fileprivate(set) var totalDuration : TimeInterval = 0.0
     open fileprivate(set) var currentDuration : TimeInterval = 0.0
     open fileprivate(set) var buffering : Bool = false
     open fileprivate(set) var playerAsset : AVURLAsset?
     open fileprivate(set) var contentURL : URL?
-    open fileprivate(set) var error : JHPlayerError
+    open fileprivate(set) var error : ViuPlayerError
     
     fileprivate var seeking : Bool = false
     
@@ -129,33 +129,33 @@ open class JHPlayer: NSObject {
         }
     }
     
-    open var state: JHPlayerState = .none {
+    open var state: ViuPlayerState = .none {
         didSet {
             if state != oldValue {
                 self.displayView.playStateDidChange(state)
-                self.delegate?.jhPlayer(self, stateDidChange: state)
+                self.delegate?.viuPlayer(self, stateDidChange: state)
             }
         }
     }
     
-    open var bufferState : JHPlayerBufferstate = .none {
+    open var bufferState : ViuPlayerBufferstate = .none {
         didSet {
             if bufferState != oldValue {
                 self.displayView.bufferStateDidChange(bufferState)
-                self.delegate?.jhPlayer(self, bufferStateDidChange: bufferState)
+                self.delegate?.viuPlayer(self, bufferStateDidChange: bufferState)
             }
         }
     }
     
     //MARK:- life cycle
-    public init(URL: URL?, playerView: JHPlayerView?) {
-        mediaFormat = JHPlayerUtils.decoderVideoFormat(URL)
+    public init(URL: URL?, playerView: ViuPlayerView?) {
+        mediaFormat = ViuPlayerUtils.decoderVideoFormat(URL)
         contentURL = URL
-        error = JHPlayerError()
+        error = ViuPlayerError()
         if let view = playerView {
             displayView = view
         } else {
-            displayView = JHPlayerView()
+            displayView = ViuPlayerView()
         }
         super.init()
         if contentURL != nil {
@@ -167,7 +167,7 @@ open class JHPlayer: NSObject {
         self.init(URL: URL, playerView: nil)
     }
     
-    public convenience init(playerView: JHPlayerView) {
+    public convenience init(playerView: ViuPlayerView) {
         self.init(URL: nil, playerView: playerView)
     }
     
@@ -184,7 +184,7 @@ open class JHPlayer: NSObject {
     }
     
     internal func configurationPlayer(_ URL: URL) {
-        self.displayView.setjhPlayer(jhPlayer: self)
+        self.displayView.setViuPlayer(viuPlayer: self)
         self.playerAsset = AVURLAsset(url: URL, options: .none)
         if URL.absoluteString.hasPrefix("file:///") {
             let keys = ["tracks", "playable"];
@@ -212,7 +212,7 @@ open class JHPlayer: NSObject {
             if let currentTime = strongSelf.player?.currentTime().seconds,
                 let totalDuration = strongSelf.player?.currentItem?.duration.seconds {
                 strongSelf.currentDuration = currentTime
-                strongSelf.delegate?.jhPlayer(strongSelf, playerDurationDidChange: currentTime, totalDuration: totalDuration)
+                strongSelf.delegate?.viuPlayer(strongSelf, playerDurationDidChange: currentTime, totalDuration: totalDuration)
                 strongSelf.displayView.playerDurationDidChange(currentTime, totalDuration: totalDuration)
             }
         })
@@ -223,11 +223,11 @@ open class JHPlayer: NSObject {
 }
 
 //MARK: - public
-extension JHPlayer {
+extension ViuPlayer {
     
     open func replaceVideo(_ URL: URL) {
         reloadPlayer()
-        mediaFormat = JHPlayerUtils.decoderVideoFormat(URL)
+        mediaFormat = ViuPlayerUtils.decoderVideoFormat(URL)
         contentURL = URL
         configurationPlayer(URL)
     }
@@ -236,7 +236,7 @@ extension JHPlayer {
         seeking = false
         totalDuration = 0.0
         currentDuration = 0.0
-        error = JHPlayerError()
+        error = ViuPlayerError()
         state = .none
         buffering = false
         bufferState = .none
@@ -301,7 +301,7 @@ extension JHPlayer {
 }
 
 //MARK: - private
-extension JHPlayer {
+extension ViuPlayer {
     
     internal func startPlayerBuffering() {
         pause()
@@ -359,7 +359,7 @@ extension JHPlayer {
         }
         
         var imageCount = times.count
-        var images:[JHThumbnail] = []
+        var images:[ViuThumbnail] = []
         
         let handler: AVAssetImageGeneratorCompletionHandler = {
             requestedTime, imageRef, actualTime, result, error in
@@ -369,7 +369,7 @@ extension JHPlayer {
                     return
                 }
                 let image: UIImage = UIImage.init(cgImage: cgImage)
-                let thumbnail: JHThumbnail = JHThumbnail()
+                let thumbnail: ViuThumbnail = ViuThumbnail()
                 thumbnail.image = image
                 thumbnail.time = actualTime
                 images.append(thumbnail)
@@ -379,7 +379,7 @@ extension JHPlayer {
                 
             if --imageCount == 0 {
                 DispatchQueue.main.async {
-                    let name = "JHThumbnailsGeneratedNotification"
+                    let name = "ViuThumbnailsGeneratedNotification"
                     let nc: NotificationCenter = NotificationCenter.default
                     nc.post(name: NSNotification.Name(rawValue: name), object: images)
                 }
@@ -392,7 +392,7 @@ extension JHPlayer {
 //MARK: - Notifation Selector & KVO
 private var playerItemContext = 0
 
-extension JHPlayer {
+extension ViuPlayer {
     
     internal func addPlayerItemObservers() {
         let options = NSKeyValueObservingOptions([.new, .initial])
@@ -462,12 +462,12 @@ extension JHPlayer {
 
 // MARK: - Selecter
 extension Selector {
-    static let playerItemDidPlayToEndTime = #selector(JHPlayer.playerItemDidPlayToEnd(_:))
-    static let applicationWillEnterForeground = #selector(JHPlayer.applicationWillEnterForeground(_:))
-    static let applicationDidEnterBackground = #selector(JHPlayer.applicationDidEnterBackground(_:))
+    static let playerItemDidPlayToEndTime = #selector(ViuPlayer.playerItemDidPlayToEnd(_:))
+    static let applicationWillEnterForeground = #selector(ViuPlayer.applicationWillEnterForeground(_:))
+    static let applicationDidEnterBackground = #selector(ViuPlayer.applicationDidEnterBackground(_:))
 }
 
-extension JHPlayer {
+extension ViuPlayer {
     open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if (context == &playerItemContext) {
             
@@ -493,7 +493,7 @@ extension JHPlayer {
                     state = .error
                     collectPlayerErrorLogEvent()
                     stopPlayerBuffering()
-                    delegate?.jhPlayer(self, playerFailed: error)
+                    delegate?.viuPlayer(self, playerFailed: error)
                     displayView.playFailed(error)
                 default:
                     break
@@ -516,7 +516,7 @@ extension JHPlayer {
                     let bufferTime = star + duration
                     
                     if let itemDuration = playerItem?.duration.seconds {
-                        delegate?.jhPlayer(self, bufferedDidChange: bufferTime, totalDuration: itemDuration)
+                        delegate?.viuPlayer(self, bufferedDidChange: bufferTime, totalDuration: itemDuration)
                         displayView.bufferedDidChange(bufferTime, totalDuration: itemDuration)
                         totalDuration = itemDuration
                         if itemDuration == bufferTime {

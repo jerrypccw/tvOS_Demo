@@ -9,12 +9,12 @@
 import Foundation
 
 extension Timer {
-    class func jhPlayer_scheduledTimerWithTimeInterval(_ timeInterval: TimeInterval, block: @escaping ()->(), repeats: Bool) -> Timer {
+    class func viuPlayer_scheduledTimerWithTimeInterval(_ timeInterval: TimeInterval, block: @escaping ()->(), repeats: Bool) -> Timer {
         return self.scheduledTimer(timeInterval: timeInterval, target:
-            self, selector: #selector(self.jhPlayer_blcokInvoke(_:)), userInfo: block, repeats: repeats)
+            self, selector: #selector(self.viuPlayer_blcokInvoke(_:)), userInfo: block, repeats: repeats)
     }
     
-    @objc class func jhPlayer_blcokInvoke(_ timer: Timer) {
+    @objc class func viuPlayer_blcokInvoke(_ timer: Timer) {
         let block: ()->() = timer.userInfo as! ()->()
         block()
     }

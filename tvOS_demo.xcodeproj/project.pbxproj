@@ -15,17 +15,17 @@
 		CB43AD05233E0F4E0000A7F1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB43AD04233E0F4E0000A7F1 /* ViewController.swift */; };
 		CB43AD08233E0F4E0000A7F1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB43AD06233E0F4E0000A7F1 /* Main.storyboard */; };
 		CB43AD0A233E0F510000A7F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB43AD09233E0F510000A7F1 /* Assets.xcassets */; };
-		CB4651AE238B8B3400078AF1 /* JHPlayerUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651A5238B8B3400078AF1 /* JHPlayerUtils.swift */; };
-		CB4651AF238B8B3400078AF1 /* JHPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651A6238B8B3400078AF1 /* JHPlayer.swift */; };
-		CB4651B0238B8B3400078AF1 /* JHPlayerLoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651A7238B8B3400078AF1 /* JHPlayerLoadingIndicator.swift */; };
-		CB4651B1238B8B3400078AF1 /* JHPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651A8238B8B3400078AF1 /* JHPlayerView.swift */; };
-		CB4651B2238B8B3400078AF1 /* Timer+JHPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651A9238B8B3400078AF1 /* Timer+JHPlayer.swift */; };
-		CB4651B4238B8B3400078AF1 /* JHSubtitles.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651AB238B8B3400078AF1 /* JHSubtitles.swift */; };
-		CB4651B5238B8B3400078AF1 /* JHPlayerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651AC238B8B3400078AF1 /* JHPlayerError.swift */; };
-		CB4651B9238BAA2B00078AF1 /* ViuPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651B8238BAA2B00078AF1 /* ViuPlayerView.swift */; };
+		CB4651AE238B8B3400078AF1 /* ViuPlayerUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651A5238B8B3400078AF1 /* ViuPlayerUtils.swift */; };
+		CB4651AF238B8B3400078AF1 /* ViuPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651A6238B8B3400078AF1 /* ViuPlayer.swift */; };
+		CB4651B0238B8B3400078AF1 /* ViuPlayerLoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651A7238B8B3400078AF1 /* ViuPlayerLoadingIndicator.swift */; };
+		CB4651B1238B8B3400078AF1 /* ViuPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651A8238B8B3400078AF1 /* ViuPlayerView.swift */; };
+		CB4651B2238B8B3400078AF1 /* Timer+ViuPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651A9238B8B3400078AF1 /* Timer+ViuPlayer.swift */; };
+		CB4651B4238B8B3400078AF1 /* ViuSubtitles.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651AB238B8B3400078AF1 /* ViuSubtitles.swift */; };
+		CB4651B5238B8B3400078AF1 /* ViiuPlayerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651AC238B8B3400078AF1 /* ViiuPlayerError.swift */; };
+		CB4651B9238BAA2B00078AF1 /* ViuPlayerSubtitlesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651B8238BAA2B00078AF1 /* ViuPlayerSubtitlesView.swift */; };
 		CB4CE960238FA4AD0046552E /* ViuPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4CE95F238FA4AD0046552E /* ViuPlayerViewController.swift */; };
 		CBA9AB752392847600093F21 /* hubblecast.m4v in Resources */ = {isa = PBXBuildFile; fileRef = CBA9AB742392847600093F21 /* hubblecast.m4v */; };
-		CBA9AB772392AD9D00093F21 /* JHThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA9AB762392AD9D00093F21 /* JHThumbnail.swift */; };
+		CBA9AB772392AD9D00093F21 /* ViuThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA9AB762392AD9D00093F21 /* ViuThumbnail.swift */; };
 		CBF08596237ACF6300D685D1 /* ViuPlayerTabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF08595237ACF6300D685D1 /* ViuPlayerTabbarView.swift */; };
 		CBF08598237ACFB500D685D1 /* ViuPlayerTabbarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF08597237ACFB500D685D1 /* ViuPlayerTabbarModel.swift */; };
 		CBF3C218238E7A7500A79EC3 /* test.srt in Resources */ = {isa = PBXBuildFile; fileRef = CBF3C217238E7A7500A79EC3 /* test.srt */; };
@@ -49,17 +49,17 @@
 		CB43AD07233E0F4E0000A7F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CB43AD09233E0F510000A7F1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CB43AD0B233E0F510000A7F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CB4651A5238B8B3400078AF1 /* JHPlayerUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JHPlayerUtils.swift; sourceTree = "<group>"; };
-		CB4651A6238B8B3400078AF1 /* JHPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JHPlayer.swift; sourceTree = "<group>"; };
-		CB4651A7238B8B3400078AF1 /* JHPlayerLoadingIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JHPlayerLoadingIndicator.swift; sourceTree = "<group>"; };
-		CB4651A8238B8B3400078AF1 /* JHPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JHPlayerView.swift; sourceTree = "<group>"; };
-		CB4651A9238B8B3400078AF1 /* Timer+JHPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Timer+JHPlayer.swift"; sourceTree = "<group>"; };
-		CB4651AB238B8B3400078AF1 /* JHSubtitles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JHSubtitles.swift; sourceTree = "<group>"; };
-		CB4651AC238B8B3400078AF1 /* JHPlayerError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JHPlayerError.swift; sourceTree = "<group>"; };
-		CB4651B8238BAA2B00078AF1 /* ViuPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViuPlayerView.swift; sourceTree = "<group>"; };
+		CB4651A5238B8B3400078AF1 /* ViuPlayerUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViuPlayerUtils.swift; sourceTree = "<group>"; };
+		CB4651A6238B8B3400078AF1 /* ViuPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViuPlayer.swift; sourceTree = "<group>"; };
+		CB4651A7238B8B3400078AF1 /* ViuPlayerLoadingIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViuPlayerLoadingIndicator.swift; sourceTree = "<group>"; };
+		CB4651A8238B8B3400078AF1 /* ViuPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViuPlayerView.swift; sourceTree = "<group>"; };
+		CB4651A9238B8B3400078AF1 /* Timer+ViuPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Timer+ViuPlayer.swift"; sourceTree = "<group>"; };
+		CB4651AB238B8B3400078AF1 /* ViuSubtitles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViuSubtitles.swift; sourceTree = "<group>"; };
+		CB4651AC238B8B3400078AF1 /* ViiuPlayerError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViiuPlayerError.swift; sourceTree = "<group>"; };
+		CB4651B8238BAA2B00078AF1 /* ViuPlayerSubtitlesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViuPlayerSubtitlesView.swift; sourceTree = "<group>"; };
 		CB4CE95F238FA4AD0046552E /* ViuPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerViewController.swift; sourceTree = "<group>"; };
 		CBA9AB742392847600093F21 /* hubblecast.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = hubblecast.m4v; sourceTree = "<group>"; };
-		CBA9AB762392AD9D00093F21 /* JHThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHThumbnail.swift; sourceTree = "<group>"; };
+		CBA9AB762392AD9D00093F21 /* ViuThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuThumbnail.swift; sourceTree = "<group>"; };
 		CBF08595237ACF6300D685D1 /* ViuPlayerTabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerTabbarView.swift; sourceTree = "<group>"; };
 		CBF08597237ACFB500D685D1 /* ViuPlayerTabbarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerTabbarModel.swift; sourceTree = "<group>"; };
 		CBF3C217238E7A7500A79EC3 /* test.srt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.srt; sourceTree = "<group>"; };
@@ -143,7 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				59CE2E6D238CD0970028EC23 /* Resource */,
-				CB4651A4238B8B3400078AF1 /* JHPlayer */,
+				CB4651A4238B8B3400078AF1 /* ViuPlayer */,
 				CBF452AD237D564F003C70F3 /* Common */,
 				CBF08594237ACF2E00D685D1 /* ViuPlayerTabbarView */,
 				CB43AD02233E0F4E0000A7F1 /* AppDelegate.swift */,
@@ -156,20 +156,20 @@
 			path = tvOS_demo;
 			sourceTree = "<group>";
 		};
-		CB4651A4238B8B3400078AF1 /* JHPlayer */ = {
+		CB4651A4238B8B3400078AF1 /* ViuPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				CB4651B8238BAA2B00078AF1 /* ViuPlayerView.swift */,
-				CB4651A5238B8B3400078AF1 /* JHPlayerUtils.swift */,
-				CB4651A6238B8B3400078AF1 /* JHPlayer.swift */,
-				CB4651A7238B8B3400078AF1 /* JHPlayerLoadingIndicator.swift */,
-				CB4651A8238B8B3400078AF1 /* JHPlayerView.swift */,
-				CB4651A9238B8B3400078AF1 /* Timer+JHPlayer.swift */,
-				CB4651AB238B8B3400078AF1 /* JHSubtitles.swift */,
-				CB4651AC238B8B3400078AF1 /* JHPlayerError.swift */,
-				CBA9AB762392AD9D00093F21 /* JHThumbnail.swift */,
+				CB4651B8238BAA2B00078AF1 /* ViuPlayerSubtitlesView.swift */,
+				CB4651A5238B8B3400078AF1 /* ViuPlayerUtils.swift */,
+				CB4651A6238B8B3400078AF1 /* ViuPlayer.swift */,
+				CB4651A7238B8B3400078AF1 /* ViuPlayerLoadingIndicator.swift */,
+				CB4651A8238B8B3400078AF1 /* ViuPlayerView.swift */,
+				CB4651A9238B8B3400078AF1 /* Timer+ViuPlayer.swift */,
+				CB4651AB238B8B3400078AF1 /* ViuSubtitles.swift */,
+				CB4651AC238B8B3400078AF1 /* ViiuPlayerError.swift */,
+				CBA9AB762392AD9D00093F21 /* ViuThumbnail.swift */,
 			);
-			path = JHPlayer;
+			path = ViuPlayer;
 			sourceTree = "<group>";
 		};
 		CBF08594237ACF2E00D685D1 /* ViuPlayerTabbarView */ = {
@@ -311,26 +311,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				CBF452B1237D674F003C70F3 /* ViuPlayerTabbarConfig.swift in Sources */,
-				CB4651B5238B8B3400078AF1 /* JHPlayerError.swift in Sources */,
+				CB4651B5238B8B3400078AF1 /* ViiuPlayerError.swift in Sources */,
 				CBF452B923811F76003C70F3 /* ViuPlayerTabbarSubtitleView.swift in Sources */,
-				CB4651AE238B8B3400078AF1 /* JHPlayerUtils.swift in Sources */,
+				CB4651AE238B8B3400078AF1 /* ViuPlayerUtils.swift in Sources */,
 				CBF08598237ACFB500D685D1 /* ViuPlayerTabbarModel.swift in Sources */,
 				CB43AD05233E0F4E0000A7F1 /* ViewController.swift in Sources */,
-				CB4651B4238B8B3400078AF1 /* JHSubtitles.swift in Sources */,
-				CB4651AF238B8B3400078AF1 /* JHPlayer.swift in Sources */,
-				CB4651B1238B8B3400078AF1 /* JHPlayerView.swift in Sources */,
+				CB4651B4238B8B3400078AF1 /* ViuSubtitles.swift in Sources */,
+				CB4651AF238B8B3400078AF1 /* ViuPlayer.swift in Sources */,
+				CB4651B1238B8B3400078AF1 /* ViuPlayerView.swift in Sources */,
 				CB43AD03233E0F4E0000A7F1 /* AppDelegate.swift in Sources */,
 				CB1FD06F2387968800A74369 /* ViuPlayerProgressView.swift in Sources */,
 				CBF452B3237D8ED6003C70F3 /* ViuPlayerTabbarIntroductionView.swift in Sources */,
-				CB4651B2238B8B3400078AF1 /* Timer+JHPlayer.swift in Sources */,
-				CB4651B9238BAA2B00078AF1 /* ViuPlayerView.swift in Sources */,
+				CB4651B2238B8B3400078AF1 /* Timer+ViuPlayer.swift in Sources */,
+				CB4651B9238BAA2B00078AF1 /* ViuPlayerSubtitlesView.swift in Sources */,
 				CBF08596237ACF6300D685D1 /* ViuPlayerTabbarView.swift in Sources */,
 				CBF452BB238133F0003C70F3 /* ViuPlayerTabbarCustomView.swift in Sources */,
 				CB4CE960238FA4AD0046552E /* ViuPlayerViewController.swift in Sources */,
 				CBF452AF237D5669003C70F3 /* UIColor+Extension.swift in Sources */,
 				CBF452B7237E9FE4003C70F3 /* ViuCustomLabel.swift in Sources */,
-				CB4651B0238B8B3400078AF1 /* JHPlayerLoadingIndicator.swift in Sources */,
-				CBA9AB772392AD9D00093F21 /* JHThumbnail.swift in Sources */,
+				CB4651B0238B8B3400078AF1 /* ViuPlayerLoadingIndicator.swift in Sources */,
+				CBA9AB772392AD9D00093F21 /* ViuThumbnail.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

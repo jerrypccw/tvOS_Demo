@@ -9,42 +9,42 @@
 import UIKit
 import MediaPlayer
 
-public protocol JHPlayerViewDelegate: NSObjectProtocol {
+public protocol ViuPlayerViewDelegate: NSObjectProtocol {
     /// Fullscreen
     ///
     /// - Parameters:
     ///   - playerView: player view
     ///   - fullscreen: Whether full screen
-    func jhPlayerView(_ playerView: JHPlayerView, willFullscreen isFullscreen: Bool)
+    func viuPlayerView(_ playerView: ViuPlayerView, willFullscreen isFullscreen: Bool)
     
     /// Close play view
     ///
     /// - Parameter playerView: player view
-    func jhPlayerView(didTappedClose playerView: JHPlayerView)
+    func viuPlayerView(didTappedClose playerView: ViuPlayerView)
     
     /// Displaye control
     ///
     /// - Parameter playerView: playerView
-    func jhPlayerView(didDisplayControl playerView: JHPlayerView)
+    func viuPlayerView(didDisplayControl playerView: ViuPlayerView)
     
 }
 
 // MARK: - delegate methods optional
-public extension JHPlayerViewDelegate {
+public extension ViuPlayerViewDelegate {
     
-    func jhPlayerView(_ playerView: JHPlayerView, willFullscreen fullscreen: Bool){}
+    func viuPlayerView(_ playerView: ViuPlayerView, willFullscreen fullscreen: Bool){}
     
-    func jhPlayerView(didTappedClose playerView: JHPlayerView) {}
+    func viuPlayerView(didTappedClose playerView: ViuPlayerView) {}
     
-    func jhPlayerView(didDisplayControl playerView: JHPlayerView) {}
+    func viuPlayerView(didDisplayControl playerView: ViuPlayerView) {}
 }
 
-public enum JHPlayerViewPanGestureDirection: Int {
+public enum ViuPlayerViewPanGestureDirection: Int {
     case vertical
     case horizontal
 }
 
-open class JHPlayerView: UIView {
+open class ViuPlayerView: UIView {
 
     /// 焦点View
     var focusView: UIView?
@@ -53,20 +53,20 @@ open class JHPlayerView: UIView {
     // 播放器进度条
     let viuProgressView = ViuPlayerProgressView()
     
-    weak open var jhPlayer : JHPlayer?
+    weak open var viuPlayer : ViuPlayer?
     open var controlViewDuration : TimeInterval = 5.0  /// default 5.0
     open fileprivate(set) var playerLayer : AVPlayerLayer?
     open fileprivate(set) var isTimeSliding : Bool = false
     open var isDisplayControl : Bool = true {
         didSet {
             if isDisplayControl != oldValue {
-                delegate?.jhPlayerView(didDisplayControl: self)
+                delegate?.viuPlayerView(didDisplayControl: self)
             }
         }
     }
-    open weak var delegate : JHPlayerViewDelegate?
-    open var panGestureDirection : JHPlayerViewPanGestureDirection = .horizontal
-    open var loadingIndicator = JHPlayerLoadingIndicator()
+    open weak var delegate : ViuPlayerViewDelegate?
+    open var panGestureDirection : ViuPlayerViewPanGestureDirection = .horizontal
+    open var loadingIndicator = ViuPlayerLoadingIndicator()
     open var tabbarSwipeUp = UISwipeGestureRecognizer()
     open var tabbarSwipeDown = UISwipeGestureRecognizer()
     
@@ -106,7 +106,7 @@ open class JHPlayerView: UIView {
         playerLayer?.removeFromSuperlayer()
         NotificationCenter.default.removeObserver(self)
         
-        print("JHPlayerView deinit")
+        print("ViuPlayerView deinit")
     }
     
     open override func layoutSubviews() {
@@ -114,12 +114,12 @@ open class JHPlayerView: UIView {
         updateDisplayerView(frame: bounds)
     }
     
-    func setjhPlayer(jhPlayer: JHPlayer) {
-        self.jhPlayer = jhPlayer
+    func setViuPlayer(viuPlayer: ViuPlayer) {
+        self.viuPlayer = viuPlayer
     }
     
     open func reloadPlayerLayer() {
-        playerLayer = AVPlayerLayer(player: self.jhPlayer?.player)
+        playerLayer = AVPlayerLayer(player: self.viuPlayer?.player)
         layer.insertSublayer(self.playerLayer!, at: 0)
         updateDisplayerView(frame: self.bounds)
         reloadGravity()
@@ -128,7 +128,7 @@ open class JHPlayerView: UIView {
     /// play state did change
     ///
     /// - Parameter state: state
-    open func playStateDidChange(_ state: JHPlayerState) {
+    open func playStateDidChange(_ state: ViuPlayerState) {
         if state == .playing || state == .playFinished {
             setupTimer()
         }
@@ -139,7 +139,7 @@ open class JHPlayerView: UIView {
     /// buffer state change
     ///
     /// - Parameter state: buffer state
-    open func bufferStateDidChange(_ state: JHPlayerBufferstate) {
+    open func bufferStateDidChange(_ state: ViuPlayerBufferstate) {
         if state == .buffering {
             loadingIndicator.isHidden = false
             loadingIndicator.startAnimating()
@@ -207,13 +207,13 @@ open class JHPlayerView: UIView {
         
         viuPlayerTabbar.buttonModels = [model, model2, model3]
         
-        let name = "JHThumbnailsGeneratedNotification"
+        let name = "ViuThumbnailsGeneratedNotification"
         NotificationCenter.default.addObserver(self, selector: #selector(buildScrubber(noti:)), name: NSNotification.Name(rawValue: name), object: nil)
     }
     
     @objc func buildScrubber(noti: Notification) {
         
-        let array:[JHThumbnail] = noti.object as! [JHThumbnail]
+        let array:[ViuThumbnail] = noti.object as! [ViuThumbnail]
         
         array.enumerated().forEach { (offset, object) in
             print("array \(String(describing: object.image))")
@@ -244,15 +244,15 @@ open class JHPlayerView: UIView {
 }
 
 // MARK: - public
-extension JHPlayerView {
+extension ViuPlayerView {
     
     open func updateDisplayerView(frame: CGRect) {
         playerLayer?.frame = frame
     }
     
     open func reloadGravity() {
-        if jhPlayer != nil {
-            switch jhPlayer!.gravityMode {
+        if viuPlayer != nil {
+            switch viuPlayer!.gravityMode {
             case .resize:
                 playerLayer?.videoGravity = .resize
             case .resizeAspect:
@@ -266,7 +266,7 @@ extension JHPlayerView {
     /// play failed
     ///
     /// - Parameter error: error
-    open func playFailed(_ error: JHPlayerError) {
+    open func playFailed(_ error: ViuPlayerError) {
         // error
     }
     
@@ -290,7 +290,7 @@ extension JHPlayerView {
 }
 
 // MARK: - private
-extension JHPlayerView {
+extension ViuPlayerView {
     
     internal func play() {
         
@@ -322,7 +322,7 @@ extension JHPlayerView {
     }
     internal func setupTimer() {
         timer.invalidate()
-        timer = Timer.jhPlayer_scheduledTimerWithTimeInterval(self.controlViewDuration, block: {  [weak self]  in
+        timer = Timer.viuPlayer_scheduledTimerWithTimeInterval(self.controlViewDuration, block: {  [weak self]  in
             guard let strongSelf = self else { return }
             strongSelf.displayControlView(false)
             }, repeats: false)
@@ -331,13 +331,13 @@ extension JHPlayerView {
 }
 
 // MARK: - UIGestureRecognizerDelegate
-extension JHPlayerView: UIGestureRecognizerDelegate {
+extension ViuPlayerView: UIGestureRecognizerDelegate {
 
     
 }
 
 // MARK: - focus view
-extension JHPlayerView {
+extension ViuPlayerView {
 
     /// 重新定义focus view
 //    override open var preferredFocusEnvironments: [UIFocusEnvironment] {
@@ -363,7 +363,7 @@ extension JHPlayerView {
 }
 
 //MARK: - UI autoLayout
-extension JHPlayerView {
+extension ViuPlayerView {
     
     internal func configurationBottomView() {
         addSubview(bottomView)
