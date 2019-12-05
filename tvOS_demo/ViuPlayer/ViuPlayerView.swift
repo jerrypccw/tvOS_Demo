@@ -164,7 +164,7 @@ open class ViuPlayerView: UIView {
     ///   - totalDuration: total duratiom
     open func bufferedDidChange(_ bufferedDuration: TimeInterval, totalDuration: TimeInterval) {
         //        timeSlider.setProgress(Float(bufferedDuration / totalDuration), animated: true)
-        print(Float(bufferedDuration / totalDuration))
+        //        print(Float(bufferedDuration / totalDuration))
         viuProgressView.progressBar.setProgress(Float(bufferedDuration / totalDuration), animated: true)
     }
     
@@ -181,6 +181,8 @@ open class ViuPlayerView: UIView {
         if !isTimeSliding {
             viuProgressView.startTimeString = current
             viuProgressView.endTimeString = formatSecondsToString(totalDuration - currentDuration)
+//            print(Float(currentDuration / totalDuration))
+            viuProgressView.progress = Float(currentDuration / totalDuration)
         }
     }
     
@@ -378,6 +380,12 @@ extension ViuPlayerView {
         loadingIndicator.isHidden = false
         loadingIndicator.startAnimating()
         addSubview(loadingIndicator)
+        
+        loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
+        loadingIndicator.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        loadingIndicator.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        loadingIndicator.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        loadingIndicator.heightAnchor.constraint(equalToConstant: 30).isActive = true        
     }
     
     internal func configurationViuProgressView() {

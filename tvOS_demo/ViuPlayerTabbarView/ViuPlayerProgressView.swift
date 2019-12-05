@@ -15,6 +15,15 @@ class ViuPlayerProgressView: UIView {
     lazy var endTime = UILabel()
     lazy var progressLine = UIView()
     
+    var progress: Float? {
+        didSet {
+            guard let p = progress else {
+                return
+            }
+           updateStartTimeFrame(p)
+        }
+    }
+    
     var startTimeString: String? {
         didSet {
             startTime.text = startTimeString
@@ -26,8 +35,6 @@ class ViuPlayerProgressView: UIView {
             endTime.text = "-" + (endTimeString ?? "00:00")
         }
     }
-    
-//    var second = 5.0
     
     /// 初始化赋值
     /// - Parameter frame: 坐标
@@ -56,7 +63,6 @@ class ViuPlayerProgressView: UIView {
         progressBar.progress = 0.0
         
         addSubview(progressBar)
-        
         progressBar.translatesAutoresizingMaskIntoConstraints = false
         progressBar.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         progressBar.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
@@ -66,8 +72,8 @@ class ViuPlayerProgressView: UIView {
         startTime.text = "00:00"
         startTime.font = UIFont.boldSystemFont(ofSize: 30)
         startTime.textColor = .white
-        addSubview(startTime)
         
+        addSubview(startTime)
         startTime.translatesAutoresizingMaskIntoConstraints = false
         startTime.leftAnchor.constraint(equalTo: progressBar.leftAnchor).isActive = true
         startTime.topAnchor.constraint(equalTo: progressBar.bottomAnchor, constant: 12).isActive = true
@@ -76,37 +82,42 @@ class ViuPlayerProgressView: UIView {
         endTime.text = "00:00"
         endTime.font = UIFont.boldSystemFont(ofSize: 30)
         endTime.textColor = .white
+       
         addSubview(endTime)
-        
         endTime.translatesAutoresizingMaskIntoConstraints = false
         endTime.rightAnchor.constraint(equalTo: progressBar.rightAnchor).isActive = true
         endTime.topAnchor.constraint(equalTo: progressBar.bottomAnchor, constant: 12).isActive = true
         endTime.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
         progressLine.backgroundColor = .purple
-        progressBar.addSubview(progressLine)
-        progressLine.frame = CGRect.init(x: 0, y: 0, width: 2, height: 10)
+        addSubview(progressLine)
+        progressLine.translatesAutoresizingMaskIntoConstraints = false
+        progressLine.leftAnchor.constraint(equalTo: progressBar.leftAnchor).isActive = true      
+        progressLine.centerYAnchor.constraint(equalTo: progressBar.centerYAnchor).isActive = true
+        progressLine.heightAnchor.constraint(equalToConstant: 10).isActive = true
+        progressLine.widthAnchor.constraint(equalToConstant: 2).isActive = true
     }
     
-//    func timerStart() {
-//        if self.isHidden == false {
-//            DispatchQueue.main.asyncAfter(deadline: .now() + second) {
-//                self.hiddenProgress()
-//            }
-//        }
-//    }
+    private func updateStartTimeFrame(_ progress: Float) {
+        
+        UIView.animate(withDuration: 0.25) {
+            let pro = max(0.0, min(progress, 1.0))
+            let x = self.progressBar.bounds.size.width * CGFloat(pro)
+            self.progressLine.transform = CGAffineTransform.init(translationX: x, y: 0.0)
+            let startTimeCenterX = self.startTime.frame.size.width / 2
+            if x > startTimeCenterX {
+                self.startTime.transform = CGAffineTransform.init(translationX: x - startTimeCenterX, y: 0.0)
+            }
+        }
+    }
     
-//    func hiddenProgress() {
-//        UIView.animate(withDuration: 0.25, animations: {
-//            self.isHidden = true
-//        })
-//    }
-//
-//    func showProgress() {
-//        UIView.animate(withDuration: 0.25, animations: {
-//            self.isHidden = false
-//        })
-//    }
+    func pauseStatusAction() {
+
+    }
+    
+    func normalStatusAction() {
+
+    }
     
     deinit {
         print("ViuPlayerProgressView deinit")

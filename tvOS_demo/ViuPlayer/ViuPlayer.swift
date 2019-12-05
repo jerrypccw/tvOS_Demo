@@ -177,7 +177,8 @@ open class ViuPlayer: NSObject {
     
     deinit {
         removePlayerNotifations()
-        removePlayerItemObservers()
+        // 不能在这里添加删除订阅，按home键回系统主界面时会导致崩溃；
+//        removePlayerItemObservers()
         cleanPlayer()        
         displayView.removeFromSuperview()
         NotificationCenter.default.removeObserver(self)
