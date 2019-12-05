@@ -6,8 +6,8 @@
 //  Copyright © 2019年 jerry. All rights reserved.
 //
 
-import UIKit
 import AVFoundation
+import UIKit
 
 /// 播放状态
 ///
@@ -75,6 +75,7 @@ public protocol ViuPlayerDelegate: NSObjectProtocol {
 }
 
 // MARK: - delegate methods optional
+
 public extension ViuPlayerDelegate {
     func viuPlayer(_ player: ViuPlayer, stateDidChange state: ViuPlayerState) {}
     func viuPlayer(_ player: ViuPlayer, playerDurationDidChange currentDuration: TimeInterval, totalDuration: TimeInterval) {}
@@ -128,7 +129,7 @@ open class ViuPlayer: NSObject {
             addPlayerNotifications()
         }
     }
-    
+
     open var state: ViuPlayerState = .none {
         didSet {
             if state != oldValue {
@@ -137,17 +138,18 @@ open class ViuPlayer: NSObject {
             }
         }
     }
-    
-    open var bufferState : ViuPlayerBufferstate = .none {
+
+    open var bufferState: ViuPlayerBufferstate = .none {
         didSet {
             if bufferState != oldValue {
-                self.displayView.bufferStateDidChange(bufferState)
-                self.delegate?.viuPlayer(self, bufferStateDidChange: bufferState)
+                displayView.bufferStateDidChange(bufferState)
+                delegate?.viuPlayer(self, bufferStateDidChange: bufferState)
             }
         }
     }
-    
-    //MARK:- life cycle
+
+    // MARK: - life cycle
+
     public init(URL: URL?, playerView: ViuPlayerView?) {
         mediaFormat = ViuPlayerUtils.decoderVideoFormat(URL)
         contentURL = URL
@@ -162,19 +164,19 @@ open class ViuPlayer: NSObject {
             configurationPlayer(contentURL!)
         }
     }
-    
+
     public convenience init(URL: URL) {
         self.init(URL: URL, playerView: nil)
     }
-    
+
     public convenience init(playerView: ViuPlayerView) {
         self.init(URL: nil, playerView: playerView)
     }
-    
-    public override convenience init() {
+
+    public convenience override init() {
         self.init(URL: nil, playerView: nil)
     }
-    
+
     deinit {
         removePlayerNotifations()
         // 不能在这里添加删除订阅，按home键回系统主界面时会导致崩溃；
@@ -183,12 +185,12 @@ open class ViuPlayer: NSObject {
         displayView.removeFromSuperview()
         NotificationCenter.default.removeObserver(self)
     }
-    
+
     internal func configurationPlayer(_ URL: URL) {
-        self.displayView.setViuPlayer(viuPlayer: self)
-        self.playerAsset = AVURLAsset(url: URL, options: .none)
+        displayView.setViuPlayer(viuPlayer: self)
+        playerAsset = AVURLAsset(url: URL, options: .none)
         if URL.absoluteString.hasPrefix("file:///") {
-            let keys = ["tracks", "playable"];
+            let keys = ["tracks", "playable"]
             playerItem = AVPlayerItem(asset: playerAsset!, automaticallyLoadedAssetKeys: keys)
         } else {
             playerItem = playerItem(URL)
@@ -196,7 +198,7 @@ open class ViuPlayer: NSObject {
         player = AVPlayer(playerItem: playerItem)
         displayView.reloadPlayerView()
     }
-    
+
     open func playerItem(_ url: URL) -> AVPlayerItem {
         let urlAsset = AVURLAsset(url: url, options: nil)
         let playerItem = AVPlayerItem(asset: urlAsset)
@@ -205,10 +207,10 @@ open class ViuPlayer: NSObject {
         }
         return playerItem
     }
-    
+
     // time KVO
     internal func addPlayerObservers() {
-        timeObserver = player?.addPeriodicTimeObserver(forInterval: .init(value: 1, timescale: 1), queue: DispatchQueue.main, using: { [weak self] time in
+        timeObserver = player?.addPeriodicTimeObserver(forInterval: .init(value: 1, timescale: 1), queue: DispatchQueue.main, using: { [weak self] _ in
             guard let strongSelf = self else { return }
             if let currentTime = strongSelf.player?.currentTime().seconds,
                 let totalDuration = strongSelf.player?.currentItem?.duration.seconds {
@@ -218,21 +220,22 @@ open class ViuPlayer: NSObject {
             }
         })
     }
+
     internal func removePlayerObservers() {
         player?.removeTimeObserver(timeObserver!)
     }
 }
 
-//MARK: - public
+// MARK: - public
+
 extension ViuPlayer {
-    
     open func replaceVideo(_ URL: URL) {
         reloadPlayer()
         mediaFormat = ViuPlayerUtils.decoderVideoFormat(URL)
         contentURL = URL
         configurationPlayer(URL)
     }
-    
+
     open func reloadPlayer() {
         seeking = false
         totalDuration = 0.0
@@ -243,7 +246,7 @@ extension ViuPlayer {
         bufferState = .none
         cleanPlayer()
     }
-    
+
     open func cleanPlayer() {
         player?.pause()
         player?.cancelPendingPrerolls()
@@ -254,14 +257,14 @@ extension ViuPlayer {
         playerItem?.cancelPendingSeeks()
         playerItem = nil
     }
-    
+
     open func play() {
         if contentURL == nil { return }
         player?.play()
         state = .playing
         displayView.play()
     }
-    
+
     open func pause() {
         guard state == .paused else {
             player?.pause()
@@ -270,11 +273,11 @@ extension ViuPlayer {
             return
         }
     }
-    
+
     open func seekTime(_ time: TimeInterval) {
         seekTime(time, completion: nil)
     }
-    
+
     open func seekTime(_ time: TimeInterval, completion: ((Bool) -> Swift.Void)?) {
         if time.isNaN || playerItem?.status != .readyToPlay {
             if completion != nil {
@@ -282,12 +285,12 @@ extension ViuPlayer {
             }
             return
         }
-        
-        DispatchQueue.main.async { [weak self]  in
+
+        DispatchQueue.main.async { [weak self] in
             guard let strongSelf = self else { return }
             strongSelf.seeking = true
             strongSelf.startPlayerBuffering()
-            strongSelf.playerItem?.seek(to: CMTimeMakeWithSeconds(time, preferredTimescale: Int32(NSEC_PER_SEC)), completionHandler: { (finished) in
+            strongSelf.playerItem?.seek(to: CMTimeMakeWithSeconds(time, preferredTimescale: Int32(NSEC_PER_SEC)), completionHandler: { finished in
                 DispatchQueue.main.async {
                     strongSelf.seeking = false
                     strongSelf.stopPlayerBuffering()
@@ -301,36 +304,36 @@ extension ViuPlayer {
     }
 }
 
-//MARK: - private
+// MARK: - private
+
 extension ViuPlayer {
-    
     internal func startPlayerBuffering() {
         pause()
         bufferState = .buffering
         buffering = true
     }
-    
+
     internal func stopPlayerBuffering() {
         bufferState = .stop
         buffering = false
     }
-    
+
     internal func collectPlayerErrorLogEvent() {
         error.playerItemErrorLogEvent = playerItem?.errorLog()?.events
         error.error = playerItem?.error
         error.extendedLogData = playerItem?.errorLog()?.extendedLogData()
         error.extendedLogDataStringEncoding = playerItem?.errorLog()?.extendedLogDataStringEncoding
     }
-    
+
     // 获取元数据的字幕信息
     internal func loadMediaOption() {
         let mc = AVMediaCharacteristic.legible
         let mediaGourp = playerAsset!.mediaSelectionGroup(forMediaCharacteristic: mc)
-        
+
         guard let gourp = mediaGourp else {
             return
         }
-        
+
         for option in gourp.options {
             if option.displayName == "English" {
                 // 显示选中的字幕
@@ -338,38 +341,37 @@ extension ViuPlayer {
             }
         }
     }
-    
+
     internal func generateThumbnails() {
-        
         guard let asset = playerAsset else {
             print("generateThumbnails asset error")
             return
         }
-        
-        imageGenerator = AVAssetImageGenerator.init(asset: asset)
+
+        imageGenerator = AVAssetImageGenerator(asset: asset)
         imageGenerator?.maximumSize = CGSize(width: 200.0, height: 0.0)
-        
+
         let duration: CMTime = asset.duration
-        var times:[NSValue] = []
+        var times: [NSValue] = []
         let increment: CMTimeValue = duration.value / 20
         var currentValue: CMTimeValue = CMTimeValue(2 * duration.timescale)
         while currentValue <= duration.value {
-            let time: CMTime = CMTime.init(value: currentValue, timescale: duration.timescale)
+            let time: CMTime = CMTime(value: currentValue, timescale: duration.timescale)
             times.append(NSValue(time: time))
             currentValue += increment
         }
-        
+
         var imageCount = times.count
-        var images:[ViuThumbnail] = []
-        
+        var images: [ViuThumbnail] = []
+
         let handler: AVAssetImageGeneratorCompletionHandler = {
-            requestedTime, imageRef, actualTime, result, error in
-            
+            _, imageRef, actualTime, result, _ in
+
             if result == .succeeded {
-                guard let cgImage =  imageRef else {
+                guard let cgImage = imageRef else {
                     return
                 }
-                let image: UIImage = UIImage.init(cgImage: cgImage)
+                let image: UIImage = UIImage(cgImage: cgImage)
                 let thumbnail: ViuThumbnail = ViuThumbnail()
                 thumbnail.image = image
                 thumbnail.time = actualTime
@@ -377,7 +379,7 @@ extension ViuPlayer {
             } else {
                 print("generateThumbnails result error")
             }
-                
+
             if --imageCount == 0 {
                 DispatchQueue.main.async {
                     let name = "ViuThumbnailsGeneratedNotification"
@@ -390,50 +392,48 @@ extension ViuPlayer {
     }
 }
 
-//MARK: - Notifation Selector & KVO
+// MARK: - Notifation Selector & KVO
+
 private var playerItemContext = 0
 
 extension ViuPlayer {
-    
     internal func addPlayerItemObservers() {
         let options = NSKeyValueObservingOptions([.new, .initial])
         playerItem?.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.status), options: options, context: &playerItemContext)
         playerItem?.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.loadedTimeRanges), options: options, context: &playerItemContext)
         playerItem?.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.playbackBufferEmpty), options: options, context: &playerItemContext)
     }
-    
+
     internal func addPlayerNotifications() {
         NotificationCenter.default.addObserver(self, selector: .playerItemDidPlayToEndTime, name: .AVPlayerItemDidPlayToEndTime, object: nil)
         NotificationCenter.default.addObserver(self, selector: .applicationWillEnterForeground, name: UIApplication.willEnterForegroundNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: .applicationDidEnterBackground, name:UIApplication.didEnterBackgroundNotification , object: nil)
+        NotificationCenter.default.addObserver(self, selector: .applicationDidEnterBackground, name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
-    
+
     internal func removePlayerItemObservers() {
         playerItem?.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.status))
         playerItem?.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.loadedTimeRanges))
         playerItem?.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.playbackBufferEmpty))
     }
-    
+
     internal func removePlayerNotifations() {
         NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
-    
+
     @objc internal func playerItemDidPlayToEnd(_ notification: Notification) {
         if state != .playFinished {
             state = .playFinished
         }
-        
     }
-    
+
     @objc internal func applicationWillEnterForeground(_ notification: Notification) {
-        
-        if let playerLayer = displayView.playerLayer  {
+        if let playerLayer = displayView.playerLayer {
             playerLayer.player = player
         }
-        
-        switch self.backgroundMode {
+
+        switch backgroundMode {
         case .suspend:
             pause()
         case .autoPlayAndPaused:
@@ -442,14 +442,13 @@ extension ViuPlayer {
             break
         }
     }
-    
+
     @objc internal func applicationDidEnterBackground(_ notification: Notification) {
-        
-        if let playerLayer = displayView.playerLayer  {
+        if let playerLayer = displayView.playerLayer {
             playerLayer.player = nil
         }
-        
-        switch self.backgroundMode {
+
+        switch backgroundMode {
         case .suspend:
             pause()
         case .autoPlayAndPaused:
@@ -462,6 +461,7 @@ extension ViuPlayer {
 }
 
 // MARK: - Selecter
+
 extension Selector {
     static let playerItemDidPlayToEndTime = #selector(ViuPlayer.playerItemDidPlayToEnd(_:))
     static let applicationWillEnterForeground = #selector(ViuPlayer.applicationWillEnterForeground(_:))
@@ -469,9 +469,8 @@ extension Selector {
 }
 
 extension ViuPlayer {
-    open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if (context == &playerItemContext) {
-            
+    open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
+        if context == &playerItemContext {
             if keyPath == #keyPath(AVPlayerItem.status) {
                 let status: AVPlayerItem.Status
                 if let statusNumber = change?[.newKey] as? NSNumber {
@@ -479,7 +478,7 @@ extension ViuPlayer {
                 } else {
                     status = .unknown
                 }
-                
+
                 switch status {
                 case .unknown:
                     startPlayerBuffering()
@@ -489,7 +488,7 @@ extension ViuPlayer {
                     loadMediaOption()
                     // 获取视频每帧的图片
                     generateThumbnails()
-                    
+
                 case .failed:
                     state = .error
                     collectPlayerErrorLogEvent()
@@ -499,9 +498,8 @@ extension ViuPlayer {
                 default:
                     break
                 }
-                
-            } else if keyPath == #keyPath(AVPlayerItem.playbackBufferEmpty){
-                
+
+            } else if keyPath == #keyPath(AVPlayerItem.playbackBufferEmpty) {
                 if let playbackBufferEmpty = change?[.newKey] as? Bool {
                     if playbackBufferEmpty {
                         startPlayerBuffering()
@@ -509,13 +507,13 @@ extension ViuPlayer {
                 }
             } else if keyPath == #keyPath(AVPlayerItem.loadedTimeRanges) {
                 // 计算缓冲
-                
+
                 let loadedTimeRanges = player?.currentItem?.loadedTimeRanges
                 if let bufferTimeRange = loadedTimeRanges?.first?.timeRangeValue {
-                    let star = bufferTimeRange.start.seconds         // The start time of the time range.
-                    let duration = bufferTimeRange.duration.seconds  // The duration of the time range.
+                    let star = bufferTimeRange.start.seconds // The start time of the time range.
+                    let duration = bufferTimeRange.duration.seconds // The duration of the time range.
                     let bufferTime = star + duration
-                    
+
                     if let itemDuration = playerItem?.duration.seconds {
                         delegate?.viuPlayer(self, bufferedDidChange: bufferTime, totalDuration: itemDuration)
                         displayView.bufferedDidChange(bufferTime, totalDuration: itemDuration)
@@ -523,13 +521,12 @@ extension ViuPlayer {
                         if itemDuration == bufferTime {
                             bufferState = .bufferFinished
                         }
-                        
                     }
-                    if let currentTime = playerItem?.currentTime().seconds{
+                    if let currentTime = playerItem?.currentTime().seconds {
                         if (bufferTime - currentTime) >= bufferInterval && state != .paused {
                             play()
                         }
-                        
+
                         if (bufferTime - currentTime) < bufferInterval {
                             bufferState = .buffering
                             buffering = true
@@ -538,13 +535,13 @@ extension ViuPlayer {
                             bufferState = .readyToPlay
                         }
                     }
-                    
+
                 } else {
                     play()
                 }
             }
-            
-        }else{
+
+        } else {
             super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
         }
     }
