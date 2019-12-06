@@ -31,6 +31,18 @@ class ViuPlayerProgressView: UIView {
             endTime.text = "-" + (endTimeString ?? "00:00")
         }
     }
+    
+    /// 用户选中快进的时间
+    var seekTime: TimeInterval {
+        get {
+            let percent = progressLineByUser.frame.origin.x / frame.size.width
+            var time = TimeInterval(percent) * duration
+            if time > duration {
+                time = duration
+            }
+            return time
+        }
+    }
 
     /// 初始化赋值
     /// - Parameter frame: 坐标
@@ -51,6 +63,7 @@ class ViuPlayerProgressView: UIView {
     }
 
     private func addSubviews() {
+        // 进度条
         progressBar.progressViewStyle = .default
         progressBar.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.7988548801)
         progressBar.trackTintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.2964201627)
@@ -62,17 +75,33 @@ class ViuPlayerProgressView: UIView {
         progressBar.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         progressBar.heightAnchor.constraint(equalToConstant: 10).isActive = true
         progressBar.topAnchor.constraint(equalTo: topAnchor, constant: 20).isActive = true
+        
+        // 当前进度
+        progressLine.backgroundColor = .purple
+        progressBar.addSubview(progressLine)
+        progressLine.frame = CGRect(x: 0, y: 0, width: 2, height: 10)
+        
+        // 用户调整的进度
+        progressLineByUser.backgroundColor = .purple
+        addSubview(progressLineByUser)
 
+        // 当前时间
         startTime.text = "00:00"
         startTime.font = UIFont.boldSystemFont(ofSize: 30)
         startTime.textColor = .white
 
         addSubview(startTime)
         startTime.translatesAutoresizingMaskIntoConstraints = false
-        startTime.leftAnchor.constraint(equalTo: progressBar.leftAnchor).isActive = true
+//        startTime.leftAnchor.constraint(equalTo: progressBar.leftAnchor).isActive = true
         startTime.topAnchor.constraint(equalTo: progressBar.bottomAnchor, constant: 12).isActive = true
         startTime.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        startTime.leftAnchor.constraint(greaterThanOrEqualTo: progressBar.leftAnchor).isActive = true
+        startTime.rightAnchor.constraint(lessThanOrEqualTo: progressBar.rightAnchor).isActive = true
+        let stCenterCon = startTime.centerXAnchor.constraint(equalTo: progressLine.centerXAnchor)
+        stCenterCon.priority = .defaultLow
+        stCenterCon.isActive = true
 
+        // 总时间
         endTime.text = "00:00"
         endTime.font = UIFont.boldSystemFont(ofSize: 30)
         endTime.textColor = .white
@@ -83,26 +112,20 @@ class ViuPlayerProgressView: UIView {
         endTime.topAnchor.constraint(equalTo: progressBar.bottomAnchor, constant: 12).isActive = true
         endTime.heightAnchor.constraint(equalToConstant: 30).isActive = true
 
-        progressLine.backgroundColor = .purple
-
-        progressBar.addSubview(progressLine)
-        progressLine.frame = CGRect(x: 0, y: 0, width: 2, height: 10)
-
-        progressLineByUser.backgroundColor = .purple
-        addSubview(progressLineByUser)
-
+        // 预览图
         thumbnailImgView.backgroundColor = .purple
         addSubview(thumbnailImgView)
         thumbnailImgView.translatesAutoresizingMaskIntoConstraints = false
         thumbnailImgView.leftAnchor.constraint(greaterThanOrEqualTo: progressBar.leftAnchor).isActive = true
-        thumbnailImgView.rightAnchor.constraint(lessThanOrEqualTo: rightAnchor).isActive = true
+        thumbnailImgView.rightAnchor.constraint(lessThanOrEqualTo: progressBar.rightAnchor).isActive = true
         thumbnailImgView.bottomAnchor.constraint(equalTo: progressLineByUser.topAnchor).isActive = true
         thumbnailImgView.widthAnchor.constraint(equalToConstant: 320).isActive = true
         thumbnailImgView.heightAnchor.constraint(equalToConstant: 240).isActive = true
-        let centerCon = thumbnailImgView.centerXAnchor.constraint(equalTo: progressLineByUser.centerXAnchor)
-        centerCon.priority = .defaultLow
-        centerCon.isActive = true
+        let thuCenterCon = thumbnailImgView.centerXAnchor.constraint(equalTo: progressLineByUser.centerXAnchor)
+        thuCenterCon.priority = .defaultLow
+        thuCenterCon.isActive = true
 
+        // 预览图时间
         thumbnailTime.text = "00:00"
         thumbnailTime.font = UIFont.boldSystemFont(ofSize: 30)
         thumbnailTime.textColor = .white
@@ -124,7 +147,7 @@ class ViuPlayerProgressView: UIView {
         }
         progressLine.frame = CGRect(x: offset, y: 0, width: 2, height: 10)
         // 设置预览图起始位置
-        let paraFrame = progressLine.convert(progressLine.frame, to: self)
+        let paraFrame = progressBar.convert(progressLine.frame, to: self)
         progressLineByUser.frame = CGRect(x: paraFrame.origin.x, y: paraFrame.origin.y - progressLine.frame.size.height, width: paraFrame.size.width, height: 20)
     }
 
@@ -163,12 +186,7 @@ class ViuPlayerProgressView: UIView {
 
     /// 计算播放器跳转的时间
     func setThumbnailTime() {
-        let percent = progressLineByUser.frame.origin.x / frame.size.width
-        var time = TimeInterval(percent) * duration
-        if time > duration {
-            time = duration
-        }
-        thumbnailTime.text = time.formatToString()
+        thumbnailTime.text = seekTime.formatToString()
     }
 
     deinit {

@@ -66,7 +66,13 @@ extension ViuPlayerViewController {
             viuPlayer.displayView.displayControlView(true)
             break
         case .paused:
-            viuPlayer.play()
+            // 跳转对应的时间播放
+            let seekTime = viuPlayer.displayView.viuProgressView.seekTime
+            if seekTime == viuPlayer.currentDuration {
+                viuPlayer.play()
+            } else {
+                viuPlayer.seekTime(seekTime)
+            }
             viuPlayer.displayView.displayControlView(false)
             break
         case .none:
@@ -81,14 +87,19 @@ extension ViuPlayerViewController {
             // 如果Tabber显示，就隐藏
             viuPlayer.displayView.hiddenTabbar()
         } else {
-            //
             switch viuPlayer.state {
             case .playing:
                 viuPlayer.pause()
                 viuPlayer.displayView.displayControlView(true)
                 break
             case .paused:
-                viuPlayer.play()
+                // 跳转对应的时间播放
+                let seekTime = viuPlayer.displayView.viuProgressView.seekTime
+                if seekTime == viuPlayer.currentDuration {
+                    viuPlayer.play()
+                } else {
+                    viuPlayer.seekTime(seekTime)
+                }
                 viuPlayer.displayView.displayControlView(false)
                 break
             default:
@@ -151,14 +162,18 @@ extension ViuPlayerViewController {
         guard let touch = touches.first else {
             return
         }
-        let ptNew = touch.location(in: view)
-        let ptPrevious = touch.previousLocation(in: view)
-        let offset = (ptNew.x - ptPrevious.x) * 0.05
+        let ptNew = touch.preciseLocation(in: view)
+        let ptPrevious = touch.precisePreviousLocation(in: view)
+        let offset = (ptNew.x - ptPrevious.x) * 0.1
 
         viuPlayer.displayView.viuProgressView.setPorgressLineByUser(offset: offset)
 
         // 取消Timer计时
         viuPlayer.displayView.timer.invalidate()
+
+//        print("majorRadius:\(touch.majorRadius) === majorRadiusTolerance:\(touch.majorRadiusTolerance)")
+//        print("azimuthAngle:\(touch.azimuthAngle(in: view)) === azimuthUnitVector:\(touch.azimuthUnitVector(in: view))")
+        print("preciseLocation:\(ptNew)")
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {

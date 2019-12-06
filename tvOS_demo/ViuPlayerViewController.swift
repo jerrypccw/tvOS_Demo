@@ -9,8 +9,8 @@
 import UIKit
 
 /// 请求片源Api，香港地区
-//https://d1k2us671qcoau.cloudfront.net/distribute?area_id=1&ccs_product_id=0a1188fd36bea62177c2d17e5ddf06ae&duration=0&language_flag_id=1&os=tvOS&platform_flag_label=tv&product_subtitle_language_id=1%3A3%3A7%3A8&ut=2
-let url = URL(string: "https://stream-hk.viu.com/s/MLKcy_KG6ySKiG8-7WB55g/1575543017/UD/0a1188fd36bea62177c2d17e5ddf06ae/0a1188fd36bea62177c2d17e5ddf06ae_Layer1_vod.m3u8")!
+// https://d1k2us671qcoau.cloudfront.net/distribute?area_id=1&ccs_product_id=0a1188fd36bea62177c2d17e5ddf06ae&duration=0&language_flag_id=1&os=tvOS&platform_flag_label=tv&product_subtitle_language_id=1%3A3%3A7%3A8&ut=2
+let url = URL(string: "https://stream-hk.viu.com/s/4j8mhSZ6BFOyaNZ9_mLmdA/1575613728/UD/0a1188fd36bea62177c2d17e5ddf06ae/0a1188fd36bea62177c2d17e5ddf06ae_Layer1_vod.m3u8")!
 
 class ViuPlayerViewController: UIViewController {
     var viuPlayer: ViuPlayer = {
@@ -54,29 +54,35 @@ class ViuPlayerViewController: UIViewController {
         setPlayerData()
         setupGestureRecognizer()
     }
-    
-    private func setPlayerData() {
-    //        if  let srt = Bundle.main.url(forResource: "test", withExtension: "srt") {
-    //            let playerView = self.viuPlayer.displayView as! ViuPlayerSubtitlesView
-    //            playerView.setSubtitles(ViuSubtitles(filePath: srt))
-    //        }
-    //
-    //        let mp4File = ViuPlayerUtils.fileResource("hubblecast", fileType: "m4v")
-    //
-    //        guard let urlStr: String = mp4File else {
-    //            print("路径不存在")
-    //            return
-    //        }
-    //
-    //        let url = URL.init(fileURLWithPath: urlStr)
 
-            viuPlayer.replaceVideo(url)
-            viuPlayer.play()
+    private func setPlayerData() {
+        //        if  let srt = Bundle.main.url(forResource: "test", withExtension: "srt") {
+        //            let playerView = self.viuPlayer.displayView as! ViuPlayerSubtitlesView
+        //            playerView.setSubtitles(ViuSubtitles(filePath: srt))
+        //        }
+        //
+        //        let mp4File = ViuPlayerUtils.fileResource("hubblecast", fileType: "m4v")
+        //
+        //        guard let urlStr: String = mp4File else {
+        //            print("路径不存在")
+        //            return
+        //        }
+        //
+        //        let url = URL.init(fileURLWithPath: urlStr)
+
+        if let playerView = viuPlayer.displayView as? ViuPlayerSubtitlesView {
+            let url = URL(string: "https://d2anahhhmp1ffz.cloudfront.net/1141076793/c3e1435ecb3e2ae3aa4ff0b20d7c9824e1b7a0c3")!
+            let subtitle = ViuSubtitles(urlPath: url, format: .srt)
+            playerView.setSubtitles(subtitle)
         }
 
+        viuPlayer.replaceVideo(url)
+        viuPlayer.play()
+    }
 }
 
 // MARK: viuPlayerDelegate
+
 extension ViuPlayerViewController: ViuPlayerDelegate {
     func viuPlayer(_ player: ViuPlayer, playerFailed error: ViuPlayerError) {
         print(error)
@@ -86,7 +92,6 @@ extension ViuPlayerViewController: ViuPlayerDelegate {
         print("player State ", state)
 
         if state == .playFinished {
-
             viuPlayer.replaceVideo(url)
             viuPlayer.play()
         }

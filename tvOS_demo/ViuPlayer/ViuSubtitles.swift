@@ -22,7 +22,7 @@ import Foundation
  Dialogue: 0,0:01:04.50,0:01:06.64,Default,,0,0,0,,古巴  哈瓦那
  */
 
-public enum subtitlesFormat : String {
+public enum SubtitlesFormat : String {
     case unknown
     case srt
     case ass
@@ -31,7 +31,7 @@ public enum subtitlesFormat : String {
 /*
  str、ass、ssa格式都解析成 结构体  index标记  star字幕开始时间  end字幕结束时间  content字幕内容
  */
-public struct subtitles: CustomStringConvertible {
+public struct Subtitles: CustomStringConvertible {
     public var index : Int
     public var start : TimeInterval
     public var end : TimeInterval
@@ -52,9 +52,9 @@ public struct subtitles: CustomStringConvertible {
 
 class ViuSubtitles {
     
-    open fileprivate(set) var subtitlesFormat : subtitlesFormat = .unknown
+    open fileprivate(set) var subtitlesFormat : SubtitlesFormat = .unknown
     // 存放字幕的字典  时间戳key 字幕value
-    open fileprivate(set) var subtitlesGroups : [subtitles] = []
+    open fileprivate(set) var subtitlesGroups : [Subtitles] = []
     
     public init(filePath: URL, encoding: String.Encoding = String.Encoding.utf8) {
         
@@ -66,8 +66,32 @@ class ViuSubtitles {
         catch { }
     }
     
-    public func search(for time: TimeInterval) -> subtitles? {
-        var result : subtitles?
+    public init(urlPath: URL, encoding: String.Encoding = String.Encoding.utf8, format: SubtitlesFormat) {
+        subtitlesFormat = format
+        
+        let request = URLRequest(url: urlPath)
+        let config = URLSessionConfiguration.default
+        let session = URLSession(configuration: config)
+
+        let task = session.dataTask(with: request) { (data, respone, error) in
+            
+            if let error = error {
+                print("initSubtitleError:\(error.localizedDescription)")
+                return
+            }
+            
+            if let data = data, let string = String(data: data, encoding: encoding) {
+                self.subtitlesGroups = self.parseSubtitles(string)
+                return
+            }
+            
+            print("initSubtitleError:Data is nil")
+        }
+        task.resume()
+    }
+    
+    public func search(for time: TimeInterval) -> Subtitles? {
+        var result : Subtitles?
         for group in subtitlesGroups {
             if group.start <= time && group.end >= time {
                 result = group
@@ -77,7 +101,7 @@ class ViuSubtitles {
         return result
     }
     
-    fileprivate func parseSubtitles(_ payload: String) -> [subtitles]  {
+    fileprivate func parseSubtitles(_ payload: String) -> [Subtitles]  {
         switch subtitlesFormat {
         case .srt:
             return parseStrSubtitles(payload)!
@@ -88,8 +112,8 @@ class ViuSubtitles {
         }
     }
     
-    fileprivate func parseStrSubtitles(_ payload: String) -> [subtitles]? {
-        var group: [subtitles] = []
+    fileprivate func parseStrSubtitles(_ payload: String) -> [Subtitles]? {
+        var group: [Subtitles] = []
         let scanner = Scanner(string: payload)
         while !scanner.isAtEnd {
             
@@ -114,15 +138,15 @@ class ViuSubtitles {
                 let content  = contentString {
                 let starTime = parseTime(start as String)
                 let endTime = parseTime(end as String)
-                let sub = subtitles(index: index, start: starTime, end: endTime, content: content as String)
+                let sub = Subtitles(index: index, start: starTime, end: endTime, content: content as String)
                 group.append(sub)
             }
         }
         return group
     }
     
-    fileprivate func parseAssSubtitles(_ payload: String) -> [subtitles]? {
-        var groups: [subtitles] = []
+    fileprivate func parseAssSubtitles(_ payload: String) -> [Subtitles]? {
+        var groups: [Subtitles] = []
         let regxString = "Dialogue: [^,.]*[0-9]*,([1-9]?[0-9]*:[0-9]*:[0-9]*.[0-9]*),([1-9]?[0-9]*:[0-9]*:[0-9]*.[0-9]*),[^,.]*,[^,.]*,[0-9]*,[0-9]*,[0-9]*,[^,.]*,(.*)"
         var index = 0
         do {
@@ -154,7 +178,7 @@ class ViuSubtitles {
                 let content = (group as NSString).replacingCharacters(in: contentRange, with: "")
                 let starTime = parseTime(startString as String)
                 let endTime = parseTime(endString as String)
-                let sub = subtitles(index: index, start: starTime, end: endTime, content: content )
+                let sub = Subtitles(index: index, start: starTime, end: endTime, content: content )
                 groups.append(sub)
                 index += 1
             }
@@ -164,7 +188,7 @@ class ViuSubtitles {
         }
     }
     
-    fileprivate func decoderSubtitlesFormat(_ filePath: URL) -> subtitlesFormat {
+    fileprivate func decoderSubtitlesFormat(_ filePath: URL) -> SubtitlesFormat {
         let path = filePath.absoluteString
         if path.contains(".srt") {
             return .srt
