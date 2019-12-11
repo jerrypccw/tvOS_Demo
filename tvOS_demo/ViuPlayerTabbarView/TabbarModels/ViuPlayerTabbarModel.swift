@@ -49,3 +49,17 @@ class TabbarCustomModel: ViuPlayerTabbarModel {
 }
 
 
+class TabbarAudioModel: ViuPlayerTabbarModel {
+    
+    var languages: [String]
+    var sounds: [String]
+    var speaker: [String]
+    
+    override init() {
+        languages = ["未知"]
+        sounds = ["完整动态范围"]
+        speaker = ["设备名称"]
+    }
+}
+
+

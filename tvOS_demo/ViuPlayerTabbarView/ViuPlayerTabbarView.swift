@@ -36,6 +36,9 @@ class ViuPlayerTabbarView: UIView {
     // 双字幕
     private lazy var customView = ViuPlayerTabbarCustomView()
     
+    // 音频
+    private lazy var audioView = ViuPlayerTabbarAudioView()
+    
     // tabbarModel 数组
     open var buttonModels : [ViuPlayerTabbarModel]? {
         willSet {
@@ -123,6 +126,12 @@ class ViuPlayerTabbarView: UIView {
                                        y: lineViewBottom,
                                        width: introductionViewWidth,
                                        height: ViuPlayerTabbarConfig.subtitleHeight)
+        
+        // audioView
+        audioView.frame = CGRect.init(x: ViuPlayerTabbarConfig.introductionSpacing,
+                                      y: lineViewBottom,
+                                      width: introductionViewWidth,
+                                      height: ViuPlayerTabbarConfig.subtitleHeight)
     
     }
 
@@ -194,7 +203,9 @@ class ViuPlayerTabbarView: UIView {
                 stackView.addArrangedSubview(btn)
                 btn.tag = 101
 
-            } else {
+            } else if model .isKind(of: TabbarAudioModel.self) {
+                audioView.model = model as? TabbarAudioModel
+                btnFilletView.addSubview(audioView)
                 stackView.addArrangedSubview(btn)
                 btn.tag = 103
             }
@@ -292,7 +303,6 @@ class ViuPlayerTabbarView: UIView {
             strongSelf.btnFilletView.frame = frame
         })
     }
-    
 }
 
 // MARK: public func
@@ -334,6 +344,7 @@ extension ViuPlayerTabbarView {
         setNeedsFocusUpdate()
         updateFocusIfNeeded()
     }
+ 
     
     /// 更新焦点的回调方法
     /// - Parameters:
@@ -355,6 +366,8 @@ extension ViuPlayerTabbarView {
             introductionView.showView()
             subtitleView.hiddenView()
             customView.hiddenView()
+            audioView.hiddenView()
+            
             break
         case 101:
             print(button.tag)
@@ -364,21 +377,27 @@ extension ViuPlayerTabbarView {
             introductionView.hiddenView()
             subtitleView.hiddenView()
             customView.showView()
+            audioView.hiddenView()
             break
         case 102:
             print(button.tag)
             
+            animateFilletHeightAction(height: ViuPlayerTabbarConfig.filletOtherHeight)
             
             subtitleView.showView()
             customView.hiddenView()
             introductionView.hiddenView()
+            audioView.hiddenView()
             break
         case 103:
             print(button.tag)
             
+            animateFilletHeightAction(height: CGFloat(ViuPlayerTabbarConfig.filletHeight))
+            
             subtitleView.hiddenView()
             customView.hiddenView()
             introductionView.hiddenView()
+            audioView.showView()
             break
         default:
             break

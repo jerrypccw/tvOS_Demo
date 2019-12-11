@@ -56,25 +56,25 @@ class ViuPlayerViewController: UIViewController {
     }
 
     private func setPlayerData() {
-        //        if  let srt = Bundle.main.url(forResource: "test", withExtension: "srt") {
-        //            let playerView = self.viuPlayer.displayView as! ViuPlayerSubtitlesView
-        //            playerView.setSubtitles(ViuSubtitles(filePath: srt))
-        //        }
-        //
-        //        let mp4File = ViuPlayerUtils.fileResource("hubblecast", fileType: "m4v")
-        //
-        //        guard let urlStr: String = mp4File else {
-        //            print("路径不存在")
-        //            return
-        //        }
-        //
-        //        let url = URL.init(fileURLWithPath: urlStr)
-
-        if let playerView = viuPlayer.displayView as? ViuPlayerSubtitlesView {
-            let url = URL(string: "https://d2anahhhmp1ffz.cloudfront.net/1141076793/c3e1435ecb3e2ae3aa4ff0b20d7c9824e1b7a0c3")!
-            let subtitle = ViuSubtitles(urlPath: url, format: .srt)
-            playerView.setSubtitles(subtitle)
+        if  let srt = Bundle.main.url(forResource: "test", withExtension: "srt") {
+            let playerView = self.viuPlayer.displayView as! ViuPlayerSubtitlesView
+            playerView.setSubtitles(ViuSubtitles(filePath: srt))
         }
+
+        let mp4File = ViuPlayerUtils.fileResource("hubblecast", fileType: "m4v")
+
+        guard let urlStr: String = mp4File else {
+            print("路径不存在")
+            return
+        }
+
+        let url = URL.init(fileURLWithPath: urlStr)
+
+//        if let playerView = viuPlayer.displayView as? ViuPlayerSubtitlesView {
+//            let url = URL(string: "https://d2anahhhmp1ffz.cloudfront.net/1141076793/c3e1435ecb3e2ae3aa4ff0b20d7c9824e1b7a0c3")!
+//            let subtitle = ViuSubtitles(urlPath: url, format: .srt)
+//            playerView.setSubtitles(subtitle)
+//        }
 
         viuPlayer.replaceVideo(url)
         viuPlayer.play()

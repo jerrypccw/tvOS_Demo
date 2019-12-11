@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		01851DC59840B02F6E036996 /* Pods_tvOS_demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 444E4028BA38B8DACFB31BAE /* Pods_tvOS_demo.framework */; };
+		CB0B7212239F411600D90461 /* ViuPlayerTabbarAudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0B7211239F411600D90461 /* ViuPlayerTabbarAudioView.swift */; };
 		CB1FD06F2387968800A74369 /* ViuPlayerProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1FD06E2387968800A74369 /* ViuPlayerProgressView.swift */; };
 		CB43AD03233E0F4E0000A7F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB43AD02233E0F4E0000A7F1 /* AppDelegate.swift */; };
 		CB43AD05233E0F4E0000A7F1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB43AD04233E0F4E0000A7F1 /* ViewController.swift */; };
@@ -31,6 +32,10 @@
 		CBF452B7237E9FE4003C70F3 /* ViuCustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF452B6237E9FE4003C70F3 /* ViuCustomLabel.swift */; };
 		CBF452B923811F76003C70F3 /* ViuPlayerTabbarSubtitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF452B823811F76003C70F3 /* ViuPlayerTabbarSubtitleView.swift */; };
 		CBF452BB238133F0003C70F3 /* ViuPlayerTabbarCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF452BA238133F0003C70F3 /* ViuPlayerTabbarCustomView.swift */; };
+		CBFB8E01239A50F2007D1686 /* hubblecast.m4v in Resources */ = {isa = PBXBuildFile; fileRef = CBFB8DFD239A50F2007D1686 /* hubblecast.m4v */; };
+		CBFB8E02239A50F2007D1686 /* apple_tv_app_universal_search_part_01_sd.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = CBFB8DFE239A50F2007D1686 /* apple_tv_app_universal_search_part_01_sd.mp4 */; };
+		CBFB8E03239A50F2007D1686 /* test.srt in Resources */ = {isa = PBXBuildFile; fileRef = CBFB8DFF239A50F2007D1686 /* test.srt */; };
+		CBFB8E04239A50F2007D1686 /* Despacito Remix Luis Fonsi ft.Daddy Yankee Justin Bieber Lyrics [Spanish].srt in Resources */ = {isa = PBXBuildFile; fileRef = CBFB8E00239A50F2007D1686 /* Despacito Remix Luis Fonsi ft.Daddy Yankee Justin Bieber Lyrics [Spanish].srt */; };
 		F2E002E423975D0B004370F6 /* ViuPlayerViewController+Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E002E323975D0B004370F6 /* ViuPlayerViewController+Gesture.swift */; };
 		F2E002E62397B443004370F6 /* TimeInterval+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E002E52397B443004370F6 /* TimeInterval+Extension.swift */; };
 /* End PBXBuildFile section */
@@ -38,6 +43,7 @@
 /* Begin PBXFileReference section */
 		00D7CD0CC39DF68E57E203F8 /* Pods-tvOS_demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tvOS_demo.debug.xcconfig"; path = "Target Support Files/Pods-tvOS_demo/Pods-tvOS_demo.debug.xcconfig"; sourceTree = "<group>"; };
 		444E4028BA38B8DACFB31BAE /* Pods_tvOS_demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_tvOS_demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB0B7211239F411600D90461 /* ViuPlayerTabbarAudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerTabbarAudioView.swift; sourceTree = "<group>"; };
 		CB1FD06E2387968800A74369 /* ViuPlayerProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerProgressView.swift; sourceTree = "<group>"; };
 		CB43ACFF233E0F4E0000A7F1 /* tvOS_demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tvOS_demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB43AD02233E0F4E0000A7F1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -63,6 +69,10 @@
 		CBF452B6237E9FE4003C70F3 /* ViuCustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuCustomLabel.swift; sourceTree = "<group>"; };
 		CBF452B823811F76003C70F3 /* ViuPlayerTabbarSubtitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerTabbarSubtitleView.swift; sourceTree = "<group>"; };
 		CBF452BA238133F0003C70F3 /* ViuPlayerTabbarCustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerTabbarCustomView.swift; sourceTree = "<group>"; };
+		CBFB8DFD239A50F2007D1686 /* hubblecast.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = hubblecast.m4v; sourceTree = "<group>"; };
+		CBFB8DFE239A50F2007D1686 /* apple_tv_app_universal_search_part_01_sd.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = apple_tv_app_universal_search_part_01_sd.mp4; sourceTree = "<group>"; };
+		CBFB8DFF239A50F2007D1686 /* test.srt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.srt; sourceTree = "<group>"; };
+		CBFB8E00239A50F2007D1686 /* Despacito Remix Luis Fonsi ft.Daddy Yankee Justin Bieber Lyrics [Spanish].srt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Despacito Remix Luis Fonsi ft.Daddy Yankee Justin Bieber Lyrics [Spanish].srt"; sourceTree = "<group>"; };
 		F2E002E323975D0B004370F6 /* ViuPlayerViewController+Gesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViuPlayerViewController+Gesture.swift"; sourceTree = "<group>"; };
 		F2E002E52397B443004370F6 /* TimeInterval+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Extension.swift"; sourceTree = "<group>"; };
 		F6807A08B93F6917F69A525B /* Pods-tvOS_demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tvOS_demo.release.xcconfig"; path = "Target Support Files/Pods-tvOS_demo/Pods-tvOS_demo.release.xcconfig"; sourceTree = "<group>"; };
@@ -127,6 +137,7 @@
 		CB43AD01233E0F4E0000A7F1 /* tvOS_demo */ = {
 			isa = PBXGroup;
 			children = (
+				CBFB8DFC239A50F2007D1686 /* Resource */,
 				CB4651A4238B8B3400078AF1 /* ViuPlayer */,
 				CBF452AD237D564F003C70F3 /* Common */,
 				CBF08594237ACF2E00D685D1 /* ViuPlayerTabbarView */,
@@ -184,8 +195,20 @@
 				CBF452B2237D8ED6003C70F3 /* ViuPlayerTabbarIntroductionView.swift */,
 				CBF452B823811F76003C70F3 /* ViuPlayerTabbarSubtitleView.swift */,
 				CBF452BA238133F0003C70F3 /* ViuPlayerTabbarCustomView.swift */,
+				CB0B7211239F411600D90461 /* ViuPlayerTabbarAudioView.swift */,
 			);
 			path = ItemViews;
+			sourceTree = "<group>";
+		};
+		CBFB8DFC239A50F2007D1686 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				CBFB8DFD239A50F2007D1686 /* hubblecast.m4v */,
+				CBFB8DFE239A50F2007D1686 /* apple_tv_app_universal_search_part_01_sd.mp4 */,
+				CBFB8DFF239A50F2007D1686 /* test.srt */,
+				CBFB8E00239A50F2007D1686 /* Despacito Remix Luis Fonsi ft.Daddy Yankee Justin Bieber Lyrics [Spanish].srt */,
+			);
+			path = Resource;
 			sourceTree = "<group>";
 		};
 		D573DAD9501BB8E46A571B7E /* Frameworks */ = {
@@ -255,8 +278,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBFB8E04239A50F2007D1686 /* Despacito Remix Luis Fonsi ft.Daddy Yankee Justin Bieber Lyrics [Spanish].srt in Resources */,
 				CB43AD0A233E0F510000A7F1 /* Assets.xcassets in Resources */,
 				CB43AD08233E0F4E0000A7F1 /* Main.storyboard in Resources */,
+				CBFB8E03239A50F2007D1686 /* test.srt in Resources */,
+				CBFB8E01239A50F2007D1686 /* hubblecast.m4v in Resources */,
+				CBFB8E02239A50F2007D1686 /* apple_tv_app_universal_search_part_01_sd.mp4 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,6 +338,7 @@
 				CBF08596237ACF6300D685D1 /* ViuPlayerTabbarView.swift in Sources */,
 				CBF452BB238133F0003C70F3 /* ViuPlayerTabbarCustomView.swift in Sources */,
 				CB4CE960238FA4AD0046552E /* ViuPlayerViewController.swift in Sources */,
+				CB0B7212239F411600D90461 /* ViuPlayerTabbarAudioView.swift in Sources */,
 				CBF452AF237D5669003C70F3 /* UIColor+Extension.swift in Sources */,
 				CBF452B7237E9FE4003C70F3 /* ViuCustomLabel.swift in Sources */,
 				CB4651B0238B8B3400078AF1 /* ViuPlayerLoadingIndicator.swift in Sources */,

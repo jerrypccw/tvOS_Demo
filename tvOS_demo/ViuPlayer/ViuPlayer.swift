@@ -326,7 +326,7 @@ extension ViuPlayer {
     }
 
     // 获取元数据的字幕信息
-    internal func loadMediaOption() {
+    internal func loadMediaLegible() {
         let mc = AVMediaCharacteristic.legible
         let mediaGourp = playerAsset!.mediaSelectionGroup(forMediaCharacteristic: mc)
 
@@ -339,6 +339,20 @@ extension ViuPlayer {
                 // 显示选中的字幕
                 playerItem?.select(option, in: gourp)
             }
+        }
+    }
+    
+    // 获取元数据的音轨信息
+    internal func loadMediaAudible() {
+        let mc = AVMediaCharacteristic.audible
+        let mediaGourp = playerAsset!.mediaSelectionGroup(forMediaCharacteristic: mc)
+
+        guard let gourp = mediaGourp else {
+            return
+        }
+
+        for option in gourp.options {
+            print("loadMediaAudible \(option.displayName)")
         }
     }
 
@@ -485,7 +499,9 @@ extension ViuPlayer {
                 case .readyToPlay:
                     bufferState = .readyToPlay
                     // 获取元数据的字幕信息
-                    loadMediaOption()
+                    loadMediaLegible()
+                    // 获取元数据的音轨信息
+                    loadMediaAudible()
                     // 获取视频每帧的图片
                     generateThumbnails()
 
