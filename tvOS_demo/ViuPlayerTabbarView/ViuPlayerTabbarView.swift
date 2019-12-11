@@ -27,6 +27,11 @@ class ViuPlayerTabbarView: UIView {
         return view
     }()
     
+    var timer: Timer = {
+           let time = Timer()
+           return time
+    }()
+    let controlViewDuration: TimeInterval = 0.35 /// default 5.0
     // 简介
     private lazy var introductionView = ViuPlayerTabbarIntroductionView()
     
@@ -76,6 +81,7 @@ class ViuPlayerTabbarView: UIView {
     }
     
     deinit {
+        timer.invalidate()
         print("ViuPlayerTabbarView deinit")
     }
     
@@ -303,6 +309,14 @@ class ViuPlayerTabbarView: UIView {
             strongSelf.btnFilletView.frame = frame
         })
     }
+    
+    private func setupTimer(btn: UIButton) {
+        timer.invalidate()
+        timer = Timer.viuPlayer_scheduledTimerWithTimeInterval(controlViewDuration, block: { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.didUpdateFocusTabbarButton(button: btn)
+            }, repeats: false)
+    }
 }
 
 // MARK: public func
@@ -356,6 +370,11 @@ extension ViuPlayerTabbarView {
         guard let button = context.nextFocusedView else {
             return
         }
+        
+        setupTimer(btn: button as! UIButton)
+    }
+    
+    func didUpdateFocusTabbarButton(button: UIButton) {
         
         switch button.tag {
         case 100:

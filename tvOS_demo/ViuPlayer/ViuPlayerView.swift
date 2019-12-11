@@ -130,7 +130,7 @@ open class ViuPlayerView: UIView {
     /// - Parameter state: state
     open func playStateDidChange(_ state: ViuPlayerState) {
         if state == .playing || state == .playFinished {
-            setupTimer()
+//            setupTimer()
             loadingIndicator.isHidden = true
         }    
     }

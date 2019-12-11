@@ -29,6 +29,8 @@ extension ViuPlayerViewController {
 
         let selectTap = UITapGestureRecognizer(target: self, action: #selector(onSelectTap(tap:)))
         selectTap.allowedPressTypes = [NSNumber(value: UIPress.PressType.select.rawValue)]
+        selectTap.delaysTouchesBegan = true
+        selectTap.delaysTouchesEnded = true
         view.addGestureRecognizer(selectTap)
         
     }
@@ -38,17 +40,17 @@ extension ViuPlayerViewController {
 
 extension ViuPlayerViewController {
     @objc func onSwipeAction(swipe: UISwipeGestureRecognizer) {
-        print("swipeAction : \(swipe)")
+//        print("swipeAction : \(swipe)")
 
         switch swipe.direction {
         case .down:
-            print("swipeDownAction")
+//            print("swipeDownAction")
             if viuPlayer.displayView.viuPlayerTabbar.isTabbarShow == false {
                 viuPlayer.displayView.showTabbar()
             }
             break
         case .up:
-            print("swipeUpAction")
+//            print("swipeUpAction")
             if viuPlayer.displayView.viuPlayerTabbar.isTabbarShow == true {
                 viuPlayer.displayView.hiddenTabbar()
             }
