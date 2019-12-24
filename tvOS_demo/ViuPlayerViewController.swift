@@ -121,5 +121,6 @@ extension ViuPlayerViewController: ViuPlayerViewDelegate {
     }
 
     func viuPlayerView(didDisplayControl playerView: ViuPlayerView) {
+        
     }
 }

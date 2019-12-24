@@ -28,10 +28,10 @@ extension ViuPlayerViewController: UIGestureRecognizerDelegate {
         playPauseTap.allowedPressTypes = [NSNumber(value: UIPress.PressType.playPause.rawValue)]
         view.addGestureRecognizer(playPauseTap)
         
-        let selectTap = UITapGestureRecognizer(target: self, action: #selector(onSelectTap(tap:)))
-        selectTap.allowedPressTypes = [NSNumber(value: UIPress.PressType.select.rawValue)]
-        selectTap.delaysTouchesBegan = true
-        view.addGestureRecognizer(selectTap)
+        //        let selectTap = UITapGestureRecognizer(target: self, action: #selector(onSelectTap(tap:)))
+        //        selectTap.allowedPressTypes = [NSNumber(value: UIPress.PressType.select.rawValue)]
+        //        selectTap.delaysTouchesBegan = true
+        //        view.addGestureRecognizer(selectTap)
         
         //        let upTap = UITapGestureRecognizer(target: self, action: #selector(onUpTap(tap:)))
         //        upTap.allowedPressTypes = [NSNumber(value: UIPress.PressType.upArrow.rawValue)]
@@ -81,6 +81,7 @@ extension ViuPlayerViewController {
         
         if gesture.state == .ended {
             viuPlayer.displayView.setupTimer()
+            viuPlayer.displayView.viuProgressView.hiddenFastForwordAndBack()
             
         } else if gesture.state == .began {
             ViuGestureSetupTimer()
@@ -91,17 +92,64 @@ extension ViuPlayerViewController {
             viuPlayer.displayView.viuProgressView.setPorgressLineByUser(offset: gesture.touchesMovedX)
         }
         
-        
         // 左右轻触
         switch gesture.touchLocation {
         case .left:
-            print("touchLocationDidChange left")
+            touchLocationDidChangeLeft(gesture)
             break
         case .right:
-            print("touchLocationDidChange right")
+            touchLocationDidChangeRight(gesture)
             break
         default:
-            return
+            touchLocationDidChangeUnknow(gesture)
+            break
+        }
+    }
+    
+    private func touchLocationDidChangeLeft(_ gesture: ViuRemoteGestureRecognizer) {
+        print("touchLocationDidChange left")
+        if viuPlayer.state == .playing {
+            viuPlayer.displayView.viuProgressView.showBackLabel()
+        }
+        
+        if gesture.isClick && gesture.state == .ended {
+            print("isClick left")
+            
+            var seekTime = viuPlayer.currentDuration
+            if seekTime < 15.0 {
+                seekTime = 0.0
+            } else {
+                seekTime = seekTime - 15.0
+            }
+            viuPlayer.seekTime(seekTime)
+        }
+        if gesture.isLongPress {
+            print("isLongPress left")
+        }
+    }
+    
+    private func touchLocationDidChangeRight(_ gesture: ViuRemoteGestureRecognizer) {
+        print("touchLocationDidChange right")
+        if viuPlayer.state == .playing {
+            viuPlayer.displayView.viuProgressView.showFastForword()
+        }
+        
+        if gesture.isClick && gesture.state == .ended {
+            print("isClick right")
+            let seekTime = viuPlayer.currentDuration + 15.0
+            viuPlayer.seekTime(seekTime)
+        }
+        if gesture.isLongPress {
+            print("isLongPress right")
+        }
+    }
+    
+    private func touchLocationDidChangeUnknow(_ gesture: ViuRemoteGestureRecognizer) {
+        print("touchLocationDidChange unknow")
+        viuPlayer.displayView.viuProgressView.hiddenFastForwordAndBack()
+        if gesture.isClick && gesture.state == .ended {
+            print("isClick unknow")
+            playPauseAction()
         }
     }
     
@@ -137,9 +185,9 @@ extension ViuPlayerViewController {
         playPauseAction()
     }
     
-    @objc func onSelectTap(tap: UITapGestureRecognizer) {
-        playPauseAction()
-    }
+    //    @objc func onSelectTap(tap: UITapGestureRecognizer) {
+    //        playPauseAction()
+    //    }
     
     //    @objc func onUpTap(tap: UITapGestureRecognizer) {
     //

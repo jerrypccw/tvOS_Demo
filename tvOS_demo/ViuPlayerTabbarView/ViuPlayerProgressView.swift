@@ -17,6 +17,8 @@ class ViuPlayerProgressView: UIView {
     let progressLineByUser = UIView()
     let thumbnailImgView = UIImageView()
     let thumbnailTime = UILabel()
+    let fastForward = UILabel()
+    let backLabel = UILabel()
 
     var duration = TimeInterval.zero
 
@@ -100,7 +102,30 @@ class ViuPlayerProgressView: UIView {
         let stCenterCon = startTime.centerXAnchor.constraint(equalTo: progressLine.centerXAnchor)
         stCenterCon.priority = .defaultLow
         stCenterCon.isActive = true
-
+        
+        // 快进与后退
+        fastForward.text = "快进"
+        fastForward.font = UIFont.boldSystemFont(ofSize: 30)
+        fastForward.textColor = .white
+        fastForward.isHidden = true
+        
+        addSubview(fastForward)
+        fastForward.translatesAutoresizingMaskIntoConstraints = false
+        fastForward.centerYAnchor.constraint(equalTo: startTime.centerYAnchor).isActive = true
+        fastForward.leftAnchor.constraint(equalTo: startTime.rightAnchor, constant: 12).isActive = true
+        fastForward.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        backLabel.text = "后退"
+        backLabel.font = UIFont.boldSystemFont(ofSize: 30)
+        backLabel.textColor = .white
+        backLabel.isHidden = true
+        
+        addSubview(backLabel)
+        backLabel.translatesAutoresizingMaskIntoConstraints = false
+        backLabel.centerYAnchor.constraint(equalTo: startTime.centerYAnchor).isActive = true
+        backLabel.rightAnchor.constraint(equalTo: startTime.leftAnchor, constant: -12).isActive = true
+        backLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        
         // 总时间
         endTime.text = "00:00"
         endTime.font = UIFont.boldSystemFont(ofSize: 30)
@@ -113,7 +138,7 @@ class ViuPlayerProgressView: UIView {
         endTime.heightAnchor.constraint(equalToConstant: 30).isActive = true
 
         // 预览图
-        thumbnailImgView.backgroundColor = .purple
+        thumbnailImgView.backgroundColor = .clear
         addSubview(thumbnailImgView)
         thumbnailImgView.translatesAutoresizingMaskIntoConstraints = false
         thumbnailImgView.leftAnchor.constraint(greaterThanOrEqualTo: progressBar.leftAnchor).isActive = true
@@ -187,6 +212,21 @@ class ViuPlayerProgressView: UIView {
     /// 计算播放器跳转的时间
     func setThumbnailTime() {
         thumbnailTime.text = seekTime.formatToString()
+    }
+    
+    func showFastForword() {
+        backLabel.isHidden = true
+        fastForward.isHidden = false
+    }
+    
+    func showBackLabel() {
+        backLabel.isHidden = false
+        fastForward.isHidden = true
+    }
+    
+    func hiddenFastForwordAndBack() {
+        backLabel.isHidden = true
+        fastForward.isHidden = true
     }
 
     deinit {

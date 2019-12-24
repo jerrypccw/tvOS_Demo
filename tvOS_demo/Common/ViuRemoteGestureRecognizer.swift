@@ -134,6 +134,8 @@ class ViuRemoteGestureRecognizer: UIGestureRecognizer {
         longPressTimer = Timer.scheduledTimer(timeInterval: minimumLongPressDuration, target: self, selector: #selector(longPressTimerFired), userInfo: nil, repeats: false)
         
         state = .changed
+        
+        
     }
     
     override func pressesChanged(_ presses: Set<UIPress>, with event: UIPressesEvent) {
@@ -147,6 +149,7 @@ class ViuRemoteGestureRecognizer: UIGestureRecognizer {
     override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent) {
         guard isClick || isLongPress else { return }
         state = .ended
+        
     }
 }
 
