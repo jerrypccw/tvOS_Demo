@@ -8,11 +8,20 @@
 
 import UIKit
 
+
 /// 请求片源Api，香港地区
 // https://d1k2us671qcoau.cloudfront.net/distribute?area_id=1&ccs_product_id=0a1188fd36bea62177c2d17e5ddf06ae&duration=0&language_flag_id=1&os=tvOS&platform_flag_label=tv&product_subtitle_language_id=1%3A3%3A7%3A8&ut=2
 let url = URL(string: "https://stream-hk.viu.com/s/4j8mhSZ6BFOyaNZ9_mLmdA/1575613728/UD/0a1188fd36bea62177c2d17e5ddf06ae/0a1188fd36bea62177c2d17e5ddf06ae_Layer1_vod.m3u8")!
 
 class ViuPlayerViewController: UIViewController {
+    
+    var bagenTimer: Timer = {
+           let time = Timer()
+           return time
+    }()
+    
+    let bagenTimerDuration: TimeInterval = 0.1 /// default 5.0
+    
     var viuPlayer: ViuPlayer = {
         let playerView = ViuPlayerSubtitlesView()
         let player = ViuPlayer(playerView: playerView)
@@ -36,7 +45,7 @@ class ViuPlayerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = .yellow
 
         view.addSubview(viuPlayer.displayView)
@@ -54,6 +63,7 @@ class ViuPlayerViewController: UIViewController {
         setPlayerData()
         setupGestureRecognizer()
     }
+    
 
     private func setPlayerData() {
         if  let srt = Bundle.main.url(forResource: "test", withExtension: "srt") {
@@ -82,7 +92,6 @@ class ViuPlayerViewController: UIViewController {
 }
 
 // MARK: viuPlayerDelegate
-
 extension ViuPlayerViewController: ViuPlayerDelegate {
     func viuPlayer(_ player: ViuPlayer, playerFailed error: ViuPlayerError) {
         print(error)

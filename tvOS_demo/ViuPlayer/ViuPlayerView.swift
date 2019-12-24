@@ -53,6 +53,7 @@ open class ViuPlayerView: UIView {
     
     open weak var viuPlayer: ViuPlayer?
     open var controlViewDuration: TimeInterval = 5.0 /// default 5.0
+    open var displayDuration: TimeInterval = 0.35
     open fileprivate(set) var playerLayer: AVPlayerLayer?
     open fileprivate(set) var isTimeSliding: Bool = false
     open var isDisplayControl: Bool = true {
@@ -276,6 +277,7 @@ extension ViuPlayerView {
     
     public func showTabbar() {
         viuPlayerTabbar.showTabbarView()
+        displayControlView(false)
     }
     
     public func hiddenTabbar() {
@@ -294,10 +296,12 @@ extension ViuPlayerView {
     
     internal func displayControlAnimation() {
         isDisplayControl = true
-        UIView.animate(withDuration: 0.5, animations: {
-            self.bottomView.alpha = 1
-        }) { _ in
-            self.bottomView.isHidden = false
+        UIView.animate(withDuration: displayDuration, animations: { [weak self] in            
+            guard let strongSelf = self else { return }
+            strongSelf.bottomView.alpha = 1
+            strongSelf.bottomView.isHidden = false
+            
+        }) { finished in
             
             // 如果是暂停状态下，出现进度条，就显示预览图
             if self.viuPlayer?.state == .paused {
@@ -308,14 +312,15 @@ extension ViuPlayerView {
     
     internal func hiddenControlAnimation() {
         timer.invalidate()
+        
         isDisplayControl = false
         // 隐藏预览图
         viuProgressView.hiddenThumbnail()
-        UIView.animate(withDuration: 0.5, animations: {
-            self.bottomView.alpha = 0
-        }) { _ in
-            self.bottomView.isHidden = true
-        }
+        UIView.animate(withDuration: displayDuration, animations: { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.bottomView.alpha = 0
+            strongSelf.bottomView.isHidden = true
+        })
     }
     
     internal func setupTimer() {

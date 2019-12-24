@@ -10,6 +10,7 @@
 		01851DC59840B02F6E036996 /* Pods_tvOS_demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 444E4028BA38B8DACFB31BAE /* Pods_tvOS_demo.framework */; };
 		CB0B7212239F411600D90461 /* ViuPlayerTabbarAudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0B7211239F411600D90461 /* ViuPlayerTabbarAudioView.swift */; };
 		CB1FD06F2387968800A74369 /* ViuPlayerProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1FD06E2387968800A74369 /* ViuPlayerProgressView.swift */; };
+		CB25E53B23ACBE8D00C68D8E /* ViuRemoteGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB25E53A23ACBE8D00C68D8E /* ViuRemoteGestureRecognizer.swift */; };
 		CB43AD03233E0F4E0000A7F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB43AD02233E0F4E0000A7F1 /* AppDelegate.swift */; };
 		CB43AD05233E0F4E0000A7F1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB43AD04233E0F4E0000A7F1 /* ViewController.swift */; };
 		CB43AD08233E0F4E0000A7F1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB43AD06233E0F4E0000A7F1 /* Main.storyboard */; };
@@ -45,6 +46,7 @@
 		444E4028BA38B8DACFB31BAE /* Pods_tvOS_demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_tvOS_demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB0B7211239F411600D90461 /* ViuPlayerTabbarAudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerTabbarAudioView.swift; sourceTree = "<group>"; };
 		CB1FD06E2387968800A74369 /* ViuPlayerProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerProgressView.swift; sourceTree = "<group>"; };
+		CB25E53A23ACBE8D00C68D8E /* ViuRemoteGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuRemoteGestureRecognizer.swift; sourceTree = "<group>"; };
 		CB43ACFF233E0F4E0000A7F1 /* tvOS_demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tvOS_demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB43AD02233E0F4E0000A7F1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CB43AD04233E0F4E0000A7F1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 			children = (
 				CBF452AE237D5669003C70F3 /* UIColor+Extension.swift */,
 				F2E002E52397B443004370F6 /* TimeInterval+Extension.swift */,
+				CB25E53A23ACBE8D00C68D8E /* ViuRemoteGestureRecognizer.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -335,6 +338,7 @@
 				CBF452B3237D8ED6003C70F3 /* ViuPlayerTabbarIntroductionView.swift in Sources */,
 				CB4651B2238B8B3400078AF1 /* Timer+ViuPlayer.swift in Sources */,
 				CB4651B9238BAA2B00078AF1 /* ViuPlayerSubtitlesView.swift in Sources */,
+				CB25E53B23ACBE8D00C68D8E /* ViuRemoteGestureRecognizer.swift in Sources */,
 				CBF08596237ACF6300D685D1 /* ViuPlayerTabbarView.swift in Sources */,
 				CBF452BB238133F0003C70F3 /* ViuPlayerTabbarCustomView.swift in Sources */,
 				CB4CE960238FA4AD0046552E /* ViuPlayerViewController.swift in Sources */,
