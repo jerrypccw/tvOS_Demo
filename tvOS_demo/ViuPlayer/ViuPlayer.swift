@@ -202,9 +202,6 @@ open class ViuPlayer: NSObject {
     open func playerItem(_ url: URL) -> AVPlayerItem {
         let urlAsset = AVURLAsset(url: url, options: nil)
         let playerItem = AVPlayerItem(asset: urlAsset)
-        if #available(iOS 9.0, *) {
-            playerItem.canUseNetworkResourcesForLiveStreamingWhilePaused = true
-        }
         return playerItem
     }
 
@@ -285,12 +282,12 @@ extension ViuPlayer {
             }
             return
         }
-
+        
         DispatchQueue.main.async { [weak self] in
             guard let strongSelf = self else { return }
             strongSelf.seeking = true
             strongSelf.startPlayerBuffering()
-            strongSelf.playerItem?.seek(to: CMTimeMakeWithSeconds(time, preferredTimescale: Int32(NSEC_PER_SEC)), completionHandler: { finished in
+            strongSelf.playerItem?.seek(to: CMTimeMakeWithSeconds(time, preferredTimescale: Int32(NSEC_PER_SEC)), toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero, completionHandler: { finished in
                 DispatchQueue.main.async {
                     strongSelf.seeking = false
                     strongSelf.stopPlayerBuffering()
@@ -300,6 +297,17 @@ extension ViuPlayer {
                     }
                 }
             })
+            
+//            strongSelf.playerItem?.seek(to: CMTimeMakeWithSeconds(time, preferredTimescale: Int32(NSEC_PER_SEC)), completionHandler: { finished in
+//                DispatchQueue.main.async {
+//                    strongSelf.seeking = false
+//                    strongSelf.stopPlayerBuffering()
+//                    strongSelf.play()
+//                    if completion != nil {
+//                        completion!(finished)
+//                    }
+//                }
+//            })
         }
     }
 }

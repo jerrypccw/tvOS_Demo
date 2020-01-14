@@ -60,8 +60,7 @@ extension ViuPlayerViewController: UIGestureRecognizerDelegate {
         // 继承UIGestureRecognizer 重写该手势的touch事件
         let viuGesture = ViuRemoteGestureRecognizer(target: self, action: #selector(touchLocationDidChange(_:)))
         viuGesture.delegate = self
-        view.addGestureRecognizer(viuGesture)
-        
+        view.addGestureRecognizer(viuGesture)        
     }
     
     // 必须同时支持多个手势
@@ -71,7 +70,6 @@ extension ViuPlayerViewController: UIGestureRecognizerDelegate {
 }
 
 // MARK: Event For UIGestureRecognizer
-
 extension ViuPlayerViewController {
     
     @objc func touchLocationDidChange(_ gesture: ViuRemoteGestureRecognizer) {
@@ -89,6 +87,7 @@ extension ViuPlayerViewController {
         
         // 进度条出现才处理
         if viuPlayer.displayView.isDisplayControl {
+            print("gesture.touchesMovedX -- \(gesture.touchesMovedX)")
             viuPlayer.displayView.viuProgressView.setPorgressLineByUser(offset: gesture.touchesMovedX)
         }
         
@@ -107,48 +106,39 @@ extension ViuPlayerViewController {
     }
     
     private func touchLocationDidChangeLeft(_ gesture: ViuRemoteGestureRecognizer) {
-        print("touchLocationDidChange left")
+        
         if viuPlayer.state == .playing {
             viuPlayer.displayView.viuProgressView.showBackLabel()
         }
         
         if gesture.isClick && gesture.state == .ended {
-            print("isClick left")
             
-            var seekTime = viuPlayer.currentDuration
-            if seekTime < 15.0 {
-                seekTime = 0.0
+            var duration = viuPlayer.currentDuration
+            if duration < 10.0 {
+                duration = 0.0
             } else {
-                seekTime = seekTime - 15.0
+                duration = duration - 10.0
             }
-            viuPlayer.seekTime(seekTime)
-        }
-        if gesture.isLongPress {
-            print("isLongPress left")
+            viuPlayer.seekTime(duration)
         }
     }
     
     private func touchLocationDidChangeRight(_ gesture: ViuRemoteGestureRecognizer) {
-        print("touchLocationDidChange right")
+        
         if viuPlayer.state == .playing {
             viuPlayer.displayView.viuProgressView.showFastForword()
         }
         
         if gesture.isClick && gesture.state == .ended {
-            print("isClick right")
-            let seekTime = viuPlayer.currentDuration + 15.0
-            viuPlayer.seekTime(seekTime)
-        }
-        if gesture.isLongPress {
-            print("isLongPress right")
+            print("isClick right \(viuPlayer.currentDuration)")
+            let duration = viuPlayer.currentDuration + 10.0
+            viuPlayer.seekTime(duration)
         }
     }
     
     private func touchLocationDidChangeUnknow(_ gesture: ViuRemoteGestureRecognizer) {
-        print("touchLocationDidChange unknow")
         viuPlayer.displayView.viuProgressView.hiddenFastForwordAndBack()
         if gesture.isClick && gesture.state == .ended {
-            print("isClick unknow")
             playPauseAction()
         }
     }
@@ -224,11 +214,20 @@ extension ViuPlayerViewController {
                 // 跳转对应的时间播放
                 let seekTime = viuPlayer.displayView.viuProgressView.seekTime
                 if seekTime == viuPlayer.currentDuration {
+                    
                     viuPlayer.play()
                 } else {
-                    viuPlayer.seekTime(seekTime)
+                    
+                    viuPlayer.seekTime(seekTime) { [weak self] (finished) in
+                        guard let strongSelf = self else { return }
+                        if finished {
+                            strongSelf.viuPlayer.displayView.setupTimer()
+                        }
+                    }
                 }
-                viuPlayer.displayView.displayControlView(false)
+                
+                // 选择快进时间后隐藏，优化使用体验
+                viuPlayer.displayView.viuProgressView.hiddenThumbnail()
                 break
             default:
                 break

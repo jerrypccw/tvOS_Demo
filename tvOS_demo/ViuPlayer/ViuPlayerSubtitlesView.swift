@@ -72,8 +72,8 @@ class ViuPlayerSubtitlesView: ViuPlayerView {
         
         firstSubtitlesLabel.translatesAutoresizingMaskIntoConstraints = false
         firstSubtitlesLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        firstSubtitlesLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        firstSubtitlesLabel.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
+        firstSubtitlesLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -30).isActive = true
+        firstSubtitlesLabel.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -44).isActive = true
         firstSubtitlesLabel.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
     }
     
@@ -90,8 +90,8 @@ class ViuPlayerSubtitlesView: ViuPlayerView {
         
         secondSubtitlesLabel.translatesAutoresizingMaskIntoConstraints = false
         secondSubtitlesLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        secondSubtitlesLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        secondSubtitlesLabel.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
+        secondSubtitlesLabel.topAnchor.constraint(equalTo: self.viuPlayerTabbar.bottomAnchor, constant: 12).isActive = true
+        secondSubtitlesLabel.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -44).isActive = true
         secondSubtitlesLabel.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
     }
 }

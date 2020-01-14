@@ -50,9 +50,7 @@ class ViuRemoteGestureRecognizer: UIGestureRecognizer {
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent) {
                 
-        guard let touch = touches.first else {
-            return
-        }
+        guard let touch = touches.first else { return }
         let ptNew = touch.preciseLocation(in: view)
         let ptPrevious = touch.precisePreviousLocation(in: view)
         let offset = (ptNew.x - ptPrevious.x) * 0.1
@@ -132,10 +130,9 @@ class ViuRemoteGestureRecognizer: UIGestureRecognizer {
         
         longPressTimer?.invalidate()
         longPressTimer = Timer.scheduledTimer(timeInterval: minimumLongPressDuration, target: self, selector: #selector(longPressTimerFired), userInfo: nil, repeats: false)
+
         
         state = .changed
-        
-        
     }
     
     override func pressesChanged(_ presses: Set<UIPress>, with event: UIPressesEvent) {
@@ -155,7 +152,9 @@ class ViuRemoteGestureRecognizer: UIGestureRecognizer {
 
 extension UIEvent {
     @nonobjc var digitizerLocation: CGPoint {
-        guard let value = value(forKey: "_digitizerLocation") as? CGPoint else { return CGPoint(x: 0.5, y: 0.5) }
+        guard let value = value(forKey: "_digitizerLocation") as? CGPoint else {
+            return CGPoint(x: 0.5, y: 0.5)
+        }
         return value
     }
 }

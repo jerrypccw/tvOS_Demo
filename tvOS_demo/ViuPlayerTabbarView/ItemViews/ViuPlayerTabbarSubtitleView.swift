@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViuPlayerTabbarSubtitleView: UIView {
+class ViuPlayerTabbarSubtitleView: UIScrollView {
     
     // 设置button居中布局视图
     private lazy var stackView: UIStackView = {
@@ -119,10 +119,24 @@ class ViuPlayerTabbarSubtitleView: UIView {
                                     width: btnWidth,
                                     height: ViuPlayerTabbarConfig.btnHeight)
             
-            stackView.frame = CGRect.init(x: btnBackgroundX,
-                                                  y: ViuPlayerTabbarConfig.zero,
-                                                  width: x + btnWidth,
-                                                  height: frame.size.height)
+            let stackWidth = x + btnWidth
+            
+            if stackWidth > frame.size.width {
+                
+                stackView.frame = CGRect.init(x: 0,
+                                              y: ViuPlayerTabbarConfig.zero,
+                                              width: stackWidth,
+                                              height: frame.size.height)
+                
+                contentSize = CGSize(width: stackView.frame.width, height: frame.size.height)
+                
+            } else {
+                
+                stackView.frame = CGRect.init(x: btnBackgroundX,
+                                              y: ViuPlayerTabbarConfig.zero,
+                                              width: x + btnWidth,
+                                              height: frame.size.height)
+            }
         }
     }    
 }

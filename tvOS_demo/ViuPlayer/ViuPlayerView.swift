@@ -29,7 +29,6 @@ public protocol ViuPlayerViewDelegate: NSObjectProtocol {
 }
 
 // MARK: - delegate methods optional
-
 public extension ViuPlayerViewDelegate {
     func viuPlayerView(_ playerView: ViuPlayerView, willFullscreen fullscreen: Bool) {}
     
@@ -55,7 +54,7 @@ open class ViuPlayerView: UIView {
     open var controlViewDuration: TimeInterval = 5.0 /// default 5.0
     open var displayDuration: TimeInterval = 0.35
     open fileprivate(set) var playerLayer: AVPlayerLayer?
-    open fileprivate(set) var isTimeSliding: Bool = false
+//    open fileprivate(set) var isTimeSliding: Bool = false
     open var isDisplayControl: Bool = true {
         didSet {
             if isDisplayControl != oldValue {
@@ -86,8 +85,7 @@ open class ViuPlayerView: UIView {
         return view
     }()
     
-    // MARK: - life cycle
-    
+    // MARK: - life cycle    
     public override init(frame: CGRect) {
         playerLayer = AVPlayerLayer(player: nil)
         super.init(frame: frame)
@@ -147,14 +145,6 @@ open class ViuPlayerView: UIView {
             loadingIndicator.isHidden = true
             loadingIndicator.stopAnimating()
         }
-        
-        //        var current = formatSecondsToString((jhPlayer?.currentDuration)!)
-        //        if (jhPlayer?.totalDuration.isNaN)! {  // HLS
-        //            current = "00:00"
-        //        }
-        //        if state == .readyToPlay && !isTimeSliding {
-        //
-        //        }
     }
     
     /// buffer duration
@@ -163,8 +153,6 @@ open class ViuPlayerView: UIView {
     ///   - bufferedDuration: buffer duration
     ///   - totalDuration: total duratiom
     open func bufferedDidChange(_ bufferedDuration: TimeInterval, totalDuration: TimeInterval) {
-        //        timeSlider.setProgress(Float(bufferedDuration / totalDuration), animated: true)
-        //        print(Float(bufferedDuration / totalDuration))
         viuProgressView.progressBar.setProgress(Float(bufferedDuration / totalDuration), animated: true)
     }
     
@@ -178,11 +166,10 @@ open class ViuPlayerView: UIView {
         if totalDuration.isNaN { // HLS
             current = "00:00"
         }
-        if !isTimeSliding {
-            viuProgressView.startTimeString = current
-            viuProgressView.endTimeString = (totalDuration - currentDuration).formatToString()
-            viuProgressView.setPorgressLineX(percent: CGFloat(currentDuration / totalDuration))
-        }
+
+        viuProgressView.setPorgressLineX(percent: CGFloat(currentDuration / totalDuration))
+        viuProgressView.startTimeString = current
+        viuProgressView.endTimeString = (totalDuration - currentDuration).formatToString()
     }
     
     open func configurationUI() {
@@ -204,7 +191,9 @@ open class ViuPlayerView: UIView {
         
         let model3 = TabbarSubtitleModel()
         model3.buttonName = "语言"
-        model3.subtitles += ["中文", "英文"]
+        model3.subtitles += ["中文", "英文", "印度文", "日文", "韩文", "法文", "意大利文", "西班牙文", "繁体中文"]
+        
+//        model3.subtitles += ["中文", "英文"]
         
         let model4 = TabbarAudioModel()
         model4.buttonName = "音轨"
@@ -228,7 +217,7 @@ open class ViuPlayerView: UIView {
     open func reloadPlayerView() {
         playerLayer = AVPlayerLayer(player: nil)
         viuProgressView.progressBar.setProgress(0, animated: false)
-        isTimeSliding = false
+//        isTimeSliding = false
         loadingIndicator.isHidden = false
         loadingIndicator.startAnimating()
         reloadPlayerLayer()

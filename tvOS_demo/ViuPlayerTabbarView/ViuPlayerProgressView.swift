@@ -17,14 +17,14 @@ class ViuPlayerProgressView: UIView {
     let progressLineByUser = UIView()
     let thumbnailImgView = UIImageView()
     let thumbnailTime = UILabel()
-    let fastForward = UILabel()
-    let backLabel = UILabel()
+    let fastForward = UIButton.init(type: .custom)
+    let backBtn = UIButton.init(type: .custom)
 
     var duration = TimeInterval.zero
 
     var startTimeString: String? {
         didSet {
-            startTime.text = startTimeString
+            self.startTime.text = self.startTimeString
         }
     }
 
@@ -104,9 +104,9 @@ class ViuPlayerProgressView: UIView {
         stCenterCon.isActive = true
         
         // 快进与后退
-        fastForward.text = "快进"
-        fastForward.font = UIFont.boldSystemFont(ofSize: 30)
-        fastForward.textColor = .white
+        fastForward.setTitle("快进", for: .normal)
+        fastForward.setTitleColor(.white, for: .normal)
+        fastForward.titleLabel!.font = UIFont.boldSystemFont(ofSize: 30)
         fastForward.isHidden = true
         
         addSubview(fastForward)
@@ -115,16 +115,16 @@ class ViuPlayerProgressView: UIView {
         fastForward.leftAnchor.constraint(equalTo: startTime.rightAnchor, constant: 12).isActive = true
         fastForward.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
-        backLabel.text = "后退"
-        backLabel.font = UIFont.boldSystemFont(ofSize: 30)
-        backLabel.textColor = .white
-        backLabel.isHidden = true
+        backBtn.setTitle("后退", for: .normal)
+        backBtn.setTitleColor(.white, for: .normal)
+        backBtn.titleLabel!.font = UIFont.boldSystemFont(ofSize: 30)
+        backBtn.isHidden = true
         
-        addSubview(backLabel)
-        backLabel.translatesAutoresizingMaskIntoConstraints = false
-        backLabel.centerYAnchor.constraint(equalTo: startTime.centerYAnchor).isActive = true
-        backLabel.rightAnchor.constraint(equalTo: startTime.leftAnchor, constant: -12).isActive = true
-        backLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        addSubview(backBtn)
+        backBtn.translatesAutoresizingMaskIntoConstraints = false
+        backBtn.centerYAnchor.constraint(equalTo: startTime.centerYAnchor).isActive = true
+        backBtn.rightAnchor.constraint(equalTo: startTime.leftAnchor, constant: -12).isActive = true
+        backBtn.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
         // 总时间
         endTime.text = "00:00"
@@ -180,16 +180,18 @@ class ViuPlayerProgressView: UIView {
     func showThumbnail(duration: TimeInterval) {
         self.duration = duration
 
-        setThumbnailTime()
-
         progressLineByUser.isHidden = false
         thumbnailImgView.isHidden = false
+        thumbnailTime.isHidden = false
+        
+        setThumbnailTime()
     }
 
     /// 隐藏预览图
     func hiddenThumbnail() {
         progressLineByUser.isHidden = true
         thumbnailImgView.isHidden = true
+        thumbnailTime.isHidden = true
 
         // 设置预览图起始位置
         let paraFrame = convert(progressLine.frame, to: self)
@@ -215,17 +217,17 @@ class ViuPlayerProgressView: UIView {
     }
     
     func showFastForword() {
-        backLabel.isHidden = true
+        backBtn.isHidden = true
         fastForward.isHidden = false
     }
     
     func showBackLabel() {
-        backLabel.isHidden = false
+        backBtn.isHidden = false
         fastForward.isHidden = true
     }
     
     func hiddenFastForwordAndBack() {
-        backLabel.isHidden = true
+        backBtn.isHidden = true
         fastForward.isHidden = true
     }
 
