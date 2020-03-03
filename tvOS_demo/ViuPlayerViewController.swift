@@ -8,16 +8,15 @@
 
 import UIKit
 
+let url = URL(string: "https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_4x3/bipbop_4x3_variant.m3u8")!
 
-/// 请求片源Api，香港地区
-// https://d1k2us671qcoau.cloudfront.net/distribute?area_id=1&ccs_product_id=0a1188fd36bea62177c2d17e5ddf06ae&duration=0&language_flag_id=1&os=tvOS&platform_flag_label=tv&product_subtitle_language_id=1%3A3%3A7%3A8&ut=2
-let url = URL(string: "https://stream-hk.viu.com/s/4j8mhSZ6BFOyaNZ9_mLmdA/1575613728/UD/0a1188fd36bea62177c2d17e5ddf06ae/0a1188fd36bea62177c2d17e5ddf06ae_Layer1_vod.m3u8")!
+let m3u8URL = URL(string: "")!
 
-class ViuPlayerViewController: UIViewController {
+class ViuPlayerViewController: UIViewController, UIGestureRecognizerDelegate {
     
     var bagenTimer: Timer = {
-           let time = Timer()
-           return time
+        let time = Timer()
+        return time
     }()
     
     let bagenTimerDuration: TimeInterval = 0.1 /// default 5.0
@@ -27,65 +26,44 @@ class ViuPlayerViewController: UIViewController {
         let player = ViuPlayer(playerView: playerView)
         return player
     }()
-
+    
     deinit {
         print("ViuPlayerViewController deinit")
     }
-
+    
     // 使用PUSH转跳需要添加一下代码，不然会丢失焦点
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         viuPlayer.pause()
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .yellow
-
+        
         view.addSubview(viuPlayer.displayView)
-
+        
         viuPlayer.backgroundMode = .proceed
         viuPlayer.delegate = self
-        viuPlayer.displayView.delegate = self
-
+        
         viuPlayer.displayView.translatesAutoresizingMaskIntoConstraints = false
         viuPlayer.displayView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         viuPlayer.displayView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         viuPlayer.displayView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         viuPlayer.displayView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-
+        
         setPlayerData()
         setupGestureRecognizer()
     }
     
-
+    
     private func setPlayerData() {
-        if  let srt = Bundle.main.url(forResource: "test", withExtension: "srt") {
-            let playerView = self.viuPlayer.displayView as! ViuPlayerSubtitlesView
-            playerView.setSubtitles(ViuSubtitles(filePath: srt))
-        }
-
-        let mp4File = ViuPlayerUtils.fileResource("hubblecast", fileType: "m4v")
-
-        guard let urlStr: String = mp4File else {
-            print("路径不存在")
-            return
-        }
-
-        let url = URL.init(fileURLWithPath: urlStr)
-
-//        if let playerView = viuPlayer.displayView as? ViuPlayerSubtitlesView {
-//            let url = URL(string: "https://d2anahhhmp1ffz.cloudfront.net/1141076793/c3e1435ecb3e2ae3aa4ff0b20d7c9824e1b7a0c3")!
-//            let subtitle = ViuSubtitles(urlPath: url, format: .srt)
-//            playerView.setSubtitles(subtitle)
-//        }
-
         viuPlayer.replaceVideo(url)
         viuPlayer.play()
     }
@@ -94,33 +72,169 @@ class ViuPlayerViewController: UIViewController {
 // MARK: viuPlayerDelegate
 extension ViuPlayerViewController: ViuPlayerDelegate {
     func viuPlayer(_ player: ViuPlayer, playerFailed error: ViuPlayerError) {
-        print(error)
+        print("ViuPlayerViewController \(error)")
     }
-
+    
     func viuPlayer(_ player: ViuPlayer, stateDidChange state: ViuPlayerState) {
-        print("player State ", state)
-
-        if state == .playFinished {
-            viuPlayer.replaceVideo(url)
-            viuPlayer.play()
+        switch state {
+        case .playFinished:
+            navigationController?.popViewController(animated: true)
+        case .paused:
+            viuPlayer.displayView.displayShadowView()
+            viuPlayer.displayView.displayControlView(true)
+            viuPlayer.displayView.viuProgressView.showThumbnail(duration: 0)
+        case .playing:
+            viuPlayer.displayView.hiddenShadowView()
+            viuPlayer.displayView.setupTimer()
+            viuPlayer.displayView.viuProgressView.hiddenThumbnail()
+        default:
+            break
         }
     }
-
+    
     func viuPlayer(_ player: ViuPlayer, bufferStateDidChange state: ViuPlayerBufferstate) {
         print("buffer State", state)
+        
+        switch state {
+        case .buffering:
+            viuPlayer.displayView.viuProgressView.hiddenFastForwordAndRewind()
+            viuPlayer.displayView.viuProgressView.bufferingIndicator.startAnimating()
+        case .readyToPlay:
+            viuPlayer.displayView.viuProgressView.hiddenFastForwordAndRewind()
+            viuPlayer.displayView.viuProgressView.bufferingIndicator.stopAnimating()
+        default:
+            break
+        }
+    }
+    
+    func viuPlayer(_ player: ViuPlayer, bufferedDidChange bufferedDuration: TimeInterval, totalDuration: TimeInterval) {
+//        print("bufferedDidChange \(bufferedDuration)")
+    }
+    
+    func viuPlayer(_ player: ViuPlayer, playerDurationDidChange currentDuration: TimeInterval, totalDuration: TimeInterval) {
+//        print("currentDuration \(currentDuration)")
     }
 }
 
-// MARK: viuPlayerViewDelegate
-
-extension ViuPlayerViewController: ViuPlayerViewDelegate {
-    func viuPlayerView(_ playerView: ViuPlayerView, willFullscreen fullscreen: Bool) {
-    }
-
-    func viuPlayerView(didTappedClose playerView: ViuPlayerView) {
-    }
-
-    func viuPlayerView(didDisplayControl playerView: ViuPlayerView) {
+extension ViuPlayerViewController {
+    
+    func setupGestureRecognizer() {
         
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(onSwipeAction(swipe:)))
+        swipeUp.direction = .up
+        // 设置为YES，以防止视图处理可能被识别为该手势的任何触摸或按下
+        //        swipeDown.delaysTouchesBegan = true
+        view.addGestureRecognizer(swipeUp)
+        
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(onSwipeAction(swipe:)))
+        swipeDown.direction = .down
+        view.addGestureRecognizer(swipeDown)
+        
+        let playPauseTap = UITapGestureRecognizer(target: self, action: #selector(onPlayPauseTap(tap:)))
+        playPauseTap.allowedPressTypes = [NSNumber(value: UIPress.PressType.playPause.rawValue)]
+        view.addGestureRecognizer(playPauseTap)
+        
+        // 继承UIGestureRecognizer 重写该手势的touch事件
+        let viuGesture = ViuRemoteGestureRecognizer(target: self, action: #selector(touchLocationDidChange(_:)))
+        viuGesture.delegate = self
+        view.addGestureRecognizer(viuGesture)
+    }
+    
+    // 必须同时支持多个手势
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
+    @objc func touchLocationDidChange(_ gesture: ViuRemoteGestureRecognizer) {
+        
+        if viuPlayer.displayView.viuPlayerTabbar.isTabbarShow == true { return }
+        
+        if gesture.state == .began || gesture.state == .changed {
+            viuPlayer.displayView.displayControlView(true)
+        }
+        
+        // 进度条出现才处理
+        if viuPlayer.displayView.isDisplayControl {
+//            print("gesture.touchesMovedX -- \(gesture.touchesMovedX)")
+            viuPlayer.displayView.viuProgressView.setPorgressLineByUser(offset: gesture.touchesMovedX)
+            return
+        }
+        
+        switch gesture.touchLocation {
+        case .left:
+            viuPlayer.displayView.viuProgressView.showLeftActionIndicator()
+            if gesture.isClick && gesture.state == .ended {
+                var duration = viuPlayer.currentDuration
+                if duration < 10.0 {
+                    duration = 0.0
+                } else {
+                    duration = duration - 10.0
+                }
+                viuPlayer.seekTime(duration)
+            }
+            
+            if gesture.isLongPress && gesture.state == .changed {
+                print(gesture.isLongPress)
+            }
+            
+        case .right:
+            viuPlayer.displayView.viuProgressView.showRightActionIndicator()
+            if gesture.isClick && gesture.state == .ended {
+                let duration = viuPlayer.currentDuration + 10.0
+                viuPlayer.seekTime(duration)
+            }
+            if gesture.isLongPress && gesture.state == .changed {
+                viuPlayer.displayView.viuProgressView.rightActionIndicator.image = UIImage.init(named: "forward")
+            }
+            
+        case .unknown:
+            viuPlayer.displayView.viuProgressView.hiddenFastForwordAndRewind()
+            viuPlayer.displayView.setupTimer()
+            if gesture.isClick && gesture.state == .ended {
+                playPauseAction()
+            }
+            
+        }
+        
+    }
+    
+    @objc func onSwipeAction(swipe: UISwipeGestureRecognizer) {
+        
+        switch swipe.direction {
+        case .down:
+            if viuPlayer.displayView.viuPlayerTabbar.isTabbarShow == false {
+                viuPlayer.displayView.showTabbar()
+            }
+            break
+        case .up:
+            if viuPlayer.displayView.viuPlayerTabbar.isTabbarShow == true {
+                viuPlayer.displayView.hiddenTabbar()
+            }
+            break
+        default:
+            break
+        }
+    }
+    
+    @objc func onPlayPauseTap(tap: UITapGestureRecognizer) {
+        playPauseAction()
+    }
+    
+    private func playPauseAction() {
+        if viuPlayer.displayView.viuPlayerTabbar.isTabbarShow == true {
+            // 如果Tabber显示，就隐藏
+            viuPlayer.displayView.hiddenTabbar()
+        } else {
+            switch viuPlayer.state {
+            case .playing:
+                viuPlayer.pause()
+                break
+            case .paused:
+                viuPlayer.play()
+                break
+            default:
+                break
+            }
+        }
     }
 }

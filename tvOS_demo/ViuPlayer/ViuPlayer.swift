@@ -39,17 +39,6 @@ public enum ViuPlayerBufferstate: Int {
     case bufferFinished // 缓冲完成
 }
 
-/// 视频承载层
-///
-/// - resize//拉伸匹配范围:
-/// - resizeAspect//default:
-/// - resizeAspectFill//通过缩放填满层的范围区域:
-public enum ViuVideoGravityMode: Int {
-    case resize            // 拉伸匹配范围
-    case resizeAspect      // default
-    case resizeAspectFill  // 通过缩放填满层的范围区域
-}
-
 /// 后台播放
 ///
 /// - suspend//禁止:
@@ -59,6 +48,12 @@ public enum ViuPlayerBackgroundMode: Int {
     case suspend                // 禁止
     case autoPlayAndPaused      // 自动播放和暂停
     case proceed                // 继续进行
+}
+
+public enum ViuVideoGravityMode: Int {
+    case resize
+    case resizeAspect      // default
+    case resizeAspectFill
 }
 
 public protocol ViuPlayerDelegate: NSObjectProtocol {
@@ -104,11 +99,11 @@ open class ViuPlayer: NSObject {
     open fileprivate(set) var playerAsset : AVURLAsset?
     open fileprivate(set) var contentURL : URL?
     open fileprivate(set) var error : ViuPlayerError
-    
+    fileprivate var resourceLoaderManager = ViuPlayerResourceLoaderManager()
     fileprivate var seeking : Bool = false
     
     var imageGenerator: AVAssetImageGenerator?
-    
+
     //
     open fileprivate(set) var player : AVPlayer? {
         willSet{
@@ -149,7 +144,6 @@ open class ViuPlayer: NSObject {
     }
 
     // MARK: - life cycle
-
     public init(URL: URL?, playerView: ViuPlayerView?) {
         mediaFormat = ViuPlayerUtils.decoderVideoFormat(URL)
         contentURL = URL
@@ -198,15 +192,15 @@ open class ViuPlayer: NSObject {
         player = AVPlayer(playerItem: playerItem)
         displayView.reloadPlayerView()
     }
-
+    
     open func playerItem(_ url: URL) -> AVPlayerItem {
         let urlAsset = AVURLAsset(url: url, options: nil)
         let playerItem = AVPlayerItem(asset: urlAsset)
         return playerItem
     }
-
+    
     // time KVO
-    internal func addPlayerObservers() {
+    internal func addPlayerObservers() { 
         timeObserver = player?.addPeriodicTimeObserver(forInterval: .init(value: 1, timescale: 1), queue: DispatchQueue.main, using: { [weak self] _ in
             guard let strongSelf = self else { return }
             if let currentTime = strongSelf.player?.currentTime().seconds,
@@ -259,16 +253,12 @@ extension ViuPlayer {
         if contentURL == nil { return }
         player?.play()
         state = .playing
-        displayView.play()
     }
 
     open func pause() {
-        guard state == .paused else {
-            player?.pause()
-            state = .paused
-            displayView.pause()
-            return
-        }
+        player?.pause()
+        state = .paused
+
     }
 
     open func seekTime(_ time: TimeInterval) {
@@ -297,17 +287,6 @@ extension ViuPlayer {
                     }
                 }
             })
-            
-//            strongSelf.playerItem?.seek(to: CMTimeMakeWithSeconds(time, preferredTimescale: Int32(NSEC_PER_SEC)), completionHandler: { finished in
-//                DispatchQueue.main.async {
-//                    strongSelf.seeking = false
-//                    strongSelf.stopPlayerBuffering()
-//                    strongSelf.play()
-//                    if completion != nil {
-//                        completion!(finished)
-//                    }
-//                }
-//            })
         }
     }
 }
@@ -332,86 +311,6 @@ extension ViuPlayer {
         error.extendedLogData = playerItem?.errorLog()?.extendedLogData()
         error.extendedLogDataStringEncoding = playerItem?.errorLog()?.extendedLogDataStringEncoding
     }
-
-    // 获取元数据的字幕信息
-    internal func loadMediaLegible() {
-        let mc = AVMediaCharacteristic.legible
-        let mediaGourp = playerAsset!.mediaSelectionGroup(forMediaCharacteristic: mc)
-
-        guard let gourp = mediaGourp else {
-            return
-        }
-
-        for option in gourp.options {
-            if option.displayName == "English" {
-                // 显示选中的字幕
-                playerItem?.select(option, in: gourp)
-            }
-        }
-    }
-    
-    // 获取元数据的音轨信息
-    internal func loadMediaAudible() {
-        let mc = AVMediaCharacteristic.audible
-        let mediaGourp = playerAsset!.mediaSelectionGroup(forMediaCharacteristic: mc)
-
-        guard let gourp = mediaGourp else {
-            return
-        }
-
-        for option in gourp.options {
-            print("loadMediaAudible \(option.displayName)")
-        }
-    }
-
-    internal func generateThumbnails() {
-        guard let asset = playerAsset else {
-            print("generateThumbnails asset error")
-            return
-        }
-
-        imageGenerator = AVAssetImageGenerator(asset: asset)
-        imageGenerator?.maximumSize = CGSize(width: 200.0, height: 0.0)
-
-        let duration: CMTime = asset.duration
-        var times: [NSValue] = []
-        let increment: CMTimeValue = duration.value / 20
-        var currentValue: CMTimeValue = CMTimeValue(2 * duration.timescale)
-        while currentValue <= duration.value {
-            let time: CMTime = CMTime(value: currentValue, timescale: duration.timescale)
-            times.append(NSValue(time: time))
-            currentValue += increment
-        }
-
-        var imageCount = times.count
-        var images: [ViuThumbnail] = []
-
-        let handler: AVAssetImageGeneratorCompletionHandler = {
-            _, imageRef, actualTime, result, _ in
-
-            if result == .succeeded {
-                guard let cgImage = imageRef else {
-                    return
-                }
-                let image: UIImage = UIImage(cgImage: cgImage)
-                let thumbnail: ViuThumbnail = ViuThumbnail()
-                thumbnail.image = image
-                thumbnail.time = actualTime
-                images.append(thumbnail)
-            } else {
-                print("generateThumbnails result error")
-            }
-
-            if --imageCount == 0 {
-                DispatchQueue.main.async {
-                    let name = "ViuThumbnailsGeneratedNotification"
-                    let nc: NotificationCenter = NotificationCenter.default
-                    nc.post(name: NSNotification.Name(rawValue: name), object: images)
-                }
-            }
-        }
-        imageGenerator?.generateCGImagesAsynchronously(forTimes: times, completionHandler: handler)
-    }
 }
 
 // MARK: - Notifation Selector & KVO
@@ -424,6 +323,8 @@ extension ViuPlayer {
         playerItem?.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.status), options: options, context: &playerItemContext)
         playerItem?.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.loadedTimeRanges), options: options, context: &playerItemContext)
         playerItem?.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.playbackBufferEmpty), options: options, context: &playerItemContext)
+        playerItem?.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.playbackLikelyToKeepUp), options: options, context: &playerItemContext)
+        
     }
 
     internal func addPlayerNotifications() {
@@ -483,7 +384,6 @@ extension ViuPlayer {
 }
 
 // MARK: - Selecter
-
 extension Selector {
     static let playerItemDidPlayToEndTime = #selector(ViuPlayer.playerItemDidPlayToEnd(_:))
     static let applicationWillEnterForeground = #selector(ViuPlayer.applicationWillEnterForeground(_:))
@@ -493,80 +393,169 @@ extension Selector {
 extension ViuPlayer {
     open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
         if context == &playerItemContext {
-            if keyPath == #keyPath(AVPlayerItem.status) {
-                let status: AVPlayerItem.Status
-                if let statusNumber = change?[.newKey] as? NSNumber {
-                    status = AVPlayerItem.Status(rawValue: statusNumber.intValue)!
-                } else {
-                    status = .unknown
-                }
-
-                switch status {
-                case .unknown:
-                    startPlayerBuffering()
-                case .readyToPlay:
-                    bufferState = .readyToPlay
-                    // 获取元数据的字幕信息
-                    loadMediaLegible()
-                    // 获取元数据的音轨信息
-                    loadMediaAudible()
-                    // 获取视频每帧的图片
-                    generateThumbnails()
-
-                case .failed:
-                    state = .error
-                    collectPlayerErrorLogEvent()
-                    stopPlayerBuffering()
-                    delegate?.viuPlayer(self, playerFailed: error)
-                    displayView.playFailed(error)
-                default:
-                    break
-                }
-
-            } else if keyPath == #keyPath(AVPlayerItem.playbackBufferEmpty) {
+            
+            switch keyPath {
+                
+            case #keyPath(AVPlayerItem.status):
+                observePlayerStatus(key: keyPath, change: change)
+                
+            case #keyPath(AVPlayerItem.playbackBufferEmpty):
                 if let playbackBufferEmpty = change?[.newKey] as? Bool {
                     if playbackBufferEmpty {
                         startPlayerBuffering()
                     }
                 }
-            } else if keyPath == #keyPath(AVPlayerItem.loadedTimeRanges) {
-                // 计算缓冲
-
-                let loadedTimeRanges = player?.currentItem?.loadedTimeRanges
-                if let bufferTimeRange = loadedTimeRanges?.first?.timeRangeValue {
-                    let star = bufferTimeRange.start.seconds // The start time of the time range.
-                    let duration = bufferTimeRange.duration.seconds // The duration of the time range.
-                    let bufferTime = star + duration
-
-                    if let itemDuration = playerItem?.duration.seconds {
-                        delegate?.viuPlayer(self, bufferedDidChange: bufferTime, totalDuration: itemDuration)
-                        displayView.bufferedDidChange(bufferTime, totalDuration: itemDuration)
-                        totalDuration = itemDuration
-                        if itemDuration == bufferTime {
-                            bufferState = .bufferFinished
-                        }
-                    }
-                    if let currentTime = playerItem?.currentTime().seconds {
-                        if (bufferTime - currentTime) >= bufferInterval && state != .paused {
-                            play()
-                        }
-
-                        if (bufferTime - currentTime) < bufferInterval {
-                            bufferState = .buffering
-                            buffering = true
-                        } else {
-                            buffering = false
-                            bufferState = .readyToPlay
-                        }
-                    }
-
-                } else {
-                    play()
-                }
+            case #keyPath(AVPlayerItem.playbackLikelyToKeepUp):
+                stopPlayerBuffering()
+                play()
+                
+            case #keyPath(AVPlayerItem.loadedTimeRanges):
+                observeLoadTimeRangs()
+                
+            default:
+                break
             }
-
         } else {
             super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
         }
     }
+    
+    private func observePlayerStatus(key: String?, change: [NSKeyValueChangeKey: Any]?) {
+        let status: AVPlayerItem.Status
+        if let statusNumber = change?[.newKey] as? NSNumber {
+            status = AVPlayerItem.Status(rawValue: statusNumber.intValue)!
+        } else {
+            status = .unknown
+        }
+
+        switch status {
+        case .unknown:
+            startPlayerBuffering()
+        case .readyToPlay:
+            bufferState = .readyToPlay
+        case .failed:
+            state = .error
+            collectPlayerErrorLogEvent()
+            stopPlayerBuffering()
+            delegate?.viuPlayer(self, playerFailed: error)
+            displayView.playFailed(error)
+        default:
+            break
+        }
+    }
+    
+    private func observeLoadTimeRangs() {
+        let loadedTimeRanges = player?.currentItem?.loadedTimeRanges
+        if let bufferTimeRange = loadedTimeRanges?.first?.timeRangeValue {
+            let star = bufferTimeRange.start.seconds // The start time of the time range.
+            let duration = bufferTimeRange.duration.seconds // The duration of the time range.
+            let bufferTime = star + duration
+            
+            if let itemDuration = playerItem?.duration.seconds {
+                delegate?.viuPlayer(self, bufferedDidChange: bufferTime, totalDuration: itemDuration)
+                displayView.bufferedDidChange(bufferTime, totalDuration: itemDuration)
+                totalDuration = itemDuration
+                if itemDuration == bufferTime {
+                    bufferState = .bufferFinished
+                }
+            }
+            if let currentTime = playerItem?.currentTime().seconds {
+                if (bufferTime - currentTime) >= bufferInterval && state != .paused {
+                    play()
+                }
+                
+                if (bufferTime - currentTime) < bufferInterval {
+                    bufferState = .buffering
+                    buffering = true
+                } else {
+                    buffering = false
+                    bufferState = .readyToPlay
+                }
+            }
+            
+        } else {
+            play()
+        }
+    }
 }
+
+
+//    // 获取元数据的字幕信息
+//    internal func loadMediaLegible() {
+//        let mc = AVMediaCharacteristic.legible
+//        let mediaGourp = playerAsset!.mediaSelectionGroup(forMediaCharacteristic: mc)
+//
+//        guard let gourp = mediaGourp else {
+//            return
+//        }
+//
+//        for option in gourp.options {
+//            if option.displayName == "English" {
+//                // 显示选中的字幕
+//                playerItem?.select(option, in: gourp)
+//            }
+//        }
+//    }
+//
+//    // 获取元数据的音轨信息
+//    internal func loadMediaAudible() {
+//        let mc = AVMediaCharacteristic.audible
+//        let mediaGourp = playerAsset!.mediaSelectionGroup(forMediaCharacteristic: mc)
+//
+//        guard let gourp = mediaGourp else {
+//            return
+//        }
+//
+//        for option in gourp.options {
+//            print("loadMediaAudible \(option.displayName)")
+//        }
+//    }
+//
+//    internal func generateThumbnails() {
+//        guard let asset = playerAsset else {
+//            print("generateThumbnails asset error")
+//            return
+//        }
+//
+//        imageGenerator = AVAssetImageGenerator(asset: asset)
+//        imageGenerator?.maximumSize = CGSize(width: 200.0, height: 0.0)
+//
+//        let duration: CMTime = asset.duration
+//        var times: [NSValue] = []
+//        let increment: CMTimeValue = duration.value / 20
+//        var currentValue: CMTimeValue = CMTimeValue(2 * duration.timescale)
+//        while currentValue <= duration.value {
+//            let time: CMTime = CMTime(value: currentValue, timescale: duration.timescale)
+//            times.append(NSValue(time: time))
+//            currentValue += increment
+//        }
+//
+//        var imageCount = times.count
+//        var images: [ViuThumbnail] = []
+//
+//        let handler: AVAssetImageGeneratorCompletionHandler = {
+//            _, imageRef, actualTime, result, _ in
+//
+//            if result == .succeeded {
+//                guard let cgImage = imageRef else {
+//                    return
+//                }
+//                let image: UIImage = UIImage(cgImage: cgImage)
+//                let thumbnail: ViuThumbnail = ViuThumbnail()
+//                thumbnail.image = image
+//                thumbnail.time = actualTime
+//                images.append(thumbnail)
+//            } else {
+//                print("generateThumbnails result error")
+//            }
+//
+//            if --imageCount == 0 {
+//                DispatchQueue.main.async {
+//                    let name = "ViuThumbnailsGeneratedNotification"
+//                    let nc: NotificationCenter = NotificationCenter.default
+//                    nc.post(name: NSNotification.Name(rawValue: name), object: images)
+//                }
+//            }
+//        }
+//        imageGenerator?.generateCGImagesAsynchronously(forTimes: times, completionHandler: handler)
+//    }

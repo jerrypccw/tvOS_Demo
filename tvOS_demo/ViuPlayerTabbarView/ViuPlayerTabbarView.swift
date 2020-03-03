@@ -28,10 +28,12 @@ class ViuPlayerTabbarView: UIView {
     }()
     
     var timer: Timer = {
-           let time = Timer()
-           return time
+        let time = Timer()
+        return time
     }()
-    let controlViewDuration: TimeInterval = 0.35 /// default 5.0
+    
+    let controlViewDuration: TimeInterval = 0.35
+    
     // 简介
     private lazy var introductionView = ViuPlayerTabbarIntroductionView()
     

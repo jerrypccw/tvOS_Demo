@@ -9,39 +9,6 @@
 import MediaPlayer
 import UIKit
 
-public protocol ViuPlayerViewDelegate: NSObjectProtocol {
-    /// Fullscreen
-    ///
-    /// - Parameters:
-    ///   - playerView: player view
-    ///   - fullscreen: Whether full screen
-    func viuPlayerView(_ playerView: ViuPlayerView, willFullscreen isFullscreen: Bool)
-    
-    /// Close play view
-    ///
-    /// - Parameter playerView: player view
-    func viuPlayerView(didTappedClose playerView: ViuPlayerView)
-    
-    /// Displaye control
-    ///
-    /// - Parameter playerView: playerView
-    func viuPlayerView(didDisplayControl playerView: ViuPlayerView)
-}
-
-// MARK: - delegate methods optional
-public extension ViuPlayerViewDelegate {
-    func viuPlayerView(_ playerView: ViuPlayerView, willFullscreen fullscreen: Bool) {}
-    
-    func viuPlayerView(didTappedClose playerView: ViuPlayerView) {}
-    
-    func viuPlayerView(didDisplayControl playerView: ViuPlayerView) {}
-}
-
-public enum ViuPlayerViewPanGestureDirection: Int {
-    case vertical
-    case horizontal
-}
-
 open class ViuPlayerView: UIView {
     /// 焦点View
     var focusView: UIView?
@@ -51,20 +18,17 @@ open class ViuPlayerView: UIView {
     let viuProgressView = ViuPlayerProgressView()
     
     open weak var viuPlayer: ViuPlayer?
-    open var controlViewDuration: TimeInterval = 5.0 /// default 5.0
-    open var displayDuration: TimeInterval = 0.35
+    open var controlViewDuration: TimeInterval = 6.0 /// default 5.0
+    open var displayDuration: TimeInterval = 0.5
     open fileprivate(set) var playerLayer: AVPlayerLayer?
-//    open fileprivate(set) var isTimeSliding: Bool = false
     open var isDisplayControl: Bool = true {
         didSet {
             if isDisplayControl != oldValue {
-                delegate?.viuPlayerView(didDisplayControl: self)
+                
             }
         }
     }
     
-    open weak var delegate: ViuPlayerViewDelegate?
-    open var panGestureDirection: ViuPlayerViewPanGestureDirection = .horizontal
     open var loadingIndicator = ViuPlayerLoadingIndicator()
     open var tabbarSwipeUp = UISwipeGestureRecognizer()
     open var tabbarSwipeDown = UISwipeGestureRecognizer()
@@ -78,7 +42,7 @@ open class ViuPlayerView: UIView {
     fileprivate var viewFrame = CGRect()
     
     // bottom view
-    open var bottomView: UIView = {
+    open var shadowView: UIView = {
         let view = UIView()
         view.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.5)
         view.isHidden = true
@@ -129,8 +93,9 @@ open class ViuPlayerView: UIView {
     /// - Parameter state: state
     open func playStateDidChange(_ state: ViuPlayerState) {
         if state == .playing || state == .playFinished {
-//            setupTimer()
+            setupTimer()
             loadingIndicator.isHidden = true
+            loadingIndicator.stopAnimating()
         }    
     }
     
@@ -176,7 +141,7 @@ open class ViuPlayerView: UIView {
         backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         
         addSubview(viuPlayerTabbar)
-        configurationBottomView()
+        configurationShadowView()
         configurationViuProgressView()
         
         let model = TabbarIntroductionModel()
@@ -201,44 +166,26 @@ open class ViuPlayerView: UIView {
         
         viuPlayerTabbar.buttonModels = [model, model2, model3, model4]
         
-        let name = "ViuThumbnailsGeneratedNotification"
-        NotificationCenter.default.addObserver(self, selector: #selector(buildScrubber(noti:)), name: NSNotification.Name(rawValue: name), object: nil)
-    }
-    
-    @objc func buildScrubber(noti: Notification) {
-        let array: [ViuThumbnail] = noti.object as! [ViuThumbnail]
-        
-        array.enumerated().forEach { _, object in
-            print("array \(String(describing: object.image))")
-        }
-        
     }
     
     open func reloadPlayerView() {
         playerLayer = AVPlayerLayer(player: nil)
         viuProgressView.progressBar.setProgress(0, animated: false)
-//        isTimeSliding = false
         loadingIndicator.isHidden = false
         loadingIndicator.startAnimating()
         reloadPlayerLayer()
     }
-    
-    /// control view display
-    ///
-    /// - Parameter display: is display
+
     open func displayControlView(_ isDisplay: Bool) {
         if isDisplay {
             displayControlAnimation()
-            //            updateFocusView(focusView: bottomView)
         } else {
             hiddenControlAnimation()
-            //            updateFocusView(focusView: nil)
         }
     }
 }
 
 // MARK: - public
-
 extension ViuPlayerView {
     open func updateDisplayerView(frame: CGRect) {
         playerLayer?.frame = frame
@@ -256,10 +203,7 @@ extension ViuPlayerView {
             }
         }
     }
-    
-    /// play failed
-    ///
-    /// - Parameter error: error
+
     open func playFailed(_ error: ViuPlayerError) {
         // error
     }
@@ -277,40 +221,42 @@ extension ViuPlayerView {
 // MARK: - private
 
 extension ViuPlayerView {
-    internal func play() {
-    }
-    
-    internal func pause() {
-    }
     
     internal func displayControlAnimation() {
         isDisplayControl = true
         UIView.animate(withDuration: displayDuration, animations: { [weak self] in            
             guard let strongSelf = self else { return }
-            strongSelf.bottomView.alpha = 1
-            strongSelf.bottomView.isHidden = false
-            
-        }) { finished in
-            
-            // 如果是暂停状态下，出现进度条，就显示预览图
-            if self.viuPlayer?.state == .paused {
-                self.viuProgressView.showThumbnail(duration: self.viuPlayer?.totalDuration ?? TimeInterval.zero)
-            }
-        }
+            strongSelf.viuProgressView.alpha = 1
+            strongSelf.viuProgressView.isHidden = false
+        })
     }
     
     internal func hiddenControlAnimation() {
         timer.invalidate()
-        
         isDisplayControl = false
-        // 隐藏预览图
-        viuProgressView.hiddenThumbnail()
         UIView.animate(withDuration: displayDuration, animations: { [weak self] in
             guard let strongSelf = self else { return }
-            strongSelf.bottomView.alpha = 0
-            strongSelf.bottomView.isHidden = true
+            strongSelf.viuProgressView.alpha = 0
+            strongSelf.viuProgressView.isHidden = true
         })
     }
+    
+    internal func displayShadowView() {
+        isDisplayControl = true
+        UIView.animate(withDuration: displayDuration, animations: { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.shadowView.alpha = 1
+            strongSelf.shadowView.isHidden = false
+        })
+    }
+    
+    internal func hiddenShadowView() {
+        UIView.animate(withDuration: displayDuration, animations: { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.shadowView.alpha = 0
+            strongSelf.shadowView.isHidden = true
+        })
+    }    
     
     internal func setupTimer() {
         timer.invalidate()
@@ -321,69 +267,32 @@ extension ViuPlayerView {
     }
 }
 
-// MARK: - UIGestureRecognizerDelegate
-//extension ViuPlayerView: UIGestureRecognizerDelegate {
-//}
-
-// MARK: - focus view
-
-extension ViuPlayerView {
-    
-    //    override open func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-    //        super.hitTest(point, with: event)
-    //
-    //        print("hitTest \(point)")
-    //        return nil
-    //    }
-    /// 重新定义focus view
-    //    override open var preferredFocusEnvironments: [UIFocusEnvironment] {
-    //        var environments = [UIFocusEnvironment]()
-    //
-    //        if focusView != nil {
-    //            environments.append(focusView!)
-    //        } else {
-    //            environments = super.preferredFocusEnvironments
-    //        }
-    //        return environments
-    //    }
-    //
-    //    /// 更新focus view
-    //    ///
-    //    /// - Parameter focusView: focus view
-    //    func updateFocusView(focusView: UIView?) {
-    //        self.focusView = focusView
-    //        setNeedsFocusUpdate()
-    //        updateFocusIfNeeded()
-    //    }
-}
-
 // MARK: - UI autoLayout
-
 extension ViuPlayerView {
-    internal func configurationBottomView() {
-        addSubview(bottomView)
+    internal func configurationShadowView() {
+        addSubview(shadowView)
         
-        bottomView.translatesAutoresizingMaskIntoConstraints = false
-        bottomView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        bottomView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
-        bottomView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        bottomView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        shadowView.translatesAutoresizingMaskIntoConstraints = false
+        shadowView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+        shadowView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+        shadowView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        shadowView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         
-        loadingIndicator.lineWidth = 1.0
+        loadingIndicator.lineWidth = 4.0
         loadingIndicator.isHidden = false
         loadingIndicator.startAnimating()
         addSubview(loadingIndicator)
-        
         loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
         loadingIndicator.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         loadingIndicator.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        loadingIndicator.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        loadingIndicator.heightAnchor.constraint(equalToConstant: 30).isActive = true        
+        loadingIndicator.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        loadingIndicator.heightAnchor.constraint(equalToConstant: 80).isActive = true
     }
     
     internal func configurationViuProgressView() {
-        bottomView.addSubview(viuProgressView)
         
+        viuProgressView.isHidden = true
+        addSubview(viuProgressView)
         viuProgressView.translatesAutoresizingMaskIntoConstraints = false
         viuProgressView.leftAnchor.constraint(equalTo: leftAnchor, constant: 100).isActive = true
         viuProgressView.rightAnchor.constraint(equalTo: rightAnchor, constant: -100).isActive = true

@@ -15,7 +15,6 @@ enum ViuRemoteTouchLocation {
     case right
 }
 
-
 class ViuRemoteGestureRecognizer: UIGestureRecognizer {
     var minimumLongPressDuration: TimeInterval = 0.5
     var minimumLongTapDuration: TimeInterval = 1.0
@@ -43,7 +42,6 @@ class ViuRemoteGestureRecognizer: UIGestureRecognizer {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
         longTapTimer?.invalidate()
         longTapTimer = Timer.scheduledTimer(timeInterval: minimumLongTapDuration, target: self, selector: #selector(longTapTimerFired), userInfo: nil, repeats: false)
-        
         state = .began
         updateTouchLocation(with: event)
     }
@@ -57,8 +55,6 @@ class ViuRemoteGestureRecognizer: UIGestureRecognizer {
         touchesMovedX = offset
         
         updateTouchLocation(with: event)
-        
-    
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent) {
@@ -88,10 +84,8 @@ class ViuRemoteGestureRecognizer: UIGestureRecognizer {
     
     func updateTouchLocation(with location: ViuRemoteTouchLocation) {
         guard touchLocation != location else { return }
-        
         touchLocation = location
         state = .changed
-        
     }
     
     override func reset() {
@@ -131,7 +125,6 @@ class ViuRemoteGestureRecognizer: UIGestureRecognizer {
         longPressTimer?.invalidate()
         longPressTimer = Timer.scheduledTimer(timeInterval: minimumLongPressDuration, target: self, selector: #selector(longPressTimerFired), userInfo: nil, repeats: false)
 
-        
         state = .changed
     }
     

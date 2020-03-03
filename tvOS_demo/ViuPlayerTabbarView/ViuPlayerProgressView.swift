@@ -9,16 +9,114 @@
 import UIKit
 
 class ViuPlayerProgressView: UIView {
+    
+    /// 焦点View
+    var focusView: UIView?
 
-    let progressBar = UIProgressView()
-    let startTime = UILabel()
-    let endTime = UILabel()
-    let progressLine = UIView()
-    let progressLineByUser = UIView()
-    let thumbnailImgView = UIImageView()
-    let thumbnailTime = UILabel()
-    let fastForward = UIButton.init(type: .custom)
-    let backBtn = UIButton.init(type: .custom)
+    lazy var progressBar: UIProgressView = {
+        let pro = UIProgressView()
+        pro.progressViewStyle = .default
+        pro.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.7988548801)
+        pro.trackTintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.2964201627)
+        pro.progress = 0.0
+        return pro
+    }()
+    
+    lazy var progressLine: UIView = {
+        let line = UIView()
+        line.backgroundColor = .purple
+        return line
+    }()
+    
+    lazy var progressLineByUser: UIView = {
+        let lineUser = UIView()
+        lineUser.backgroundColor = .purple
+        return lineUser
+    }()
+    
+    lazy var startTime: UILabel = {
+        let sTime = UILabel()
+        sTime.text = "00:00"
+        sTime.font = UIFont.boldSystemFont(ofSize: 30)
+        sTime.textColor = .white
+        return sTime
+    }()
+    
+    lazy var endTime: UILabel = {
+        let eTime = UILabel()
+        eTime.text = "00:00"
+        eTime.font = UIFont.boldSystemFont(ofSize: 30)
+        eTime.textColor = .white
+        return eTime
+    }()
+
+    lazy var thumbnailImgView: UIImageView = {
+        let iv = UIImageView()
+        iv.backgroundColor = .clear
+        return iv
+    }()
+    
+    lazy var thumbnailTime: UILabel = {
+        let t = UILabel()
+        t.text = "00:00"
+        t.font = UIFont.boldSystemFont(ofSize: 30)
+        t.textColor = .white
+        t.textAlignment = .center
+        return t
+    }()
+        
+//    lazy var fastForward: UIButton = {
+//        let f = UIButton.init(type: .custom)
+//        f.setTitle("快进", for: .normal)
+//        f.setTitle("快进", for: .focused)
+//        f.setTitleColor(.white, for: .normal)
+//        f.setTitleColor(.blue, for: .focused)
+//        f.titleLabel!.font = UIFont.boldSystemFont(ofSize: 30)
+//        f.addTarget(self, action: #selector(fastForwardAction), for:.primaryActionTriggered)
+//        f.isHidden = true
+//        return f
+//    }()
+//
+//    lazy var backBtn: UIButton = {
+//        let b = UIButton.init(type: .custom)
+//        b.setTitle("后退", for: .normal)
+//        b.setTitle("后退", for: .focused)
+//        b.setTitleColor(.white, for: .normal)
+//        b.setTitleColor(.blue, for: .focused)
+//        b.titleLabel!.font = UIFont.boldSystemFont(ofSize: 30)
+//        b.isHidden = true
+//        return b
+//    }()
+    
+    // 快进
+    lazy var rightActionIndicator: UIImageView = {
+        let iv = UIImageView()
+        iv.image = UIImage.init(named: "forward-10")
+        return iv
+    }()
+    
+    // 后退
+    lazy var leftActionIndicator: UIImageView = {
+        let iv = UIImageView()
+        iv.image = UIImage.init(named: "rewind-10")
+        return iv
+    }()
+    
+    
+    // 快进buffer加载
+    lazy var bufferingIndicator: UIActivityIndicatorView = {
+        if #available(tvOS 13.0, *) {
+            let av = UIActivityIndicatorView.init(style: .medium)
+            av.stopAnimating()
+            av.color = .white
+            return av
+        } else {
+            let av = UIActivityIndicatorView.init(style: .white)
+            av.stopAnimating()
+            av.color = .white
+            return av
+        }
+    }()
 
     var duration = TimeInterval.zero
 
@@ -66,11 +164,6 @@ class ViuPlayerProgressView: UIView {
 
     private func addSubviews() {
         // 进度条
-        progressBar.progressViewStyle = .default
-        progressBar.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.7988548801)
-        progressBar.trackTintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.2964201627)
-        progressBar.progress = 0.0
-
         addSubview(progressBar)
         progressBar.translatesAutoresizingMaskIntoConstraints = false
         progressBar.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
@@ -79,23 +172,16 @@ class ViuPlayerProgressView: UIView {
         progressBar.topAnchor.constraint(equalTo: topAnchor, constant: 20).isActive = true
         
         // 当前进度
-        progressLine.backgroundColor = .purple
         progressBar.addSubview(progressLine)
         progressLine.frame = CGRect(x: 0, y: 0, width: 2, height: 10)
         
         // 用户调整的进度
-        progressLineByUser.backgroundColor = .purple
         addSubview(progressLineByUser)
 
         // 当前时间
-        startTime.text = "00:00"
-        startTime.font = UIFont.boldSystemFont(ofSize: 30)
-        startTime.textColor = .white
-
         addSubview(startTime)
         startTime.translatesAutoresizingMaskIntoConstraints = false
-//        startTime.leftAnchor.constraint(equalTo: progressBar.leftAnchor).isActive = true
-        startTime.topAnchor.constraint(equalTo: progressBar.bottomAnchor, constant: 12).isActive = true
+        startTime.topAnchor.constraint(equalTo: progressBar.bottomAnchor, constant: 10).isActive = true
         startTime.heightAnchor.constraint(equalToConstant: 30).isActive = true
         startTime.leftAnchor.constraint(greaterThanOrEqualTo: progressBar.leftAnchor).isActive = true
         startTime.rightAnchor.constraint(lessThanOrEqualTo: progressBar.rightAnchor).isActive = true
@@ -104,41 +190,28 @@ class ViuPlayerProgressView: UIView {
         stCenterCon.isActive = true
         
         // 快进与后退
-        fastForward.setTitle("快进", for: .normal)
-        fastForward.setTitleColor(.white, for: .normal)
-        fastForward.titleLabel!.font = UIFont.boldSystemFont(ofSize: 30)
-        fastForward.isHidden = true
+        addSubview(rightActionIndicator)
+        rightActionIndicator.translatesAutoresizingMaskIntoConstraints = false
+        rightActionIndicator.centerYAnchor.constraint(equalTo: startTime.centerYAnchor).isActive = true
+        rightActionIndicator.leftAnchor.constraint(equalTo: startTime.rightAnchor, constant: 20).isActive = true
+        rightActionIndicator.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        rightActionIndicator.widthAnchor.constraint(equalToConstant: 30).isActive = true
         
-        addSubview(fastForward)
-        fastForward.translatesAutoresizingMaskIntoConstraints = false
-        fastForward.centerYAnchor.constraint(equalTo: startTime.centerYAnchor).isActive = true
-        fastForward.leftAnchor.constraint(equalTo: startTime.rightAnchor, constant: 12).isActive = true
-        fastForward.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        
-        backBtn.setTitle("后退", for: .normal)
-        backBtn.setTitleColor(.white, for: .normal)
-        backBtn.titleLabel!.font = UIFont.boldSystemFont(ofSize: 30)
-        backBtn.isHidden = true
-        
-        addSubview(backBtn)
-        backBtn.translatesAutoresizingMaskIntoConstraints = false
-        backBtn.centerYAnchor.constraint(equalTo: startTime.centerYAnchor).isActive = true
-        backBtn.rightAnchor.constraint(equalTo: startTime.leftAnchor, constant: -12).isActive = true
-        backBtn.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        addSubview(leftActionIndicator)
+        leftActionIndicator.translatesAutoresizingMaskIntoConstraints = false
+        leftActionIndicator.centerYAnchor.constraint(equalTo: startTime.centerYAnchor).isActive = true
+        leftActionIndicator.rightAnchor.constraint(equalTo: startTime.leftAnchor, constant: -20).isActive = true
+        leftActionIndicator.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        leftActionIndicator.widthAnchor.constraint(equalToConstant: 30).isActive = true
         
         // 总时间
-        endTime.text = "00:00"
-        endTime.font = UIFont.boldSystemFont(ofSize: 30)
-        endTime.textColor = .white
-       
         addSubview(endTime)
         endTime.translatesAutoresizingMaskIntoConstraints = false
         endTime.rightAnchor.constraint(equalTo: progressBar.rightAnchor).isActive = true
-        endTime.topAnchor.constraint(equalTo: progressBar.bottomAnchor, constant: 12).isActive = true
+        endTime.topAnchor.constraint(equalTo: progressBar.bottomAnchor, constant: 10).isActive = true
         endTime.heightAnchor.constraint(equalToConstant: 30).isActive = true
 
         // 预览图
-        thumbnailImgView.backgroundColor = .clear
         addSubview(thumbnailImgView)
         thumbnailImgView.translatesAutoresizingMaskIntoConstraints = false
         thumbnailImgView.leftAnchor.constraint(greaterThanOrEqualTo: progressBar.leftAnchor).isActive = true
@@ -151,10 +224,6 @@ class ViuPlayerProgressView: UIView {
         thuCenterCon.isActive = true
 
         // 预览图时间
-        thumbnailTime.text = "00:00"
-        thumbnailTime.font = UIFont.boldSystemFont(ofSize: 30)
-        thumbnailTime.textColor = .white
-        thumbnailTime.textAlignment = .center
         thumbnailImgView.addSubview(thumbnailTime)
         thumbnailTime.translatesAutoresizingMaskIntoConstraints = false
         thumbnailTime.leftAnchor.constraint(equalTo: thumbnailImgView.leftAnchor).isActive = true
@@ -162,6 +231,17 @@ class ViuPlayerProgressView: UIView {
         thumbnailTime.bottomAnchor.constraint(equalTo: thumbnailImgView.bottomAnchor).isActive = true
 
         hiddenThumbnail()
+        setBufferingIndicatorLayout()
+    }
+    
+    private func setBufferingIndicatorLayout() {
+        
+        addSubview(bufferingIndicator)
+        bufferingIndicator.translatesAutoresizingMaskIntoConstraints = false
+        bufferingIndicator.leadingAnchor.constraint(equalTo: startTime.trailingAnchor, constant: 26).isActive = true
+        bufferingIndicator.centerYAnchor.constraint(equalTo: startTime.centerYAnchor).isActive = true
+        bufferingIndicator.widthAnchor.constraint(equalToConstant: 8).isActive = true
+        bufferingIndicator.heightAnchor.constraint(equalToConstant: 8).isActive = true
     }
 
     /// 设置播放进度条
@@ -173,7 +253,7 @@ class ViuPlayerProgressView: UIView {
         progressLine.frame = CGRect(x: offset, y: 0, width: 2, height: 10)
         // 设置预览图起始位置
         let paraFrame = progressBar.convert(progressLine.frame, to: self)
-        progressLineByUser.frame = CGRect(x: paraFrame.origin.x, y: paraFrame.origin.y - progressLine.frame.size.height, width: paraFrame.size.width, height: 20)
+        progressLineByUser.frame = CGRect(x: paraFrame.origin.x, y: paraFrame.origin.y - progressLine.frame.size.height, width: paraFrame.size.width, height: 24)
     }
 
     /// 显示预览图
@@ -216,22 +296,66 @@ class ViuPlayerProgressView: UIView {
         thumbnailTime.text = seekTime.formatToString()
     }
     
-    func showFastForword() {
-        backBtn.isHidden = true
-        fastForward.isHidden = false
+    func showRightActionIndicator() {
+        if bufferingIndicator.isAnimating {
+            rightActionIndicator.isHidden = true
+        } else {
+            rightActionIndicator.isHidden = false
+        }
+        leftActionIndicator.isHidden = true
+        
     }
     
-    func showBackLabel() {
-        backBtn.isHidden = false
-        fastForward.isHidden = true
+    func showLeftActionIndicator() {
+        leftActionIndicator.isHidden = false
+        rightActionIndicator.isHidden = true
     }
     
-    func hiddenFastForwordAndBack() {
-        backBtn.isHidden = true
-        fastForward.isHidden = true
+    func hiddenFastForwordAndRewind() {
+        leftActionIndicator.isHidden = true
+        rightActionIndicator.isHidden = true
+        rightActionIndicator.image = UIImage.init(named: "forward-10")
     }
-
+    
     deinit {
         print("ViuPlayerProgressView deinit")
+    }
+}
+
+extension ViuPlayerProgressView {
+    
+    override var canBecomeFocused: Bool {
+         return true
+    }
+        
+    /// 重新定义focus view
+    override var preferredFocusEnvironments: [UIFocusEnvironment] {
+        var environments = [UIFocusEnvironment]()
+        
+        if focusView != nil {
+            environments.append(focusView!)
+        } else {
+            environments = super.preferredFocusEnvironments
+        }
+        return environments
+    }
+    
+    /// 更新focus view
+    ///
+    /// - Parameter focusView: focus view
+    func updateFocusView(focusView: UIView?) {
+        self.focusView = focusView
+        setNeedsFocusUpdate()
+        updateFocusIfNeeded()
+    }
+    
+    /// 更新焦点的回调方法
+    /// - Parameters:
+    ///   - context:focus 上下文
+    ///   - coordinator: 焦点更新期间与焦点相关的动画的协调器
+    override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
+        super.didUpdateFocus(in: context, with: coordinator)
+        
+        
     }
 }

@@ -17,8 +17,11 @@ class ViuPlayerTabbarIntroductionView: UIView {
     
     var model: TabbarIntroductionModel? {
         didSet {
-            titleLabel.text = model?.dramaTitle
-            descriptionLabel.text = model?.dramaDescription
+            guard let m = model else {
+                return
+            }
+            titleLabel.text = m.dramaTitle
+            descriptionLabel.text = m.dramaDescription
             playTimeLabel.text = "1小时40分"
         }
     }

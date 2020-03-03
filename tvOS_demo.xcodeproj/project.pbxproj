@@ -10,7 +10,24 @@
 		01851DC59840B02F6E036996 /* Pods_tvOS_demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 444E4028BA38B8DACFB31BAE /* Pods_tvOS_demo.framework */; };
 		CB0B7212239F411600D90461 /* ViuPlayerTabbarAudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0B7211239F411600D90461 /* ViuPlayerTabbarAudioView.swift */; };
 		CB1FD06F2387968800A74369 /* ViuPlayerProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1FD06E2387968800A74369 /* ViuPlayerProgressView.swift */; };
+		CB25CF8E23E9658E00770881 /* ViuPlayerDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB25CF8D23E9658E00770881 /* ViuPlayerDownloader.swift */; };
+		CB25CF9023E970C000770881 /* ViuPlayerCacheMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB25CF8F23E970C000770881 /* ViuPlayerCacheMedia.swift */; };
+		CB25CF9223E9719700770881 /* ViuPlayerCacheMediaWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB25CF9123E9719700770881 /* ViuPlayerCacheMediaWorker.swift */; };
+		CB25CF9423E9722E00770881 /* ViuPlayerCacheMediaConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB25CF9323E9722E00770881 /* ViuPlayerCacheMediaConfiguration.swift */; };
+		CB25CF9623E9728100770881 /* ViuPlayerCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB25CF9523E9728100770881 /* ViuPlayerCacheManager.swift */; };
+		CB25CF9823E9732800770881 /* ViuPlayerCacheAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB25CF9723E9732800770881 /* ViuPlayerCacheAction.swift */; };
+		CB25CF9A23E9736E00770881 /* ViuPlayerDownloadActionWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB25CF9923E9736E00770881 /* ViuPlayerDownloadActionWorker.swift */; };
+		CB25CF9C23E973BC00770881 /* ViuPlayerDownloadURLSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB25CF9B23E973BC00770881 /* ViuPlayerDownloadURLSessionManager.swift */; };
+		CB25CF9E23E97E7C00770881 /* ViuPlayerCacheSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB25CF9D23E97E7C00770881 /* ViuPlayerCacheSession.swift */; };
+		CB25CFA023E9803300770881 /* ViuPlayerResourceLoaderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB25CF9F23E9803300770881 /* ViuPlayerResourceLoaderManager.swift */; };
 		CB25E53B23ACBE8D00C68D8E /* ViuRemoteGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB25E53A23ACBE8D00C68D8E /* ViuRemoteGestureRecognizer.swift */; };
+		CB28A30C23FD19FD006BECF0 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A30B23FD19FD006BECF0 /* PlayerViewController.swift */; };
+		CB28A30F23FD1AF1006BECF0 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A30E23FD1AF1006BECF0 /* Player.swift */; };
+		CB28A31223FD6A60006BECF0 /* PlayerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A31123FD6A60006BECF0 /* PlayerLayer.swift */; };
+		CB28A31423FD6B5D006BECF0 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A31323FD6B5D006BECF0 /* PlayerView.swift */; };
+		CB28A31623FD6C67006BECF0 /* PlayerRenderingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A31523FD6C67006BECF0 /* PlayerRenderingView.swift */; };
+		CB28A31923FE3EC1006BECF0 /* PlayerControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A31823FE3EC1006BECF0 /* PlayerControl.swift */; };
+		CB28A31B23FE4DEB006BECF0 /* PlayerControlBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A31A23FE4DEB006BECF0 /* PlayerControlBehaviour.swift */; };
 		CB43AD03233E0F4E0000A7F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB43AD02233E0F4E0000A7F1 /* AppDelegate.swift */; };
 		CB43AD05233E0F4E0000A7F1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB43AD04233E0F4E0000A7F1 /* ViewController.swift */; };
 		CB43AD08233E0F4E0000A7F1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB43AD06233E0F4E0000A7F1 /* Main.storyboard */; };
@@ -19,12 +36,21 @@
 		CB4651AF238B8B3400078AF1 /* ViuPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651A6238B8B3400078AF1 /* ViuPlayer.swift */; };
 		CB4651B0238B8B3400078AF1 /* ViuPlayerLoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651A7238B8B3400078AF1 /* ViuPlayerLoadingIndicator.swift */; };
 		CB4651B1238B8B3400078AF1 /* ViuPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651A8238B8B3400078AF1 /* ViuPlayerView.swift */; };
-		CB4651B2238B8B3400078AF1 /* Timer+ViuPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651A9238B8B3400078AF1 /* Timer+ViuPlayer.swift */; };
+		CB4651B2238B8B3400078AF1 /* ViuPlayer+Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651A9238B8B3400078AF1 /* ViuPlayer+Time.swift */; };
 		CB4651B4238B8B3400078AF1 /* ViuSubtitles.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651AB238B8B3400078AF1 /* ViuSubtitles.swift */; };
 		CB4651B5238B8B3400078AF1 /* ViiuPlayerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651AC238B8B3400078AF1 /* ViiuPlayerError.swift */; };
 		CB4651B9238BAA2B00078AF1 /* ViuPlayerSubtitlesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651B8238BAA2B00078AF1 /* ViuPlayerSubtitlesView.swift */; };
 		CB4CE960238FA4AD0046552E /* ViuPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4CE95F238FA4AD0046552E /* ViuPlayerViewController.swift */; };
+		CB70824123FB960F000B8C65 /* VPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB70824023FB960F000B8C65 /* VPlayerViewController.swift */; };
+		CB70824423FB993B000B8C65 /* ViuGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB70824323FB993B000B8C65 /* ViuGradientView.swift */; };
+		CB70824623FB9CF3000B8C65 /* ViuProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB70824523FB9CF3000B8C65 /* ViuProgressBar.swift */; };
+		CB70824923FBB957000B8C65 /* TouchGestureRecogniser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB70824823FBB957000B8C65 /* TouchGestureRecogniser.swift */; };
+		CB70824B23FBB961000B8C65 /* LongPressGestureRecogniser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB70824A23FBB961000B8C65 /* LongPressGestureRecogniser.swift */; };
+		CB70825423FBE7F9000B8C65 /* RemoteActionPositionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB70825323FBE7F9000B8C65 /* RemoteActionPositionController.swift */; };
+		CB70825623FBE828000B8C65 /* PositionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB70825523FBE828000B8C65 /* PositionController.swift */; };
 		CBA9AB772392AD9D00093F21 /* ViuThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA9AB762392AD9D00093F21 /* ViuThumbnail.swift */; };
+		CBAA940723D7EC9F00F8B671 /* ViuPlayerResourceLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAA940623D7EC9F00F8B671 /* ViuPlayerResourceLoader.swift */; };
+		CBAA940923D7ED6100F8B671 /* ViuPlayerResourceLoadingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBAA940823D7ED6100F8B671 /* ViuPlayerResourceLoadingRequest.swift */; };
 		CBF08596237ACF6300D685D1 /* ViuPlayerTabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF08595237ACF6300D685D1 /* ViuPlayerTabbarView.swift */; };
 		CBF08598237ACFB500D685D1 /* ViuPlayerTabbarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF08597237ACFB500D685D1 /* ViuPlayerTabbarModel.swift */; };
 		CBF452AF237D5669003C70F3 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF452AE237D5669003C70F3 /* UIColor+Extension.swift */; };
@@ -46,7 +72,24 @@
 		444E4028BA38B8DACFB31BAE /* Pods_tvOS_demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_tvOS_demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB0B7211239F411600D90461 /* ViuPlayerTabbarAudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerTabbarAudioView.swift; sourceTree = "<group>"; };
 		CB1FD06E2387968800A74369 /* ViuPlayerProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerProgressView.swift; sourceTree = "<group>"; };
+		CB25CF8D23E9658E00770881 /* ViuPlayerDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerDownloader.swift; sourceTree = "<group>"; };
+		CB25CF8F23E970C000770881 /* ViuPlayerCacheMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerCacheMedia.swift; sourceTree = "<group>"; };
+		CB25CF9123E9719700770881 /* ViuPlayerCacheMediaWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerCacheMediaWorker.swift; sourceTree = "<group>"; };
+		CB25CF9323E9722E00770881 /* ViuPlayerCacheMediaConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerCacheMediaConfiguration.swift; sourceTree = "<group>"; };
+		CB25CF9523E9728100770881 /* ViuPlayerCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerCacheManager.swift; sourceTree = "<group>"; };
+		CB25CF9723E9732800770881 /* ViuPlayerCacheAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerCacheAction.swift; sourceTree = "<group>"; };
+		CB25CF9923E9736E00770881 /* ViuPlayerDownloadActionWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerDownloadActionWorker.swift; sourceTree = "<group>"; };
+		CB25CF9B23E973BC00770881 /* ViuPlayerDownloadURLSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerDownloadURLSessionManager.swift; sourceTree = "<group>"; };
+		CB25CF9D23E97E7C00770881 /* ViuPlayerCacheSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerCacheSession.swift; sourceTree = "<group>"; };
+		CB25CF9F23E9803300770881 /* ViuPlayerResourceLoaderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerResourceLoaderManager.swift; sourceTree = "<group>"; };
 		CB25E53A23ACBE8D00C68D8E /* ViuRemoteGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuRemoteGestureRecognizer.swift; sourceTree = "<group>"; };
+		CB28A30B23FD19FD006BECF0 /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
+		CB28A30E23FD1AF1006BECF0 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		CB28A31123FD6A60006BECF0 /* PlayerLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerLayer.swift; sourceTree = "<group>"; };
+		CB28A31323FD6B5D006BECF0 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
+		CB28A31523FD6C67006BECF0 /* PlayerRenderingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerRenderingView.swift; sourceTree = "<group>"; };
+		CB28A31823FE3EC1006BECF0 /* PlayerControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerControl.swift; sourceTree = "<group>"; };
+		CB28A31A23FE4DEB006BECF0 /* PlayerControlBehaviour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerControlBehaviour.swift; sourceTree = "<group>"; };
 		CB43ACFF233E0F4E0000A7F1 /* tvOS_demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tvOS_demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB43AD02233E0F4E0000A7F1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CB43AD04233E0F4E0000A7F1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -57,12 +100,21 @@
 		CB4651A6238B8B3400078AF1 /* ViuPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViuPlayer.swift; sourceTree = "<group>"; };
 		CB4651A7238B8B3400078AF1 /* ViuPlayerLoadingIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViuPlayerLoadingIndicator.swift; sourceTree = "<group>"; };
 		CB4651A8238B8B3400078AF1 /* ViuPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViuPlayerView.swift; sourceTree = "<group>"; };
-		CB4651A9238B8B3400078AF1 /* Timer+ViuPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Timer+ViuPlayer.swift"; sourceTree = "<group>"; };
+		CB4651A9238B8B3400078AF1 /* ViuPlayer+Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViuPlayer+Time.swift"; sourceTree = "<group>"; };
 		CB4651AB238B8B3400078AF1 /* ViuSubtitles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViuSubtitles.swift; sourceTree = "<group>"; };
 		CB4651AC238B8B3400078AF1 /* ViiuPlayerError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViiuPlayerError.swift; sourceTree = "<group>"; };
 		CB4651B8238BAA2B00078AF1 /* ViuPlayerSubtitlesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViuPlayerSubtitlesView.swift; sourceTree = "<group>"; };
 		CB4CE95F238FA4AD0046552E /* ViuPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerViewController.swift; sourceTree = "<group>"; };
+		CB70824023FB960F000B8C65 /* VPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPlayerViewController.swift; sourceTree = "<group>"; };
+		CB70824323FB993B000B8C65 /* ViuGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuGradientView.swift; sourceTree = "<group>"; };
+		CB70824523FB9CF3000B8C65 /* ViuProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuProgressBar.swift; sourceTree = "<group>"; };
+		CB70824823FBB957000B8C65 /* TouchGestureRecogniser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchGestureRecogniser.swift; sourceTree = "<group>"; };
+		CB70824A23FBB961000B8C65 /* LongPressGestureRecogniser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LongPressGestureRecogniser.swift; sourceTree = "<group>"; };
+		CB70825323FBE7F9000B8C65 /* RemoteActionPositionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteActionPositionController.swift; sourceTree = "<group>"; };
+		CB70825523FBE828000B8C65 /* PositionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PositionController.swift; sourceTree = "<group>"; };
 		CBA9AB762392AD9D00093F21 /* ViuThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuThumbnail.swift; sourceTree = "<group>"; };
+		CBAA940623D7EC9F00F8B671 /* ViuPlayerResourceLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerResourceLoader.swift; sourceTree = "<group>"; };
+		CBAA940823D7ED6100F8B671 /* ViuPlayerResourceLoadingRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerResourceLoadingRequest.swift; sourceTree = "<group>"; };
 		CBF08595237ACF6300D685D1 /* ViuPlayerTabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerTabbarView.swift; sourceTree = "<group>"; };
 		CBF08597237ACFB500D685D1 /* ViuPlayerTabbarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerTabbarModel.swift; sourceTree = "<group>"; };
 		CBF452AE237D5669003C70F3 /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
@@ -118,6 +170,44 @@
 			path = TabbarConfig;
 			sourceTree = "<group>";
 		};
+		CB28A30A23FD19AE006BECF0 /* VPlayerVC */ = {
+			isa = PBXGroup;
+			children = (
+				CB28A31723FE3EA1006BECF0 /* PlayerControl */,
+				CB28A31023FD6A2C006BECF0 /* Rendering */,
+				CB28A30D23FD1AC9006BECF0 /* Player */,
+				CB28A30B23FD19FD006BECF0 /* PlayerViewController.swift */,
+				CB28A31323FD6B5D006BECF0 /* PlayerView.swift */,
+			);
+			path = VPlayerVC;
+			sourceTree = "<group>";
+		};
+		CB28A30D23FD1AC9006BECF0 /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				CB28A30E23FD1AF1006BECF0 /* Player.swift */,
+			);
+			path = Player;
+			sourceTree = "<group>";
+		};
+		CB28A31023FD6A2C006BECF0 /* Rendering */ = {
+			isa = PBXGroup;
+			children = (
+				CB28A31123FD6A60006BECF0 /* PlayerLayer.swift */,
+				CB28A31523FD6C67006BECF0 /* PlayerRenderingView.swift */,
+			);
+			path = Rendering;
+			sourceTree = "<group>";
+		};
+		CB28A31723FE3EA1006BECF0 /* PlayerControl */ = {
+			isa = PBXGroup;
+			children = (
+				CB28A31823FE3EC1006BECF0 /* PlayerControl.swift */,
+				CB28A31A23FE4DEB006BECF0 /* PlayerControlBehaviour.swift */,
+			);
+			path = PlayerControl;
+			sourceTree = "<group>";
+		};
 		CB43ACF6233E0F4E0000A7F1 = {
 			isa = PBXGroup;
 			children = (
@@ -139,6 +229,8 @@
 		CB43AD01233E0F4E0000A7F1 /* tvOS_demo */ = {
 			isa = PBXGroup;
 			children = (
+				CB28A30A23FD19AE006BECF0 /* VPlayerVC */,
+				CB70823F23FB95C7000B8C65 /* NewViuPlayerVC */,
 				CBFB8DFC239A50F2007D1686 /* Resource */,
 				CB4651A4238B8B3400078AF1 /* ViuPlayer */,
 				CBF452AD237D564F003C70F3 /* Common */,
@@ -157,17 +249,75 @@
 		CB4651A4238B8B3400078AF1 /* ViuPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				CBAA940523D7EC4F00F8B671 /* ViuMediaCache */,
 				CB4651B8238BAA2B00078AF1 /* ViuPlayerSubtitlesView.swift */,
 				CB4651A5238B8B3400078AF1 /* ViuPlayerUtils.swift */,
 				CB4651A6238B8B3400078AF1 /* ViuPlayer.swift */,
 				CB4651A7238B8B3400078AF1 /* ViuPlayerLoadingIndicator.swift */,
 				CB4651A8238B8B3400078AF1 /* ViuPlayerView.swift */,
-				CB4651A9238B8B3400078AF1 /* Timer+ViuPlayer.swift */,
+				CB4651A9238B8B3400078AF1 /* ViuPlayer+Time.swift */,
 				CB4651AB238B8B3400078AF1 /* ViuSubtitles.swift */,
 				CB4651AC238B8B3400078AF1 /* ViiuPlayerError.swift */,
 				CBA9AB762392AD9D00093F21 /* ViuThumbnail.swift */,
 			);
 			path = ViuPlayer;
+			sourceTree = "<group>";
+		};
+		CB70823F23FB95C7000B8C65 /* NewViuPlayerVC */ = {
+			isa = PBXGroup;
+			children = (
+				CB70824C23FBB97D000B8C65 /* Position */,
+				CB70824723FBB92E000B8C65 /* Gesture */,
+				CB70824223FB990E000B8C65 /* Views */,
+				CB70824023FB960F000B8C65 /* VPlayerViewController.swift */,
+			);
+			path = NewViuPlayerVC;
+			sourceTree = "<group>";
+		};
+		CB70824223FB990E000B8C65 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CB70824323FB993B000B8C65 /* ViuGradientView.swift */,
+				CB70824523FB9CF3000B8C65 /* ViuProgressBar.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		CB70824723FBB92E000B8C65 /* Gesture */ = {
+			isa = PBXGroup;
+			children = (
+				CB70824A23FBB961000B8C65 /* LongPressGestureRecogniser.swift */,
+				CB70824823FBB957000B8C65 /* TouchGestureRecogniser.swift */,
+			);
+			path = Gesture;
+			sourceTree = "<group>";
+		};
+		CB70824C23FBB97D000B8C65 /* Position */ = {
+			isa = PBXGroup;
+			children = (
+				CB70825523FBE828000B8C65 /* PositionController.swift */,
+				CB70825323FBE7F9000B8C65 /* RemoteActionPositionController.swift */,
+			);
+			path = Position;
+			sourceTree = "<group>";
+		};
+		CBAA940523D7EC4F00F8B671 /* ViuMediaCache */ = {
+			isa = PBXGroup;
+			children = (
+				CBAA940623D7EC9F00F8B671 /* ViuPlayerResourceLoader.swift */,
+				CBAA940823D7ED6100F8B671 /* ViuPlayerResourceLoadingRequest.swift */,
+				CB25CF9F23E9803300770881 /* ViuPlayerResourceLoaderManager.swift */,
+				CB25CF8D23E9658E00770881 /* ViuPlayerDownloader.swift */,
+				CB25CF9923E9736E00770881 /* ViuPlayerDownloadActionWorker.swift */,
+				CB25CF9B23E973BC00770881 /* ViuPlayerDownloadURLSessionManager.swift */,
+				CB25CF8F23E970C000770881 /* ViuPlayerCacheMedia.swift */,
+				CB25CF9523E9728100770881 /* ViuPlayerCacheManager.swift */,
+				CB25CF9723E9732800770881 /* ViuPlayerCacheAction.swift */,
+				CB25CF9D23E97E7C00770881 /* ViuPlayerCacheSession.swift */,
+				CB25CF9123E9719700770881 /* ViuPlayerCacheMediaWorker.swift */,
+				CB25CF9323E9722E00770881 /* ViuPlayerCacheMediaConfiguration.swift */,
+			);
+			path = ViuMediaCache;
 			sourceTree = "<group>";
 		};
 		CBF08594237ACF2E00D685D1 /* ViuPlayerTabbarView */ = {
@@ -323,29 +473,55 @@
 			buildActionMask = 2147483647;
 			files = (
 				CBF452B1237D674F003C70F3 /* ViuPlayerTabbarConfig.swift in Sources */,
+				CB25CF9223E9719700770881 /* ViuPlayerCacheMediaWorker.swift in Sources */,
+				CBAA940923D7ED6100F8B671 /* ViuPlayerResourceLoadingRequest.swift in Sources */,
+				CB28A31423FD6B5D006BECF0 /* PlayerView.swift in Sources */,
 				CB4651B5238B8B3400078AF1 /* ViiuPlayerError.swift in Sources */,
+				CB28A30F23FD1AF1006BECF0 /* Player.swift in Sources */,
 				CBF452B923811F76003C70F3 /* ViuPlayerTabbarSubtitleView.swift in Sources */,
+				CB70824923FBB957000B8C65 /* TouchGestureRecogniser.swift in Sources */,
 				CB4651AE238B8B3400078AF1 /* ViuPlayerUtils.swift in Sources */,
+				CB25CF9623E9728100770881 /* ViuPlayerCacheManager.swift in Sources */,
 				CBF08598237ACFB500D685D1 /* ViuPlayerTabbarModel.swift in Sources */,
+				CB70824123FB960F000B8C65 /* VPlayerViewController.swift in Sources */,
 				CB43AD05233E0F4E0000A7F1 /* ViewController.swift in Sources */,
 				CB4651B4238B8B3400078AF1 /* ViuSubtitles.swift in Sources */,
 				CB4651AF238B8B3400078AF1 /* ViuPlayer.swift in Sources */,
 				F2E002E423975D0B004370F6 /* ViuPlayerViewController+Gesture.swift in Sources */,
+				CB28A30C23FD19FD006BECF0 /* PlayerViewController.swift in Sources */,
 				F2E002E62397B443004370F6 /* TimeInterval+Extension.swift in Sources */,
 				CB4651B1238B8B3400078AF1 /* ViuPlayerView.swift in Sources */,
+				CB25CF9023E970C000770881 /* ViuPlayerCacheMedia.swift in Sources */,
+				CB25CF9C23E973BC00770881 /* ViuPlayerDownloadURLSessionManager.swift in Sources */,
+				CB28A31623FD6C67006BECF0 /* PlayerRenderingView.swift in Sources */,
+				CB70824B23FBB961000B8C65 /* LongPressGestureRecogniser.swift in Sources */,
 				CB43AD03233E0F4E0000A7F1 /* AppDelegate.swift in Sources */,
+				CB25CF9423E9722E00770881 /* ViuPlayerCacheMediaConfiguration.swift in Sources */,
 				CB1FD06F2387968800A74369 /* ViuPlayerProgressView.swift in Sources */,
+				CB28A31B23FE4DEB006BECF0 /* PlayerControlBehaviour.swift in Sources */,
+				CB25CF9E23E97E7C00770881 /* ViuPlayerCacheSession.swift in Sources */,
+				CB70824623FB9CF3000B8C65 /* ViuProgressBar.swift in Sources */,
 				CBF452B3237D8ED6003C70F3 /* ViuPlayerTabbarIntroductionView.swift in Sources */,
-				CB4651B2238B8B3400078AF1 /* Timer+ViuPlayer.swift in Sources */,
+				CB4651B2238B8B3400078AF1 /* ViuPlayer+Time.swift in Sources */,
 				CB4651B9238BAA2B00078AF1 /* ViuPlayerSubtitlesView.swift in Sources */,
+				CB25CF9A23E9736E00770881 /* ViuPlayerDownloadActionWorker.swift in Sources */,
+				CB70825623FBE828000B8C65 /* PositionController.swift in Sources */,
 				CB25E53B23ACBE8D00C68D8E /* ViuRemoteGestureRecognizer.swift in Sources */,
 				CBF08596237ACF6300D685D1 /* ViuPlayerTabbarView.swift in Sources */,
+				CB70825423FBE7F9000B8C65 /* RemoteActionPositionController.swift in Sources */,
+				CB70824423FB993B000B8C65 /* ViuGradientView.swift in Sources */,
 				CBF452BB238133F0003C70F3 /* ViuPlayerTabbarCustomView.swift in Sources */,
+				CB25CF8E23E9658E00770881 /* ViuPlayerDownloader.swift in Sources */,
+				CB25CFA023E9803300770881 /* ViuPlayerResourceLoaderManager.swift in Sources */,
+				CB28A31923FE3EC1006BECF0 /* PlayerControl.swift in Sources */,
 				CB4CE960238FA4AD0046552E /* ViuPlayerViewController.swift in Sources */,
 				CB0B7212239F411600D90461 /* ViuPlayerTabbarAudioView.swift in Sources */,
+				CB28A31223FD6A60006BECF0 /* PlayerLayer.swift in Sources */,
 				CBF452AF237D5669003C70F3 /* UIColor+Extension.swift in Sources */,
+				CBAA940723D7EC9F00F8B671 /* ViuPlayerResourceLoader.swift in Sources */,
 				CBF452B7237E9FE4003C70F3 /* ViuCustomLabel.swift in Sources */,
 				CB4651B0238B8B3400078AF1 /* ViuPlayerLoadingIndicator.swift in Sources */,
+				CB25CF9823E9732800770881 /* ViuPlayerCacheAction.swift in Sources */,
 				CBA9AB772392AD9D00093F21 /* ViuThumbnail.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

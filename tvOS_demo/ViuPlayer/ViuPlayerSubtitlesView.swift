@@ -68,7 +68,7 @@ class ViuPlayerSubtitlesView: ViuPlayerView {
         firstSubtitlesLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         //        subtitlesLabel.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.5031571062)
         firstSubtitlesLabel.adjustsFontSizeToFitWidth = false
-        self.insertSubview(firstSubtitlesLabel, belowSubview: self.bottomView)
+        self.insertSubview(firstSubtitlesLabel, belowSubview: self.shadowView)
         
         firstSubtitlesLabel.translatesAutoresizingMaskIntoConstraints = false
         firstSubtitlesLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
@@ -86,7 +86,7 @@ class ViuPlayerSubtitlesView: ViuPlayerView {
         secondSubtitlesLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         //        subtitlesLabel.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.5031571062)
         secondSubtitlesLabel.adjustsFontSizeToFitWidth = false
-        self.insertSubview(secondSubtitlesLabel, belowSubview: self.bottomView)
+        self.insertSubview(secondSubtitlesLabel, belowSubview: self.shadowView)
         
         secondSubtitlesLabel.translatesAutoresizingMaskIntoConstraints = false
         secondSubtitlesLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
