@@ -163,6 +163,7 @@ extension ViuPlayerViewController {
         switch gesture.touchLocation {
         case .left:
             viuPlayer.displayView.viuProgressView.showLeftActionIndicator()
+            
             if gesture.isClick && gesture.state == .ended {
                 var duration = viuPlayer.currentDuration
                 if duration < 10.0 {
