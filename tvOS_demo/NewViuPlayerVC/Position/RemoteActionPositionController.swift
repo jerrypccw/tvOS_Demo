@@ -25,13 +25,13 @@ class RemoteActionPositionController: NSObject, PositionController {
 
             switch self {
             case .fastForward:
-                return (nil, UIImage(named: "Fast Forward", in: bundle, compatibleWith: nil))
+                return (nil, UIImage(named: "Forward", in: bundle, compatibleWith: nil))
             case .rewind:
                 return (UIImage(named: "Rewind", in: bundle, compatibleWith: nil), nil)
             case .jumpForward:
                 return (nil, UIImage(named: "SkipForward30", in: bundle, compatibleWith: nil))
             case .jumpBackward:
-                return (UIImage(named: "SkipBack30", in: bundle, compatibleWith: nil), nil)
+                return (UIImage(named: "SkipBackward30", in: bundle, compatibleWith: nil), nil)
             default:
                 return (nil, nil)
             }
@@ -121,10 +121,10 @@ class RemoteActionPositionController: NSObject, PositionController {
                           duration: 0.4,
                           options: .transitionCrossDissolve,
                           animations: {
-                            guard let left = self.leftActionIndicator, let right = self.rightActionIndicator else {
+                            guard let left = self.leftActionIndicator,
+                                let right = self.rightActionIndicator else {
                                 return
                             }
-
                             (left.image, right.image) = self.displayedAction.images
         })
     }
