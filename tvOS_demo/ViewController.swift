@@ -16,6 +16,8 @@ class ViewController: UIViewController {
     
     let btn3 = UIButton.init(type: .custom)
     
+    let btn4 = UIButton.init(type: .custom)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
                 
@@ -59,6 +61,18 @@ class ViewController: UIViewController {
         btn3.widthAnchor.constraint(equalToConstant: 300).isActive = true
         btn3.heightAnchor.constraint(equalToConstant: 80).isActive = true
         
+        btn4.setTitle("测试手势", for: .normal)
+        btn4.setTitle("测试手势", for: .focused)
+        btn4.setTitleColor(.black, for: .normal)
+        btn4.setTitleColor(.blue, for: .focused)
+        btn4.addTarget(self, action: #selector(gotoPlayerVC4), for: .primaryActionTriggered)
+        
+        view.addSubview(btn4)
+        btn4.translatesAutoresizingMaskIntoConstraints = false
+        btn4.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 200).isActive = true
+        btn4.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        btn4.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        btn4.heightAnchor.constraint(equalToConstant: 80).isActive = true
     }
     
     
@@ -77,5 +91,8 @@ class ViewController: UIViewController {
         //        self.present(ViuPlayerViewController(), animated: true, completion: nil)
     }
     
-    
+    @objc func gotoPlayerVC4() {
+        navigationController?.pushViewController(GestureViewController(), animated: true)
+        //        self.present(ViuPlayerViewController(), animated: true, completion: nil)
+    }
 }
