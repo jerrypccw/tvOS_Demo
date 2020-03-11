@@ -104,6 +104,12 @@ class VPlayerViewController: UIViewController {
     var actionGesture: LongPressGestureRecogniser!
     var remoteActionPositionController: RemoteActionPositionController!
     
+    private var lastSelectedPanelTabIndex: Int = 0
+    private var displayedPanelViewController: ViuPanelViewController?
+    private var isPanelDisplayed: Bool {
+        return displayedPanelViewController != nil
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -137,9 +143,16 @@ class VPlayerViewController: UIViewController {
         remoteActionPositionController.rightActionIndicator = rightActionIndicator
         remoteActionPositionController.leftActionIndicator = leftActionIndicator
         
-        setUpPositionController()
+        setupPositionController()
         
-
+        setupPanelViewController()
+    }
+    
+    func setupPanelViewController() {
+        let panelVC = ViuPanelViewController()
+        panelVC.selectedIndex = lastSelectedPanelTabIndex
+        panelVC.transitioningDelegate = self
+        present(panelVC, animated: true, completion: nil)
     }
     
     // GestureRecogniser
@@ -155,7 +168,7 @@ class VPlayerViewController: UIViewController {
         hideControl()
     }
     
-    fileprivate func setUpPositionController() {
+    fileprivate func setupPositionController() {
 //        guard player.isSeekable && !isOpening && !isPanelDisplayed else {
 //            positionController = nil
 //            return
@@ -329,5 +342,14 @@ extension VPlayerViewController: RemoteActionPositionControllerDelegate {
         case .reset:
             print("reset")
         }
+    }
+}
+
+extension VPlayerViewController: UIViewControllerTransitioningDelegate {
+    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return presented is ViuPanelViewController ? ViuSlideDownAnimatedTransitioner() : nil
+    }
+    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return dismissed is ViuPanelViewController ? ViuSlideUpAnimatedTransitioner() : nil
     }
 }

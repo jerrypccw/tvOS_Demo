@@ -28,6 +28,9 @@
 		CB28A31623FD6C67006BECF0 /* PlayerRenderingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A31523FD6C67006BECF0 /* PlayerRenderingView.swift */; };
 		CB28A31923FE3EC1006BECF0 /* PlayerControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A31823FE3EC1006BECF0 /* PlayerControl.swift */; };
 		CB28A31B23FE4DEB006BECF0 /* PlayerControlBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB28A31A23FE4DEB006BECF0 /* PlayerControlBehaviour.swift */; };
+		CB3C0FB924178386007B8A85 /* ViuPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3C0FB824178386007B8A85 /* ViuPanelViewController.swift */; };
+		CB3C0FBB241784D4007B8A85 /* ViuSlideDownAnimatedTransitioner.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3C0FBA241784D4007B8A85 /* ViuSlideDownAnimatedTransitioner.swift */; };
+		CB3C0FBD24178A67007B8A85 /* ViuFocusTabbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3C0FBC24178A67007B8A85 /* ViuFocusTabbar.swift */; };
 		CB43AD03233E0F4E0000A7F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB43AD02233E0F4E0000A7F1 /* AppDelegate.swift */; };
 		CB43AD05233E0F4E0000A7F1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB43AD04233E0F4E0000A7F1 /* ViewController.swift */; };
 		CB43AD08233E0F4E0000A7F1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB43AD06233E0F4E0000A7F1 /* Main.storyboard */; };
@@ -90,6 +93,9 @@
 		CB28A31523FD6C67006BECF0 /* PlayerRenderingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerRenderingView.swift; sourceTree = "<group>"; };
 		CB28A31823FE3EC1006BECF0 /* PlayerControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerControl.swift; sourceTree = "<group>"; };
 		CB28A31A23FE4DEB006BECF0 /* PlayerControlBehaviour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerControlBehaviour.swift; sourceTree = "<group>"; };
+		CB3C0FB824178386007B8A85 /* ViuPanelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPanelViewController.swift; sourceTree = "<group>"; };
+		CB3C0FBA241784D4007B8A85 /* ViuSlideDownAnimatedTransitioner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuSlideDownAnimatedTransitioner.swift; sourceTree = "<group>"; };
+		CB3C0FBC24178A67007B8A85 /* ViuFocusTabbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuFocusTabbar.swift; sourceTree = "<group>"; };
 		CB43ACFF233E0F4E0000A7F1 /* tvOS_demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tvOS_demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB43AD02233E0F4E0000A7F1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CB43AD04233E0F4E0000A7F1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -208,6 +214,16 @@
 			path = PlayerControl;
 			sourceTree = "<group>";
 		};
+		CB3C0FB724178360007B8A85 /* Panel */ = {
+			isa = PBXGroup;
+			children = (
+				CB3C0FB824178386007B8A85 /* ViuPanelViewController.swift */,
+				CB3C0FBA241784D4007B8A85 /* ViuSlideDownAnimatedTransitioner.swift */,
+				CB3C0FBC24178A67007B8A85 /* ViuFocusTabbar.swift */,
+			);
+			path = Panel;
+			sourceTree = "<group>";
+		};
 		CB43ACF6233E0F4E0000A7F1 = {
 			isa = PBXGroup;
 			children = (
@@ -266,6 +282,7 @@
 		CB70823F23FB95C7000B8C65 /* NewViuPlayerVC */ = {
 			isa = PBXGroup;
 			children = (
+				CB3C0FB724178360007B8A85 /* Panel */,
 				CB70824C23FBB97D000B8C65 /* Position */,
 				CB70824723FBB92E000B8C65 /* Gesture */,
 				CB70824223FB990E000B8C65 /* Views */,
@@ -477,15 +494,18 @@
 				CBAA940923D7ED6100F8B671 /* ViuPlayerResourceLoadingRequest.swift in Sources */,
 				CB28A31423FD6B5D006BECF0 /* PlayerView.swift in Sources */,
 				CB4651B5238B8B3400078AF1 /* ViiuPlayerError.swift in Sources */,
+				CB3C0FBD24178A67007B8A85 /* ViuFocusTabbar.swift in Sources */,
 				CB28A30F23FD1AF1006BECF0 /* Player.swift in Sources */,
 				CBF452B923811F76003C70F3 /* ViuPlayerTabbarSubtitleView.swift in Sources */,
 				CB70824923FBB957000B8C65 /* TouchGestureRecogniser.swift in Sources */,
+				CB3C0FBB241784D4007B8A85 /* ViuSlideDownAnimatedTransitioner.swift in Sources */,
 				CB4651AE238B8B3400078AF1 /* ViuPlayerUtils.swift in Sources */,
 				CB25CF9623E9728100770881 /* ViuPlayerCacheManager.swift in Sources */,
 				CBF08598237ACFB500D685D1 /* ViuPlayerTabbarModel.swift in Sources */,
 				CB70824123FB960F000B8C65 /* VPlayerViewController.swift in Sources */,
 				CB43AD05233E0F4E0000A7F1 /* ViewController.swift in Sources */,
 				CB4651B4238B8B3400078AF1 /* ViuSubtitles.swift in Sources */,
+				CB3C0FB924178386007B8A85 /* ViuPanelViewController.swift in Sources */,
 				CB4651AF238B8B3400078AF1 /* ViuPlayer.swift in Sources */,
 				F2E002E423975D0B004370F6 /* ViuPlayerViewController+Gesture.swift in Sources */,
 				CB28A30C23FD19FD006BECF0 /* PlayerViewController.swift in Sources */,
