@@ -261,11 +261,16 @@ extension ViuPlayer {
 
     }
 
-    open func seekTime(_ time: TimeInterval) {
-        seekTime(time, completion: nil)
+    open func seekTime(offect: Double, autoPlay: Bool = true) {
+        let newDuration = max(currentDuration + offect, 0)
+        seekTime(newDuration, autoPlay: autoPlay)
+    }
+    
+    open func seekTime(_ time: TimeInterval, autoPlay: Bool = true) {
+        seekTime(time, autoPlay: autoPlay, completion: nil)
     }
 
-    open func seekTime(_ time: TimeInterval, completion: ((Bool) -> Swift.Void)?) {
+    open func seekTime(_ time: TimeInterval, autoPlay: Bool = true, completion: ((Bool) -> Swift.Void)?) {
         if time.isNaN || playerItem?.status != .readyToPlay {
             if completion != nil {
                 completion!(false)
@@ -281,7 +286,9 @@ extension ViuPlayer {
                 DispatchQueue.main.async {
                     strongSelf.seeking = false
                     strongSelf.stopPlayerBuffering()
-                    strongSelf.play()
+                    if autoPlay {
+                        strongSelf.play()
+                    }
                     if completion != nil {
                         completion!(finished)
                     }
@@ -295,14 +302,14 @@ extension ViuPlayer {
 
 extension ViuPlayer {
     internal func startPlayerBuffering() {
-        pause()
-        bufferState = .buffering
-        buffering = true
+//        pause()
+//        bufferState = .buffering
+//        buffering = true
     }
 
     internal func stopPlayerBuffering() {
-        bufferState = .stop
-        buffering = false
+//        bufferState = .stop
+//        buffering = false
     }
 
     internal func collectPlayerErrorLogEvent() {
@@ -321,9 +328,9 @@ extension ViuPlayer {
     internal func addPlayerItemObservers() {
         let options = NSKeyValueObservingOptions([.new, .initial])
         playerItem?.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.status), options: options, context: &playerItemContext)
-        playerItem?.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.loadedTimeRanges), options: options, context: &playerItemContext)
-        playerItem?.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.playbackBufferEmpty), options: options, context: &playerItemContext)
-        playerItem?.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.playbackLikelyToKeepUp), options: options, context: &playerItemContext)
+//        playerItem?.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.loadedTimeRanges), options: options, context: &playerItemContext)
+//        playerItem?.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.playbackBufferEmpty), options: options, context: &playerItemContext)
+//        playerItem?.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.playbackLikelyToKeepUp), options: options, context: &playerItemContext)
         
     }
 
@@ -335,8 +342,9 @@ extension ViuPlayer {
 
     internal func removePlayerItemObservers() {
         playerItem?.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.status))
-        playerItem?.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.loadedTimeRanges))
-        playerItem?.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.playbackBufferEmpty))
+//        playerItem?.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.loadedTimeRanges))
+//        playerItem?.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.playbackBufferEmpty))
+//        playerItem?.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.playbackLikelyToKeepUp))
     }
 
     internal func removePlayerNotifations() {
@@ -399,18 +407,18 @@ extension ViuPlayer {
             case #keyPath(AVPlayerItem.status):
                 observePlayerStatus(key: keyPath, change: change)
                 
-            case #keyPath(AVPlayerItem.playbackBufferEmpty):
-                if let playbackBufferEmpty = change?[.newKey] as? Bool {
-                    if playbackBufferEmpty {
-                        startPlayerBuffering()
-                    }
-                }
-            case #keyPath(AVPlayerItem.playbackLikelyToKeepUp):
-                stopPlayerBuffering()
-                play()
-                
-            case #keyPath(AVPlayerItem.loadedTimeRanges):
-                observeLoadTimeRangs()
+//            case #keyPath(AVPlayerItem.playbackBufferEmpty):
+//                if let playbackBufferEmpty = change?[.newKey] as? Bool {
+//                    if playbackBufferEmpty {
+//                        startPlayerBuffering()
+//                    }
+//                }
+//            case #keyPath(AVPlayerItem.playbackLikelyToKeepUp):
+//                stopPlayerBuffering()
+//                play()
+//
+//            case #keyPath(AVPlayerItem.loadedTimeRanges):
+//                observeLoadTimeRangs()
                 
             default:
                 break

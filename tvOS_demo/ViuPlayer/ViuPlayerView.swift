@@ -21,13 +21,7 @@ open class ViuPlayerView: UIView {
     open var controlViewDuration: TimeInterval = 6.0 /// default 5.0
     open var displayDuration: TimeInterval = 0.5
     open fileprivate(set) var playerLayer: AVPlayerLayer?
-    open var isDisplayControl: Bool = true {
-        didSet {
-            if isDisplayControl != oldValue {
-                
-            }
-        }
-    }
+    open var isDisplayControl: Bool = true
     
     open var loadingIndicator = ViuPlayerLoadingIndicator()
     open var tabbarSwipeUp = UISwipeGestureRecognizer()

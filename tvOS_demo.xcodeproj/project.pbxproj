@@ -52,6 +52,8 @@
 		CBF452B923811F76003C70F3 /* ViuPlayerTabbarSubtitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF452B823811F76003C70F3 /* ViuPlayerTabbarSubtitleView.swift */; };
 		CBF452BB238133F0003C70F3 /* ViuPlayerTabbarCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF452BA238133F0003C70F3 /* ViuPlayerTabbarCustomView.swift */; };
 		F2AC2FB6241744CA00C89BAC /* GestureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AC2FB5241744CA00C89BAC /* GestureViewController.swift */; };
+		F2AC2FB8241A082200C89BAC /* ViuPlayerPlaybackGestureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AC2FB7241A082200C89BAC /* ViuPlayerPlaybackGestureManager.swift */; };
+		F2AC2FBA241A08A300C89BAC /* ViuPlayerPlaybackTouchGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AC2FB9241A08A300C89BAC /* ViuPlayerPlaybackTouchGestureRecognizer.swift */; };
 		F2E002E423975D0B004370F6 /* ViuPlayerViewController+Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E002E323975D0B004370F6 /* ViuPlayerViewController+Gesture.swift */; };
 		F2E002E62397B443004370F6 /* TimeInterval+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E002E52397B443004370F6 /* TimeInterval+Extension.swift */; };
 /* End PBXBuildFile section */
@@ -109,6 +111,8 @@
 		CBFB8DFF239A50F2007D1686 /* test.srt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.srt; sourceTree = "<group>"; };
 		CBFB8E00239A50F2007D1686 /* Despacito Remix Luis Fonsi ft.Daddy Yankee Justin Bieber Lyrics [Spanish].srt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Despacito Remix Luis Fonsi ft.Daddy Yankee Justin Bieber Lyrics [Spanish].srt"; sourceTree = "<group>"; };
 		F2AC2FB5241744CA00C89BAC /* GestureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureViewController.swift; sourceTree = "<group>"; };
+		F2AC2FB7241A082200C89BAC /* ViuPlayerPlaybackGestureManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerPlaybackGestureManager.swift; sourceTree = "<group>"; };
+		F2AC2FB9241A08A300C89BAC /* ViuPlayerPlaybackTouchGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerPlaybackTouchGestureRecognizer.swift; sourceTree = "<group>"; };
 		F2E002E323975D0B004370F6 /* ViuPlayerViewController+Gesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViuPlayerViewController+Gesture.swift"; sourceTree = "<group>"; };
 		F2E002E52397B443004370F6 /* TimeInterval+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Extension.swift"; sourceTree = "<group>"; };
 		F6807A08B93F6917F69A525B /* Pods-tvOS_demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tvOS_demo.release.xcconfig"; path = "Target Support Files/Pods-tvOS_demo/Pods-tvOS_demo.release.xcconfig"; sourceTree = "<group>"; };
@@ -313,6 +317,8 @@
 				CBF452AE237D5669003C70F3 /* UIColor+Extension.swift */,
 				F2E002E52397B443004370F6 /* TimeInterval+Extension.swift */,
 				CB25E53A23ACBE8D00C68D8E /* ViuRemoteGestureRecognizer.swift */,
+				F2AC2FB7241A082200C89BAC /* ViuPlayerPlaybackGestureManager.swift */,
+				F2AC2FB9241A08A300C89BAC /* ViuPlayerPlaybackTouchGestureRecognizer.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -460,6 +466,7 @@
 				F2E002E423975D0B004370F6 /* ViuPlayerViewController+Gesture.swift in Sources */,
 				CB28A30C23FD19FD006BECF0 /* PlayerViewController.swift in Sources */,
 				F2E002E62397B443004370F6 /* TimeInterval+Extension.swift in Sources */,
+				F2AC2FBA241A08A300C89BAC /* ViuPlayerPlaybackTouchGestureRecognizer.swift in Sources */,
 				CB4651B1238B8B3400078AF1 /* ViuPlayerView.swift in Sources */,
 				CB28A31623FD6C67006BECF0 /* PlayerRenderingView.swift in Sources */,
 				CB70824B23FBB961000B8C65 /* LongPressGestureRecogniser.swift in Sources */,
@@ -483,6 +490,7 @@
 				CB4CE960238FA4AD0046552E /* ViuPlayerViewController.swift in Sources */,
 				CB0B7212239F411600D90461 /* ViuPlayerTabbarAudioView.swift in Sources */,
 				CB28A31223FD6A60006BECF0 /* PlayerLayer.swift in Sources */,
+				F2AC2FB8241A082200C89BAC /* ViuPlayerPlaybackGestureManager.swift in Sources */,
 				CBF452AF237D5669003C70F3 /* UIColor+Extension.swift in Sources */,
 				CBF452B7237E9FE4003C70F3 /* ViuCustomLabel.swift in Sources */,
 				CB4651B0238B8B3400078AF1 /* ViuPlayerLoadingIndicator.swift in Sources */,

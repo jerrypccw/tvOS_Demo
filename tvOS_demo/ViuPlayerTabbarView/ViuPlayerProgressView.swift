@@ -250,7 +250,11 @@ class ViuPlayerProgressView: UIView {
         if offset.isNaN {
             offset = 0
         }
-        progressLine.frame = CGRect(x: offset, y: 0, width: 2, height: 10)
+        
+        UIView.animate(withDuration: 0.5) {
+            self.progressLine.frame = CGRect(x: offset, y: 0, width: 2, height: 10)
+        }
+
         // 设置预览图起始位置
         let paraFrame = progressBar.convert(progressLine.frame, to: self)
         progressLineByUser.frame = CGRect(x: paraFrame.origin.x, y: paraFrame.origin.y - progressLine.frame.size.height, width: paraFrame.size.width, height: 24)
@@ -296,17 +300,16 @@ class ViuPlayerProgressView: UIView {
         thumbnailTime.text = seekTime.formatToString()
     }
     
-    func showRightActionIndicator() {
-        if bufferingIndicator.isAnimating {
-            rightActionIndicator.isHidden = true
-        } else {
-            rightActionIndicator.isHidden = false
-        }
-        leftActionIndicator.isHidden = true
+    func showRightActionIndicator(isLongPress: Bool) {
+        rightActionIndicator.image = UIImage(named: isLongPress ? "forward" : "forward-10")
         
+        rightActionIndicator.isHidden = false
+        leftActionIndicator.isHidden = true
     }
     
-    func showLeftActionIndicator() {
+    func showLeftActionIndicator(isLongPress: Bool) {
+        leftActionIndicator.image = UIImage(named: isLongPress ? "rewind" : "rewind-10")
+        
         leftActionIndicator.isHidden = false
         rightActionIndicator.isHidden = true
     }
@@ -314,7 +317,6 @@ class ViuPlayerProgressView: UIView {
     func hiddenFastForwordAndRewind() {
         leftActionIndicator.isHidden = true
         rightActionIndicator.isHidden = true
-        rightActionIndicator.image = UIImage.init(named: "forward-10")
     }
     
     deinit {

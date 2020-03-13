@@ -143,11 +143,11 @@ class ViuRemoteGestureRecognizer: UIGestureRecognizer {
     }
 }
 
-extension UIEvent {
-    @nonobjc var digitizerLocation: CGPoint {
-        guard let value = value(forKey: "_digitizerLocation") as? CGPoint else {
-            return CGPoint(x: 0.5, y: 0.5)
-        }
-        return value
-    }
-}
+//extension UIEvent {
+//    @nonobjc var digitizerLocation: CGPoint {
+//        guard let value = value(forKey: "_digitizerLocation") as? CGPoint else {
+//            return CGPoint(x: 0.5, y: 0.5)
+//        }
+//        return value
+//    }
+//}
