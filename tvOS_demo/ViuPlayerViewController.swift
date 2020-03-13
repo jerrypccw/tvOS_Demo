@@ -22,9 +22,6 @@ class ViuPlayerViewController: UIViewController {
     
     let playbackGestureManager = ViuPlayerPlaybackGestureManager()
     
-    var longPressTimer: Timer?
-    let longPressTimerDuration: TimeInterval = 0.5
-    
     deinit {
         print("ViuPlayerViewController deinit")
     }
@@ -80,7 +77,7 @@ extension ViuPlayerViewController: ViuPlayerDelegate {
         case .paused:
             viuPlayer.displayView.displayShadowView()
             viuPlayer.displayView.displayControlView(true)
-            viuPlayer.displayView.viuProgressView.showThumbnail(duration: 0)
+            viuPlayer.displayView.viuProgressView.showThumbnail(duration: viuPlayer.player?.currentItem?.duration.seconds ?? 0)
         case .playing:
             viuPlayer.displayView.hiddenShadowView()
             viuPlayer.displayView.setupTimer()
@@ -201,12 +198,10 @@ extension ViuPlayerViewController: ViuPlayerPlaybackGestureManagerDelegate {
 //                viuPlayer.displayView.showTabbar()
 //            }
             viuPlayer.displayView.showTabbar()
-            break
 //        case .up:
 //            if viuPlayer.displayView.viuPlayerTabbar.isTabbarShow == true {
 //                viuPlayer.displayView.hiddenTabbar()
 //            }
-//            break
         default:
             break
         }
@@ -235,18 +230,27 @@ extension ViuPlayerViewController: ViuPlayerPlaybackGestureManagerDelegate {
     }
     
     func onTouch(_ gesture: ViuPlayerPlaybackTouchGestureRecognizer) {
+        // 信息栏显示，就不执行
         if viuPlayer.displayView.viuPlayerTabbar.isTabbarShow == true { return }
+        // 快进过程中忽略Touch
+        if let rate = viuPlayer.player?.rate, rate > 1 || rate < 0 { return }
 
         if gesture.state == .began || gesture.state == .changed {
             viuPlayer.displayView.displayControlView(true)
             
-            switch gesture.remoteTouchLocation {
-            case .left:
-                viuPlayer.displayView.viuProgressView.showLeftActionIndicator(isLongPress: false)
-            case .right:
-                viuPlayer.displayView.viuProgressView.showRightActionIndicator(isLongPress: false)
-            case .center:
-                viuPlayer.displayView.viuProgressView.hiddenFastForwordAndRewind()
+            if viuPlayer.state == .paused {
+                // 如果是暂停，就可以滑动
+                viuPlayer.displayView.viuProgressView.setPorgressLineByUser(offset: gesture.touchesMovedX)
+            } else {
+                // 播放中就快进/快退
+                switch gesture.remoteTouchLocation {
+                case .left:
+                    viuPlayer.displayView.viuProgressView.showLeftActionIndicator(isLongPress: false)
+                case .right:
+                    viuPlayer.displayView.viuProgressView.showRightActionIndicator(isLongPress: false)
+                case .center:
+                    viuPlayer.displayView.viuProgressView.hiddenFastForwordAndRewind()
+                }
             }
         } else {
             viuPlayer.displayView.viuProgressView.hiddenFastForwordAndRewind()
@@ -255,9 +259,15 @@ extension ViuPlayerViewController: ViuPlayerPlaybackGestureManagerDelegate {
     }
     
     func onTap(_ gesture: UITapGestureRecognizer) {
+        // 信息栏显示，就不执行
         if viuPlayer.displayView.viuPlayerTabbar.isTabbarShow == true { return }
         
-        if gesture.numberOfTapsRequired == 1 && gesture.state == .ended {
+        viuPlayer.displayView.displayControlView(true)
+        
+        if viuPlayer.state == .paused {
+            // 滑动跳特定时间
+            viuPlayer.seekTime(viuPlayer.displayView.viuProgressView.seekTime)
+        } else if gesture.numberOfTapsRequired == 1 && gesture.state == .ended {
             switch gesture.remoteTouchLocation {
             case .left:// 快退10秒
                 viuPlayer.seekTime(offect: -10)
@@ -270,24 +280,27 @@ extension ViuPlayerViewController: ViuPlayerPlaybackGestureManagerDelegate {
     }
     
     func onLongPress(_ gesture: UILongPressGestureRecognizer) {
+        // 信息栏显示，就不执行
         if viuPlayer.displayView.viuPlayerTabbar.isTabbarShow == true { return }
         
+        // 视频暂停时，就不执行
+        if viuPlayer.state == .paused { return }
+        
+        viuPlayer.displayView.displayControlView(true)
+        
         if (gesture.state == .began || gesture.state == .changed) && gesture.remoteTouchLocation != .center {
-            longPressTimer?.invalidate()
-            longPressTimer = Timer.scheduledTimer(withTimeInterval: longPressTimerDuration, repeats: true) { [weak self] _ in
-                switch gesture.remoteTouchLocation {
-                case .left:
-                    self?.viuPlayer.displayView.viuProgressView.showLeftActionIndicator(isLongPress: true)
-                    self?.viuPlayer.seekTime(offect: -30)
-                case .right:
-                    self?.viuPlayer.displayView.viuProgressView.showRightActionIndicator(isLongPress: true)
-                    self?.viuPlayer.seekTime(offect: 30)
-                default:
-                    break
-                }
+            switch gesture.remoteTouchLocation {
+            case .left:// 快退
+                viuPlayer.displayView.viuProgressView.showLeftActionIndicator(isLongPress: true)
+                viuPlayer.player?.rate = -4
+            case .right:// 快进
+                viuPlayer.displayView.viuProgressView.showRightActionIndicator(isLongPress: true)
+                viuPlayer.player?.rate = 4
+            default:
+                break
             }
         } else {
-            longPressTimer?.invalidate()
+            viuPlayer.player?.rate = 1
         }
     }
 }

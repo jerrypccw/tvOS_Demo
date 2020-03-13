@@ -271,7 +271,7 @@ extension ViuPlayer {
     }
 
     open func seekTime(_ time: TimeInterval, autoPlay: Bool = true, completion: ((Bool) -> Swift.Void)?) {
-        if time.isNaN || playerItem?.status != .readyToPlay {
+        if time.isNaN || playerItem?.status != .readyToPlay || seeking {
             if completion != nil {
                 completion!(false)
             }
@@ -281,17 +281,17 @@ extension ViuPlayer {
         DispatchQueue.main.async { [weak self] in
             guard let strongSelf = self else { return }
             strongSelf.seeking = true
-            strongSelf.startPlayerBuffering()
+//            strongSelf.startPlayerBuffering()
             strongSelf.playerItem?.seek(to: CMTimeMakeWithSeconds(time, preferredTimescale: Int32(NSEC_PER_SEC)), toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero, completionHandler: { finished in
                 DispatchQueue.main.async {
-                    strongSelf.seeking = false
-                    strongSelf.stopPlayerBuffering()
+//                    strongSelf.stopPlayerBuffering()
                     if autoPlay {
                         strongSelf.play()
                     }
                     if completion != nil {
                         completion!(finished)
                     }
+                    strongSelf.seeking = false
                 }
             })
         }
