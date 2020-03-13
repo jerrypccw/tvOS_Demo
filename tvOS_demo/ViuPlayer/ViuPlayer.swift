@@ -99,7 +99,7 @@ open class ViuPlayer: NSObject {
     open fileprivate(set) var playerAsset : AVURLAsset?
     open fileprivate(set) var contentURL : URL?
     open fileprivate(set) var error : ViuPlayerError
-    fileprivate var resourceLoaderManager = ViuPlayerResourceLoaderManager()
+//    fileprivate var resourceLoaderManager = ViuPlayerResourceLoaderManager()
     fileprivate var seeking : Bool = false
     
     var imageGenerator: AVAssetImageGenerator?

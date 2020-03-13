@@ -129,13 +129,13 @@ class VPlayerViewController: UIViewController {
         setPlaybackControlViewLayout()
         
         // Gesture
-        actionGesture = LongPressGestureRecogniser.init(target: self, action: #selector(click(_:)))
+        actionGesture = LongPressGestureRecogniser.init(target: self, action: #selector(click(_ :)))
         view.addGestureRecognizer(actionGesture)
         
-        playPauseGesture = UITapGestureRecognizer.init(target: self, action: #selector(playOrPause(_:)))
+        playPauseGesture = UITapGestureRecognizer.init(target: self, action: #selector(playOrPause(_ :)))
         view.addGestureRecognizer(playPauseGesture)
         
-        cancelGesture = UITapGestureRecognizer.init(target: self, action: #selector(cancel(_:)))
+        cancelGesture = UITapGestureRecognizer.init(target: self, action: #selector(cancel(_ :)))
         view.addGestureRecognizer(cancelGesture)
         
         remoteActionPositionController = RemoteActionPositionController()
@@ -146,13 +146,19 @@ class VPlayerViewController: UIViewController {
         setupPositionController()
         
         setupPanelViewController()
+        
+        let swipDown = UISwipeGestureRecognizer.init(target: self, action: #selector(swipDownAction(_ :)))
+        swipDown.direction = .down
+        view.addGestureRecognizer(swipDown)
+        
     }
     
     func setupPanelViewController() {
         let panelVC = ViuPanelViewController()
         panelVC.selectedIndex = lastSelectedPanelTabIndex
         panelVC.transitioningDelegate = self
-        present(panelVC, animated: true, completion: nil)
+        displayedPanelViewController = panelVC
+        
     }
     
     // GestureRecogniser
@@ -167,6 +173,14 @@ class VPlayerViewController: UIViewController {
     @objc func cancel(_ sender: Any) {
         hideControl()
     }
+    
+    @objc func swipDownAction(_ sender: Any) {
+        present(displayedPanelViewController!, animated: true, completion: nil)
+        setupPositionController()
+        hideControl()
+    }
+    
+    
     
     fileprivate func setupPositionController() {
 //        guard player.isSeekable && !isOpening && !isPanelDisplayed else {
@@ -185,6 +199,7 @@ class VPlayerViewController: UIViewController {
     
     // MARK: Control
     var playbackControlHideTimer: Timer?
+    
     public func showPlaybackControl() {
         playbackControlHideTimer?.invalidate()
 //        if player.state != .paused {
@@ -219,6 +234,14 @@ class VPlayerViewController: UIViewController {
         UIView.transition(with: self.view, duration: 0.5, options: .transitionCrossDissolve, animations: {
             self.playbackControlView.isHidden = true
         })
+    }
+    
+    fileprivate func handlePlaybackControlVisibility() {
+//        if player.state == .paused {
+//            showPlaybackControl()
+//        } else {
+            autoHideControl()
+//        }
     }
     
     // setLayout
@@ -351,5 +374,17 @@ extension VPlayerViewController: UIViewControllerTransitioningDelegate {
     }
     public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return dismissed is ViuPanelViewController ? ViuSlideUpAnimatedTransitioner() : nil
+    }
+}
+
+extension VPlayerViewController: ViuPanelViewControllerDelegate {
+    func panelViewController(_ panelViewController: ViuPanelViewController, didSelectTabAtIndex index: Int) {
+        lastSelectedPanelTabIndex = index
+    }
+
+    func panelViewControllerDidDismiss(_ panelViewController: ViuPanelViewController) {
+        displayedPanelViewController = nil
+        setupPositionController()
+        handlePlaybackControlVisibility()
     }
 }

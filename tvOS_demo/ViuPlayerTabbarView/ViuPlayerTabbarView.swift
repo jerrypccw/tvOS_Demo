@@ -277,7 +277,7 @@ class ViuPlayerTabbarView: UIView {
     /// - Parameter y: 设置视图的Y值
     private func animateTabbarAction(y: CGFloat) {
         
-        UIView.animate(withDuration: ViuPlayerTabbarConfig.AnimationTime, delay: 0.0, options: .curveEaseInOut, animations: { [weak self] in
+        UIView.animate(withDuration: ViuPlayerTabbarConfig.AnimationTime, delay: 0.0, options: .curveEaseOut, animations: { [weak self] in
              
             guard let strongSelf = self else {
                 return

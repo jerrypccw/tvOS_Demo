@@ -10,6 +10,7 @@ import UIKit
 
 class ViuPlayerTabbarSubtitleView: UIScrollView {
     
+
     // 设置button居中布局视图
     private lazy var stackView: UIStackView = {
         let view = UIStackView()
@@ -51,7 +52,6 @@ class ViuPlayerTabbarSubtitleView: UIScrollView {
     
     private func setupSubviews() {
         backgroundColor = .clear
-        
         alpha = 0
     }
     
