@@ -12,20 +12,18 @@ let url = URL(string: "https://devstreaming-cdn.apple.com/videos/streaming/examp
 
 let m3u8URL = URL(string: "")!
 
-class ViuPlayerViewController: UIViewController, UIGestureRecognizerDelegate {
-    
-    var bagenTimer: Timer = {
-        let time = Timer()
-        return time
-    }()
-    
-    let bagenTimerDuration: TimeInterval = 0.1 /// default 5.0
+class ViuPlayerViewController: UIViewController {
     
     var viuPlayer: ViuPlayer = {
         let playerView = ViuPlayerSubtitlesView()
         let player = ViuPlayer(playerView: playerView)
         return player
     }()
+    
+    let playbackGestureManager = ViuPlayerPlaybackGestureManager()
+    
+    var longPressTimer: Timer?
+    let longPressTimerDuration: TimeInterval = 0.5
     
     deinit {
         print("ViuPlayerViewController deinit")
@@ -116,102 +114,99 @@ extension ViuPlayerViewController: ViuPlayerDelegate {
     }
 }
 
-extension ViuPlayerViewController {
-    
+extension ViuPlayerViewController: ViuPlayerPlaybackGestureManagerDelegate {
     func setupGestureRecognizer() {
         
-        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(onSwipeAction(swipe:)))
-        swipeUp.direction = .up
-        // 设置为YES，以防止视图处理可能被识别为该手势的任何触摸或按下
-        //        swipeDown.delaysTouchesBegan = true
-        view.addGestureRecognizer(swipeUp)
+//        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(onSwipeAction(swipe:)))
+//        swipeUp.direction = .up
+//        swipeUp.delegate = playbackGestureManager
+//        view.addGestureRecognizer(swipeUp)
         
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(onSwipeAction(swipe:)))
         swipeDown.direction = .down
+        swipeDown.delegate = playbackGestureManager
         view.addGestureRecognizer(swipeDown)
         
         let playPauseTap = UITapGestureRecognizer(target: self, action: #selector(onPlayPauseTap(tap:)))
         playPauseTap.allowedPressTypes = [NSNumber(value: UIPress.PressType.playPause.rawValue)]
+        playPauseTap.delegate = playbackGestureManager
         view.addGestureRecognizer(playPauseTap)
         
-        // 继承UIGestureRecognizer 重写该手势的touch事件
-        let viuGesture = ViuRemoteGestureRecognizer(target: self, action: #selector(touchLocationDidChange(_:)))
-        viuGesture.delegate = self
-        view.addGestureRecognizer(viuGesture)
+//        // 继承UIGestureRecognizer 重写该手势的touch事件
+//        let viuGesture = ViuRemoteGestureRecognizer(target: self, action: #selector(touchLocationDidChange(_:)))
+//        viuGesture.delegate = self
+//        view.addGestureRecognizer(viuGesture)
+        playbackGestureManager.addGesture(view)
+        playbackGestureManager.delegate = self
     }
     
-    // 必须同时支持多个手势
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
-    }
-    
-    @objc func touchLocationDidChange(_ gesture: ViuRemoteGestureRecognizer) {
-        
-        if viuPlayer.displayView.viuPlayerTabbar.isTabbarShow == true { return }
-        
-        if gesture.state == .began || gesture.state == .changed {
-            viuPlayer.displayView.displayControlView(true)
-        }
-        
-        // 进度条出现才处理
-        if viuPlayer.displayView.isDisplayControl {
-//            print("gesture.touchesMovedX -- \(gesture.touchesMovedX)")
-            viuPlayer.displayView.viuProgressView.setPorgressLineByUser(offset: gesture.touchesMovedX)
-            return
-        }
-        
-        switch gesture.touchLocation {
-        case .left:
-            viuPlayer.displayView.viuProgressView.showLeftActionIndicator()
-            
-            if gesture.isClick && gesture.state == .ended {
-                var duration = viuPlayer.currentDuration
-                if duration < 10.0 {
-                    duration = 0.0
-                } else {
-                    duration = duration - 10.0
-                }
-                viuPlayer.seekTime(duration)
-            }
-            
-            if gesture.isLongPress && gesture.state == .changed {
-                print(gesture.isLongPress)
-            }
-            
-        case .right:
-            viuPlayer.displayView.viuProgressView.showRightActionIndicator()
-            if gesture.isClick && gesture.state == .ended {
-                let duration = viuPlayer.currentDuration + 10.0
-                viuPlayer.seekTime(duration)
-            }
-            if gesture.isLongPress && gesture.state == .changed {
-                viuPlayer.displayView.viuProgressView.rightActionIndicator.image = UIImage.init(named: "forward")
-            }
-            
-        case .unknown:
-            viuPlayer.displayView.viuProgressView.hiddenFastForwordAndRewind()
-            viuPlayer.displayView.setupTimer()
-            if gesture.isClick && gesture.state == .ended {
-                playPauseAction()
-            }
-            
-        }
-        
-    }
+//    @objc func touchLocationDidChange(_ gesture: ViuRemoteGestureRecognizer) {
+//
+//        if viuPlayer.displayView.viuPlayerTabbar.isTabbarShow == true { return }
+//
+//        if gesture.state == .began || gesture.state == .changed {
+//            viuPlayer.displayView.displayControlView(true)
+//        }
+//
+//        // 进度条出现才处理
+//        if viuPlayer.displayView.isDisplayControl {
+////            print("gesture.touchesMovedX -- \(gesture.touchesMovedX)")
+//            viuPlayer.displayView.viuProgressView.setPorgressLineByUser(offset: gesture.touchesMovedX)
+//            return
+//        }
+//
+//        switch gesture.touchLocation {
+//        case .left:
+//            viuPlayer.displayView.viuProgressView.showLeftActionIndicator()
+//
+//            if gesture.isClick && gesture.state == .ended {
+//                var duration = viuPlayer.currentDuration
+//                if duration < 10.0 {
+//                    duration = 0.0
+//                } else {
+//                    duration = duration - 10.0
+//                }
+//                viuPlayer.seekTime(duration)
+//            }
+//
+//            if gesture.isLongPress && gesture.state == .changed {
+//                print(gesture.isLongPress)
+//            }
+//
+//        case .right:
+//            viuPlayer.displayView.viuProgressView.showRightActionIndicator()
+//            if gesture.isClick && gesture.state == .ended {
+//                let duration = viuPlayer.currentDuration + 10.0
+//                viuPlayer.seekTime(duration)
+//            }
+//            if gesture.isLongPress && gesture.state == .changed {
+//                viuPlayer.displayView.viuProgressView.rightActionIndicator.image = UIImage.init(named: "forward")
+//            }
+//
+//        case .unknown:
+//            viuPlayer.displayView.viuProgressView.hiddenFastForwordAndRewind()
+//            viuPlayer.displayView.setupTimer()
+//            if gesture.isClick && gesture.state == .ended {
+//                playPauseAction()
+//            }
+//
+//        }
+//
+//    }
     
     @objc func onSwipeAction(swipe: UISwipeGestureRecognizer) {
-        
         switch swipe.direction {
         case .down:
-            if viuPlayer.displayView.viuPlayerTabbar.isTabbarShow == false {
-                viuPlayer.displayView.showTabbar()
-            }
+//            if viuPlayer.displayView.viuPlayerTabbar.isTabbarShow == false {
+//                viuPlayer.displayView.showTabbar()
+//            }
+            viuPlayer.displayView.showTabbar()
             break
-        case .up:
-            if viuPlayer.displayView.viuPlayerTabbar.isTabbarShow == true {
-                viuPlayer.displayView.hiddenTabbar()
-            }
-            break
+//        case .up:
+//            if viuPlayer.displayView.viuPlayerTabbar.isTabbarShow == true {
+//                viuPlayer.displayView.hiddenTabbar()
+//            }
+//            break
         default:
             break
         }
@@ -222,20 +217,77 @@ extension ViuPlayerViewController {
     }
     
     private func playPauseAction() {
-        if viuPlayer.displayView.viuPlayerTabbar.isTabbarShow == true {
-            // 如果Tabber显示，就隐藏
-            viuPlayer.displayView.hiddenTabbar()
-        } else {
-            switch viuPlayer.state {
-            case .playing:
-                viuPlayer.pause()
-                break
-            case .paused:
-                viuPlayer.play()
-                break
-            default:
-                break
+//        if viuPlayer.displayView.viuPlayerTabbar.isTabbarShow == true {
+//            // 如果Tabber显示，就隐藏
+//            viuPlayer.displayView.hiddenTabbar()
+//        }
+        
+        switch viuPlayer.state {
+        case .playing:
+            viuPlayer.pause()
+            break
+        case .paused:
+            viuPlayer.play()
+            break
+        default:
+            break
+        }
+    }
+    
+    func onTouch(_ gesture: ViuPlayerPlaybackTouchGestureRecognizer) {
+        if viuPlayer.displayView.viuPlayerTabbar.isTabbarShow == true { return }
+
+        if gesture.state == .began || gesture.state == .changed {
+            viuPlayer.displayView.displayControlView(true)
+            
+            switch gesture.remoteTouchLocation {
+            case .left:
+                viuPlayer.displayView.viuProgressView.showLeftActionIndicator(isLongPress: false)
+            case .right:
+                viuPlayer.displayView.viuProgressView.showRightActionIndicator(isLongPress: false)
+            case .center:
+                viuPlayer.displayView.viuProgressView.hiddenFastForwordAndRewind()
             }
+        } else {
+            viuPlayer.displayView.viuProgressView.hiddenFastForwordAndRewind()
+            viuPlayer.displayView.setupTimer()
+        }
+    }
+    
+    func onTap(_ gesture: UITapGestureRecognizer) {
+        if viuPlayer.displayView.viuPlayerTabbar.isTabbarShow == true { return }
+        
+        if gesture.numberOfTapsRequired == 1 && gesture.state == .ended {
+            switch gesture.remoteTouchLocation {
+            case .left:// 快退10秒
+                viuPlayer.seekTime(offect: -10)
+            case .right:// 快进10秒
+                viuPlayer.seekTime(offect: 10)
+            case .center:
+                playPauseAction()
+            }
+        }
+    }
+    
+    func onLongPress(_ gesture: UILongPressGestureRecognizer) {
+        if viuPlayer.displayView.viuPlayerTabbar.isTabbarShow == true { return }
+        
+        if (gesture.state == .began || gesture.state == .changed) && gesture.remoteTouchLocation != .center {
+            longPressTimer?.invalidate()
+            longPressTimer = Timer.scheduledTimer(withTimeInterval: longPressTimerDuration, repeats: true) { [weak self] _ in
+                switch gesture.remoteTouchLocation {
+                case .left:
+                    self?.viuPlayer.displayView.viuProgressView.showLeftActionIndicator(isLongPress: true)
+                    self?.viuPlayer.seekTime(offect: -30)
+                case .right:
+                    self?.viuPlayer.displayView.viuProgressView.showRightActionIndicator(isLongPress: true)
+                    self?.viuPlayer.seekTime(offect: 30)
+                default:
+                    break
+                }
+            }
+        } else {
+            longPressTimer?.invalidate()
         }
     }
 }
