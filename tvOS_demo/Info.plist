@@ -26,5 +26,7 @@
 	</array>
 	<key>UIUserInterfaceStyle</key>
 	<string>Automatic</string>
+	<key>BitmovinPlayerLicenseKey</key>
+	<string>0882c607-54dd-4bca-8ed4-ee62b81ea451</string>
 </dict>
 </plist>

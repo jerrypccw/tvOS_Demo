@@ -1,181 +1,53 @@
-////
-////  GestureViewController.swift
-////  tvOS_demo
-////
-////  Created by TerryChe on 2020/3/10.
-////  Copyright © 2020 jerry. All rights reserved.
-////
 //
-//import UIKit
+//  GestureViewController.swift
+//  tvOS_demo
 //
-//enum TouchLocation {
-//    case center
-//    case left
-//    case right
-//}
+//  Created by TerryChe on 2020/3/10.
+//  Copyright © 2020 jerry. All rights reserved.
 //
-//class GestureViewController: UIViewController, GestureManagerDelegate {
-//    let gm = GestureManager()
-//
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//
-//        gm.addGesture(view)
-//        gm.delegate = self
-//    }
-//
-//    func onTap(_ gesture: TouchGesture) {
-//        print("\(gesture.remoteTouchLocation) === 触摸 === \(gesture.stateString)")
-//    }
-//
-//    func onClick(_ gesture: UITapGestureRecognizer) {
-//        print("\(gesture.remoteTouchLocation) >>>>>> 点击 >>> \(gesture.stateString)")
-//    }
-//
-//    func onLongPress(_ gesture: UILongPressGestureRecognizer) {
-//        print("\(gesture.remoteTouchLocation) <<<<<<<<< 长按 <<< \(gesture.stateString)")
-//    }
-//}
-//
-//public protocol GestureManagerDelegate : NSObjectProtocol {
-//    func onTap(_ gesture: TouchGesture)
-//
-//    func onClick(_ gesture: UITapGestureRecognizer)
-//
-//    func onLongPress(_ gesture: UILongPressGestureRecognizer)
-//}
-//
-//class GestureManager: NSObject, UIGestureRecognizerDelegate {
-//    weak open var delegate: GestureManagerDelegate? // the gesture recognizer's delegate
-//    var touchLocation: TouchLocation = .center
-//
-//    func addGesture(_ target: UIView) {
-//        let touch = TouchGesture(target: self, action: #selector(touchGesture(_:)))
-//        touch.delegate = self
-//        target.addGestureRecognizer(touch)
-//
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(tapGesture(_:)))
-//        tap.cancelsTouchesInView = false
-//        tap.delegate = self
-//        target.addGestureRecognizer(tap)
-//
-//        let long = UILongPressGestureRecognizer(target: self, action: #selector(longPressGesture))
-//        long.cancelsTouchesInView = false
-//        long.delegate = self
-//        target.addGestureRecognizer(long)
-//    }
-//
-//    @objc func touchGesture(_ gesture: TouchGesture) {
-//        touchLocation = gesture.remoteTouchLocation
-//
-//        if let delegate = delegate {
-//            delegate.onTap(gesture)
+
+import UIKit
+import BitmovinPlayer
+
+class GestureViewController: UIViewController {
+    override func viewDidLoad() {
+        // Create the HLS stream URL
+//        guard let streamUrl = URL(string: "https://bitmovin-a.akamaihd.net/content/MI201109210084_1/m3u8s/playlist.m3u8") else {
+//            return
 //        }
-//    }
-//
-//    @objc func tapGesture(_ gesture: UITapGestureRecognizer) {
-//        if let delegate = delegate {
-//            gesture.remoteTouchLocation = touchLocation
-//            delegate.onClick(gesture)
+        
+       guard let streamUrl = URL(string: "https://d1k2us671qcoau.cloudfront.net/vodapi/airplay.m3u8?vid=c897cf1be4c15031cf95317ea814e4a3&ts=202003181153&layer=Layer4&streamurl=https://stream-hk.viu.com/s/A0lJrVx9YSgqGXLp3lws3g/1584518028/UD/c897cf1be4c15031cf95317ea814e4a3/c897cf1be4c15031cf95317ea814e4a3_Layer4_vod.m3u8&region=hk&subLang=3:1:7:8&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9kMWsydXM2NzFxY29hdS5jbG91ZGZyb250Lm5ldC92b2RhcGkvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTU4NDUxODAyOH19fV19&Signature=dQ29JBqBZLWEKje7hfKToJ-XWhMOZoRcZP83lq-uvxflQ5MDb0Hc4UyCXLm9ExlOFQcLFIVzlwc8gbAiTN0pxFq-fwAvP~cz51DZHfYNf3qtc77clc4OWspg-XidSzmEZa4kzOLVy8d8Pxnj5BtabnHcKYam6s5cJxYmfWVYZEgI0QXYHWtaYJ2Nx0SgrKLc1VFR0qYHob-ZJSbKIJkFh3E-Ugessr5TsFi7WUnaEQ9mwp0eP4JlijLbb-6GiwMATGoSX73SX07BBCR6SerlYaRcm4WmSjYYf00Uhb-YukwKx5-izX3McCIWces5bXDdDDC2AqTS0ObRik0S3uiutw__&Key-Pair-Id=APKAJ6Z4RF5IYK7Y3SQQ") else {
+            return
+        }
+        
+//       guard let streamUrl = URL(string: "https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_4x3/bipbop_4x3_variant.m3u8") else {
+//            return
 //        }
-//    }
-//
-//    @objc func longPressGesture(_ gesture: UILongPressGestureRecognizer) {
-//        if let delegate = delegate {
-//            gesture.remoteTouchLocation = touchLocation
-//            delegate.onLongPress(gesture)
-//        }
-//    }
-//
-//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-//        return true
-//    }
-//}
-//
-//open class TouchGesture: UIGestureRecognizer {
-//    override init(target: Any?, action: Selector?) {
-//        super.init(target: target, action: action)
-//        allowedTouchTypes = [NSNumber(value: UITouch.TouchType.indirect.rawValue)]
-//        cancelsTouchesInView = false
-//    }
-//
-//    override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
-////        print("touchesBegan")
-//
-//        if event.digitizerLocation.x < 0.3 {
-//            remoteTouchLocation = .left
-//        } else if event.digitizerLocation.x > 0.7 {
-//            remoteTouchLocation = .right
-//        } else {
-//            remoteTouchLocation = .center
-//        }
-//
-//        state = .began
-//    }
-//    override open func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent) {
-////        print("touchesMoved")
-//
-//        if event.digitizerLocation.x < 0.3 {
-//            remoteTouchLocation = .left
-//        } else if event.digitizerLocation.x > 0.7 {
-//            remoteTouchLocation = .right
-//        } else {
-//            remoteTouchLocation = .center
-//        }
-//    }
-//    override open func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent) {
-////        print("touchesCancelled")
-//        reset()
-//    }
-//    override open func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent) {
-////        print("touchesEnded")
-//        reset()
-//    }
-//
-//    override open func reset() {
-//        remoteTouchLocation = .center
-//        super.reset()
-//    }
-//}
-//
-//extension UIGestureRecognizer {
-//    private struct AssociatedKeys {
-//        static var managerKey = "UIGestureRecognizer.remoteTouchLocation"
-//    }
-//
-//    var remoteTouchLocation: TouchLocation {
-//        get {
-//            if let temp = objc_getAssociatedObject(self, &AssociatedKeys.managerKey) as? TouchLocation {
-//                return temp
-//            }
-//
-//            return .center
-//        }
-//        set (manager) {
-//            objc_setAssociatedObject(self, &AssociatedKeys.managerKey, manager, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-//        }
-//    }
-//
-//    var stateString: String {
-//        get {
-//            switch state {
-//            case .began:
-//                return "began"
-//            case .cancelled:
-//                return "cancelled"
-//            case .changed:
-//                return "changed"
-//            case .ended:
-//                return "ended"
-//            case .failed:
-//                return "failed"
-//            case .possible:
-//                return "possible"
-//            case .recognized:
-//                return "recognized"
-//            default:
-//                return "unkonw"
-//            }
-//        }
-//    }
-//}
+        
+        // Create a source item based on the HLS stream URL
+        let hlsSource = HLSSource(url: streamUrl)
+        let sourceItem = SourceItem(adaptiveSource: hlsSource)
+        
+        sourceItem?.metadata = [
+            AVMetadataIdentifier.commonIdentifierTitle : "标题" as NSCopying & NSObjectProtocol,
+            AVMetadataIdentifier.commonIdentifierDescription : "正文介绍正文介绍正文介绍正文介绍正文介绍正文介绍正文介绍正文介绍正文介绍正文介绍正文介绍" as NSCopying & NSObjectProtocol
+        ]
+
+        // Create player configuration
+        let config = PlayerConfiguration()
+
+        // Add the source item to the configuration
+        config.sourceItem = sourceItem
+        
+        let player = BitmovinPlayer(configuration: config)
+        
+        let playerView = BMPBitmovinPlayerView(player: player, frame: .zero)
+        playerView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        playerView.frame = view.bounds
+
+        view.addSubview(playerView)
+        view.bringSubviewToFront(playerView)
+        
+        player.play()
+    }
+}
