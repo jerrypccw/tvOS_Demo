@@ -8,11 +8,11 @@
 
 import UIKit
 
-let url = URL(string: "https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_4x3/bipbop_4x3_variant.m3u8")!
+let url = URL(string: "https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8")!
 
 let m3u8URL = URL(string: "")!
 
-class ViuPlayerViewController: UIViewController {
+class oldViuPlayerViewController: UIViewController {
     
     var viuPlayer: ViuPlayer = {
         let playerView = ViuPlayerSubtitlesView()
@@ -65,7 +65,7 @@ class ViuPlayerViewController: UIViewController {
 }
 
 // MARK: viuPlayerDelegate
-extension ViuPlayerViewController: ViuPlayerDelegate {
+extension oldViuPlayerViewController: ViuPlayerDelegate {
     func viuPlayer(_ player: ViuPlayer, playerFailed error: ViuPlayerError) {
         print("ViuPlayerViewController \(error)")
     }
@@ -111,7 +111,7 @@ extension ViuPlayerViewController: ViuPlayerDelegate {
     }
 }
 
-extension ViuPlayerViewController: ViuPlayerPlaybackGestureManagerDelegate {
+extension oldViuPlayerViewController: ViuPlayerPlaybackGestureManagerDelegate {
     func setupGestureRecognizer() {
         
 //        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(onSwipeAction(swipe:)))

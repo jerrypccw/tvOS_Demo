@@ -77,7 +77,7 @@ class ViewController: UIViewController {
     
     
     @objc func gotoPlayerVC() {
-        navigationController?.pushViewController(ViuPlayerViewController(), animated: true)
+        navigationController?.pushViewController(oldViuPlayerViewController(), animated: true)
         //        self.present(ViuPlayerViewController(), animated: true, completion: nil)
     }
     
@@ -92,6 +92,8 @@ class ViewController: UIViewController {
     }
     
     @objc func gotoPlayerVC4() {
-        navigationController?.pushViewController(GestureViewController(), animated: true)
+//        navigationController?.pushViewController(BitmovinPlayerViewController(), animated: true)
+        
+        navigationController?.pushViewController(TestViuPlayerViewController(), animated: true)
     }
 }

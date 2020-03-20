@@ -9,7 +9,7 @@
 import UIKit
 import BitmovinPlayer
 
-class GestureViewController: UIViewController {
+class BitmovinPlayerViewController: UIViewController {
     override func viewDidLoad() {
         // Create the HLS stream URL
 //        guard let streamUrl = URL(string: "https://bitmovin-a.akamaihd.net/content/MI201109210084_1/m3u8s/playlist.m3u8") else {
@@ -24,6 +24,7 @@ class GestureViewController: UIViewController {
 //            return
 //        }
         
+        /// BitmovinPlayer
         // Create a source item based on the HLS stream URL
         let hlsSource = HLSSource(url: streamUrl)
         let sourceItem = SourceItem(adaptiveSource: hlsSource)
