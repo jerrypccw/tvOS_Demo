@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -58,12 +58,29 @@
 		CBF452B7237E9FE4003C70F3 /* ViuCustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF452B6237E9FE4003C70F3 /* ViuCustomLabel.swift */; };
 		CBF452B923811F76003C70F3 /* ViuPlayerTabbarSubtitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF452B823811F76003C70F3 /* ViuPlayerTabbarSubtitleView.swift */; };
 		CBF452BB238133F0003C70F3 /* ViuPlayerTabbarCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF452BA238133F0003C70F3 /* ViuPlayerTabbarCustomView.swift */; };
-		F2AC2FB6241744CA00C89BAC /* GestureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AC2FB5241744CA00C89BAC /* GestureViewController.swift */; };
+		F2A17DE92424631D00074198 /* TestViuPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A17DE82424631C00074198 /* TestViuPlayerViewController.swift */; };
+		F2A17DEB2424636900074198 /* ViuPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2A17DEA2424636900074198 /* ViuPlayer.framework */; };
+		F2A17DEC2424636900074198 /* ViuPlayer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F2A17DEA2424636900074198 /* ViuPlayer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F2AC2FB6241744CA00C89BAC /* BitmovinPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AC2FB5241744CA00C89BAC /* BitmovinPlayerViewController.swift */; };
 		F2AC2FB8241A082200C89BAC /* ViuPlayerPlaybackGestureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AC2FB7241A082200C89BAC /* ViuPlayerPlaybackGestureManager.swift */; };
 		F2AC2FBA241A08A300C89BAC /* ViuPlayerPlaybackTouchGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AC2FB9241A08A300C89BAC /* ViuPlayerPlaybackTouchGestureRecognizer.swift */; };
 		F2E002E423975D0B004370F6 /* ViuPlayerViewController+Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E002E323975D0B004370F6 /* ViuPlayerViewController+Gesture.swift */; };
 		F2E002E62397B443004370F6 /* TimeInterval+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E002E52397B443004370F6 /* TimeInterval+Extension.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F2A17DED2424636900074198 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F2A17DEC2424636900074198 /* ViuPlayer.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		00D7CD0CC39DF68E57E203F8 /* Pods-tvOS_demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tvOS_demo.debug.xcconfig"; path = "Target Support Files/Pods-tvOS_demo/Pods-tvOS_demo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -124,7 +141,9 @@
 		CBFB8DFE239A50F2007D1686 /* apple_tv_app_universal_search_part_01_sd.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = apple_tv_app_universal_search_part_01_sd.mp4; sourceTree = "<group>"; };
 		CBFB8DFF239A50F2007D1686 /* test.srt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.srt; sourceTree = "<group>"; };
 		CBFB8E00239A50F2007D1686 /* Despacito Remix Luis Fonsi ft.Daddy Yankee Justin Bieber Lyrics [Spanish].srt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Despacito Remix Luis Fonsi ft.Daddy Yankee Justin Bieber Lyrics [Spanish].srt"; sourceTree = "<group>"; };
-		F2AC2FB5241744CA00C89BAC /* GestureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureViewController.swift; sourceTree = "<group>"; };
+		F2A17DE82424631C00074198 /* TestViuPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViuPlayerViewController.swift; sourceTree = "<group>"; };
+		F2A17DEA2424636900074198 /* ViuPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ViuPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F2AC2FB5241744CA00C89BAC /* BitmovinPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitmovinPlayerViewController.swift; sourceTree = "<group>"; };
 		F2AC2FB7241A082200C89BAC /* ViuPlayerPlaybackGestureManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerPlaybackGestureManager.swift; sourceTree = "<group>"; };
 		F2AC2FB9241A08A300C89BAC /* ViuPlayerPlaybackTouchGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerPlaybackTouchGestureRecognizer.swift; sourceTree = "<group>"; };
 		F2E002E323975D0B004370F6 /* ViuPlayerViewController+Gesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViuPlayerViewController+Gesture.swift"; sourceTree = "<group>"; };
@@ -137,6 +156,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2A17DEB2424636900074198 /* ViuPlayer.framework in Frameworks */,
 				01851DC59840B02F6E036996 /* Pods_tvOS_demo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -276,7 +296,8 @@
 				CB43AD0B233E0F510000A7F1 /* Info.plist */,
 				CB4CE95F238FA4AD0046552E /* ViuPlayerViewController.swift */,
 				F2E002E323975D0B004370F6 /* ViuPlayerViewController+Gesture.swift */,
-				F2AC2FB5241744CA00C89BAC /* GestureViewController.swift */,
+				F2AC2FB5241744CA00C89BAC /* BitmovinPlayerViewController.swift */,
+				F2A17DE82424631C00074198 /* TestViuPlayerViewController.swift */,
 			);
 			path = tvOS_demo;
 			sourceTree = "<group>";
@@ -385,6 +406,7 @@
 		D573DAD9501BB8E46A571B7E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F2A17DEA2424636900074198 /* ViuPlayer.framework */,
 				444E4028BA38B8DACFB31BAE /* Pods_tvOS_demo.framework */,
 			);
 			name = Frameworks;
@@ -401,6 +423,8 @@
 				CB43ACFB233E0F4E0000A7F1 /* Sources */,
 				CB43ACFC233E0F4E0000A7F1 /* Frameworks */,
 				CB43ACFD233E0F4E0000A7F1 /* Resources */,
+				74834160D47F97B64A6F17C7 /* [CP] Embed Pods Frameworks */,
+				F2A17DED2424636900074198 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -479,6 +503,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		74834160D47F97B64A6F17C7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-tvOS_demo/Pods-tvOS_demo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-tvOS_demo/Pods-tvOS_demo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-tvOS_demo/Pods-tvOS_demo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -529,13 +570,14 @@
 				CB70824423FB993B000B8C65 /* ViuGradientView.swift in Sources */,
 				CBF452BB238133F0003C70F3 /* ViuPlayerTabbarCustomView.swift in Sources */,
 				CB3C0FC5241A285E007B8A85 /* PVSubtitleViewController.swift in Sources */,
-				F2AC2FB6241744CA00C89BAC /* GestureViewController.swift in Sources */,
+				F2AC2FB6241744CA00C89BAC /* BitmovinPlayerViewController.swift in Sources */,
 				CB28A31923FE3EC1006BECF0 /* PlayerControl.swift in Sources */,
 				CB4CE960238FA4AD0046552E /* ViuPlayerViewController.swift in Sources */,
 				CB0B7212239F411600D90461 /* ViuPlayerTabbarAudioView.swift in Sources */,
 				CB28A31223FD6A60006BECF0 /* PlayerLayer.swift in Sources */,
 				F2AC2FB8241A082200C89BAC /* ViuPlayerPlaybackGestureManager.swift in Sources */,
 				CBF452AF237D5669003C70F3 /* UIColor+Extension.swift in Sources */,
+				F2A17DE92424631D00074198 /* TestViuPlayerViewController.swift in Sources */,
 				CBF452B7237E9FE4003C70F3 /* ViuCustomLabel.swift in Sources */,
 				CB4651B0238B8B3400078AF1 /* ViuPlayerLoadingIndicator.swift in Sources */,
 				CBA9AB772392AD9D00093F21 /* ViuThumbnail.swift in Sources */,

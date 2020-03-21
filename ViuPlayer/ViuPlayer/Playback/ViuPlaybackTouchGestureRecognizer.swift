@@ -14,7 +14,7 @@ enum TouchRemoteLocation {
     case right
 }
 
-open class ViuPlayerPlaybackTouchGestureRecognizer: UIGestureRecognizer {
+open class ViuPlaybackTouchGestureRecognizer: UIGestureRecognizer {
     private(set) var touchesMovedX: CGFloat = 0.0
 
     override init(target: Any?, action: Selector?) {

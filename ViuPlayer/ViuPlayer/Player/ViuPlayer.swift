@@ -1,9 +1,9 @@
 //
-//  JHPlayer.swift
-//  JHPlayerView
+//  ViuPlayer.swift
+//  ViuPlayer
 //
-//  Created by Jerry He on 2019/2/10.
-//  Copyright © 2019年 jerry. All rights reserved.
+//  Created by TerryChe on 2020/3/19.
+//  Copyright © 2020 TerryChe. All rights reserved.
 //
 
 import AVFoundation
@@ -31,7 +31,7 @@ public enum ViuPlayerState: Int {
 /// - buffering//正在缓冲:
 /// - stop//停止:
 /// - bufferFinished//缓冲完成:
-public enum ViuPlayerBufferstate: Int {
+public enum ViuPlayerBufferState: Int {
     case none           // default
     case readyToPlay    // 准备播放
     case buffering      // 正在缓冲
@@ -50,11 +50,11 @@ public enum ViuPlayerBackgroundMode: Int {
     case proceed                // 继续进行
 }
 
-public enum ViuVideoGravityMode: Int {
-    case resize
-    case resizeAspect      // default
-    case resizeAspectFill
-}
+//public enum ViuVideoGravityMode: Int {
+//    case resize
+//    case resizeAspect      // default
+//    case resizeAspectFill
+//}
 
 public protocol ViuPlayerDelegate: NSObjectProtocol {
     // play state
@@ -62,7 +62,7 @@ public protocol ViuPlayerDelegate: NSObjectProtocol {
     // playe Duration
     func viuPlayer(_ player: ViuPlayer, playerDurationDidChange currentDuration: TimeInterval, totalDuration: TimeInterval)
     // buffer state
-    func viuPlayer(_ player: ViuPlayer, bufferStateDidChange state: ViuPlayerBufferstate)
+    func viuPlayer(_ player: ViuPlayer, bufferStateDidChange state: ViuPlayerBufferState)
     // buffered Duration
     func viuPlayer(_ player: ViuPlayer, bufferedDidChange bufferedDuration: TimeInterval, totalDuration: TimeInterval)
     // play error
@@ -74,43 +74,52 @@ public protocol ViuPlayerDelegate: NSObjectProtocol {
 public extension ViuPlayerDelegate {
     func viuPlayer(_ player: ViuPlayer, stateDidChange state: ViuPlayerState) {}
     func viuPlayer(_ player: ViuPlayer, playerDurationDidChange currentDuration: TimeInterval, totalDuration: TimeInterval) {}
-    func viuPlayer(_ player: ViuPlayer, bufferStateDidChange state: ViuPlayerBufferstate) {}
+    func viuPlayer(_ player: ViuPlayer, bufferStateDidChange state: ViuPlayerBufferState) {}
     func viuPlayer(_ player: ViuPlayer, bufferedDidChange bufferedDuration: TimeInterval, totalDuration: TimeInterval) {}
     func viuPlayer(_ player: ViuPlayer, playerFailed error: ViuPlayerError) {}
 }
 
-
-open class ViuPlayer: NSObject {
+open class ViuPlayer: UIView {
     
     //
     weak var delegate : ViuPlayerDelegate?
     //
-    var displayView : ViuPlayerView
-    var gravityMode : ViuVideoGravityMode = .resizeAspect
+//    var gravityMode : ViuVideoGravityMode = .resizeAspect
     var backgroundMode : ViuPlayerBackgroundMode = .autoPlayAndPaused
     var bufferInterval : TimeInterval = 2.0
     //
     private var timeObserver: Any?
     //
-    open fileprivate(set) var mediaFormat : ViuPlayerMediaFormat
+    open fileprivate(set) var mediaFormat : ViuPlayerMediaFormat?
     open fileprivate(set) var totalDuration : TimeInterval = 0.0
     open fileprivate(set) var currentDuration : TimeInterval = 0.0
     open fileprivate(set) var buffering : Bool = false
-    open fileprivate(set) var playerAsset : AVURLAsset?
+//    open fileprivate(set) var playerAsset : AVURLAsset?
     open fileprivate(set) var contentURL : URL?
-    open fileprivate(set) var error : ViuPlayerError
+    open fileprivate(set) var error = ViuPlayerError()
 //    fileprivate var resourceLoaderManager = ViuPlayerResourceLoaderManager()
     fileprivate var seeking : Bool = false
+    fileprivate var isUserPaused : Bool = false
     
     var imageGenerator: AVAssetImageGenerator?
+    
+    var playerLayer : AVPlayerLayer?
 
     //
     open fileprivate(set) var player : AVPlayer? {
         willSet{
             removePlayerObservers()
+            
+            playerLayer?.removeFromSuperlayer()
+            playerLayer = nil
         }
         didSet {
             addPlayerObservers()
+            
+            playerLayer = AVPlayerLayer(player: player)
+            playerLayer?.frame = frame
+            playerLayer?.videoGravity = .resizeAspect
+            layer.addSublayer(playerLayer!)
         }
     }
     
@@ -120,95 +129,63 @@ open class ViuPlayer: NSObject {
             removePlayerNotifations()
         }
         didSet {
+            guard let item = playerItem else { return }
             addPlayerItemObservers()
             addPlayerNotifications()
+            player = AVPlayer(playerItem: item)
+            totalDuration = item.duration.seconds
         }
     }
 
     open var state: ViuPlayerState = .none {
         didSet {
             if state != oldValue {
-                self.displayView.playStateDidChange(state)
-                self.delegate?.viuPlayer(self, stateDidChange: state)
+                delegate?.viuPlayer(self, stateDidChange: state)
             }
         }
     }
 
-    open var bufferState: ViuPlayerBufferstate = .none {
+    open var bufferState: ViuPlayerBufferState = .none {
         didSet {
             if bufferState != oldValue {
-                displayView.bufferStateDidChange(bufferState)
                 delegate?.viuPlayer(self, bufferStateDidChange: bufferState)
             }
         }
     }
-
-    // MARK: - life cycle
-    public init(URL: URL?, playerView: ViuPlayerView?) {
-        mediaFormat = ViuPlayerUtils.decoderVideoFormat(URL)
-        contentURL = URL
-        error = ViuPlayerError()
-        if let view = playerView {
-            displayView = view
-        } else {
-            displayView = ViuPlayerView()
-        }
-        super.init()
-        if contentURL != nil {
-            configurationPlayer(contentURL!)
-        }
-    }
-
-    public convenience init(URL: URL) {
-        self.init(URL: URL, playerView: nil)
-    }
-
-    public convenience init(playerView: ViuPlayerView) {
-        self.init(URL: nil, playerView: playerView)
-    }
-
-    public convenience override init() {
-        self.init(URL: nil, playerView: nil)
-    }
-
+    
     deinit {
         removePlayerNotifations()
-        // 不能在这里添加删除订阅，按home键回系统主界面时会导致崩溃；
-//        removePlayerItemObservers()
-        cleanPlayer()        
-        displayView.removeFromSuperview()
+        cleanPlayer()
         NotificationCenter.default.removeObserver(self)
     }
-
-    internal func configurationPlayer(_ URL: URL) {
-        displayView.setViuPlayer(viuPlayer: self)
-        playerAsset = AVURLAsset(url: URL, options: .none)
-        if URL.absoluteString.hasPrefix("file:///") {
-            let keys = ["tracks", "playable"]
-            playerItem = AVPlayerItem(asset: playerAsset!, automaticallyLoadedAssetKeys: keys)
-        } else {
-            playerItem = playerItem(URL)
-        }
-        player = AVPlayer(playerItem: playerItem)
-        displayView.reloadPlayerView()
-    }
     
-    open func playerItem(_ url: URL) -> AVPlayerItem {
-        let urlAsset = AVURLAsset(url: url, options: nil)
-        let playerItem = AVPlayerItem(asset: urlAsset)
-        return playerItem
+    public func setupPlayer(URL: URL) {
+        mediaFormat = ViuPlayerUtils.decoderVideoFormat(URL)
+        contentURL = URL
+
+        configurationPlayer(contentURL!)
+    }
+
+    internal func configurationPlayer(_ url: URL) {
+        if url.absoluteString.hasPrefix("file:///") {
+            let keys = ["tracks", "playable"]
+            playerItem = AVPlayerItem(asset: AVURLAsset(url: url), automaticallyLoadedAssetKeys: keys)
+        } else {
+            playerItem = AVPlayerItem(asset: AVURLAsset(url: url))
+        }
+        play()
     }
     
     // time KVO
-    internal func addPlayerObservers() { 
+    internal func addPlayerObservers() {
         timeObserver = player?.addPeriodicTimeObserver(forInterval: .init(value: 1, timescale: 1), queue: DispatchQueue.main, using: { [weak self] _ in
-            guard let strongSelf = self else { return }
-            if let currentTime = strongSelf.player?.currentTime().seconds,
-                let totalDuration = strongSelf.player?.currentItem?.duration.seconds {
-                strongSelf.currentDuration = currentTime
-                strongSelf.delegate?.viuPlayer(strongSelf, playerDurationDidChange: currentTime, totalDuration: totalDuration)
-                strongSelf.displayView.playerDurationDidChange(currentTime, totalDuration: totalDuration)
-            }
+            guard let strongSelf = self,
+                let player = strongSelf.player,
+                let playerItem = player.currentItem else { return }
+            
+            let currentTime = player.currentTime().seconds
+            strongSelf.currentDuration = currentTime
+            strongSelf.delegate?.viuPlayer(strongSelf, playerDurationDidChange: currentTime, totalDuration: playerItem.duration.seconds)
         })
     }
 
@@ -220,6 +197,22 @@ open class ViuPlayer: NSObject {
 // MARK: - public
 
 extension ViuPlayer {
+    open func playPauseAction() {
+        switch state {
+        case .playing:
+            isUserPaused = true
+            pause()
+            break
+        case .paused:
+            isUserPaused = false
+            play()
+            break
+        default:
+            isUserPaused = false
+            break
+        }
+    }
+    
     open func replaceVideo(_ URL: URL) {
         reloadPlayer()
         mediaFormat = ViuPlayerUtils.decoderVideoFormat(URL)
@@ -239,18 +232,16 @@ extension ViuPlayer {
     }
 
     open func cleanPlayer() {
+        playerItem?.cancelPendingSeeks()
+        playerItem = nil
+        
         player?.pause()
         player?.cancelPendingPrerolls()
         player?.replaceCurrentItem(with: nil)
         player = nil
-        playerAsset?.cancelLoading()
-        playerAsset = nil
-        playerItem?.cancelPendingSeeks()
-        playerItem = nil
     }
 
     open func play() {
-        if contentURL == nil { return }
         player?.play()
         state = .playing
     }
@@ -258,7 +249,6 @@ extension ViuPlayer {
     open func pause() {
         player?.pause()
         state = .paused
-
     }
 
     open func seekTime(offect: Double, autoPlay: Bool = true) {
@@ -281,10 +271,10 @@ extension ViuPlayer {
         DispatchQueue.main.async { [weak self] in
             guard let strongSelf = self else { return }
             strongSelf.seeking = true
-//            strongSelf.startPlayerBuffering()
+            strongSelf.startPlayerBuffering()
             strongSelf.playerItem?.seek(to: CMTimeMakeWithSeconds(time, preferredTimescale: Int32(NSEC_PER_SEC)), toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero, completionHandler: { finished in
                 DispatchQueue.main.async {
-//                    strongSelf.stopPlayerBuffering()
+                    strongSelf.stopPlayerBuffering()
                     if autoPlay {
                         strongSelf.play()
                     }
@@ -302,14 +292,14 @@ extension ViuPlayer {
 
 extension ViuPlayer {
     internal func startPlayerBuffering() {
-//        pause()
-//        bufferState = .buffering
-//        buffering = true
+        pause()
+        bufferState = .buffering
+        buffering = true
     }
 
     internal func stopPlayerBuffering() {
-//        bufferState = .stop
-//        buffering = false
+        bufferState = .stop
+        buffering = false
     }
 
     internal func collectPlayerErrorLogEvent() {
@@ -328,9 +318,9 @@ extension ViuPlayer {
     internal func addPlayerItemObservers() {
         let options = NSKeyValueObservingOptions([.new, .initial])
         playerItem?.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.status), options: options, context: &playerItemContext)
-//        playerItem?.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.loadedTimeRanges), options: options, context: &playerItemContext)
-//        playerItem?.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.playbackBufferEmpty), options: options, context: &playerItemContext)
-//        playerItem?.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.playbackLikelyToKeepUp), options: options, context: &playerItemContext)
+        playerItem?.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.loadedTimeRanges), options: options, context: &playerItemContext)
+        playerItem?.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.playbackBufferEmpty), options: options, context: &playerItemContext)
+        playerItem?.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.playbackLikelyToKeepUp), options: options, context: &playerItemContext)
         
     }
 
@@ -342,9 +332,9 @@ extension ViuPlayer {
 
     internal func removePlayerItemObservers() {
         playerItem?.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.status))
-//        playerItem?.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.loadedTimeRanges))
-//        playerItem?.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.playbackBufferEmpty))
-//        playerItem?.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.playbackLikelyToKeepUp))
+        playerItem?.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.loadedTimeRanges))
+        playerItem?.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.playbackBufferEmpty))
+        playerItem?.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.playbackLikelyToKeepUp))
     }
 
     internal func removePlayerNotifations() {
@@ -360,10 +350,6 @@ extension ViuPlayer {
     }
 
     @objc internal func applicationWillEnterForeground(_ notification: Notification) {
-        if let playerLayer = displayView.playerLayer {
-            playerLayer.player = player
-        }
-
         switch backgroundMode {
         case .suspend:
             pause()
@@ -375,10 +361,6 @@ extension ViuPlayer {
     }
 
     @objc internal func applicationDidEnterBackground(_ notification: Notification) {
-        if let playerLayer = displayView.playerLayer {
-            playerLayer.player = nil
-        }
-
         switch backgroundMode {
         case .suspend:
             pause()
@@ -407,18 +389,17 @@ extension ViuPlayer {
             case #keyPath(AVPlayerItem.status):
                 observePlayerStatus(key: keyPath, change: change)
                 
-//            case #keyPath(AVPlayerItem.playbackBufferEmpty):
-//                if let playbackBufferEmpty = change?[.newKey] as? Bool {
-//                    if playbackBufferEmpty {
-//                        startPlayerBuffering()
-//                    }
-//                }
-//            case #keyPath(AVPlayerItem.playbackLikelyToKeepUp):
-//                stopPlayerBuffering()
-//                play()
-//
-//            case #keyPath(AVPlayerItem.loadedTimeRanges):
-//                observeLoadTimeRangs()
+            case #keyPath(AVPlayerItem.playbackBufferEmpty):
+                if let playbackBufferEmpty = change?[.newKey] as? Bool {
+                    if playbackBufferEmpty {
+                        startPlayerBuffering()
+                    }
+                }
+            case #keyPath(AVPlayerItem.playbackLikelyToKeepUp):
+                stopPlayerBuffering()
+
+            case #keyPath(AVPlayerItem.loadedTimeRanges):
+                observeLoadTimeRangs()
                 
             default:
                 break
@@ -446,43 +427,35 @@ extension ViuPlayer {
             collectPlayerErrorLogEvent()
             stopPlayerBuffering()
             delegate?.viuPlayer(self, playerFailed: error)
-            displayView.playFailed(error)
         default:
             break
         }
     }
     
     private func observeLoadTimeRangs() {
-        let loadedTimeRanges = player?.currentItem?.loadedTimeRanges
-        if let bufferTimeRange = loadedTimeRanges?.first?.timeRangeValue {
+        guard let playerItem = player?.currentItem else { return }
+        
+        let loadedTimeRanges = playerItem.loadedTimeRanges
+        if let bufferTimeRange = loadedTimeRanges.first?.timeRangeValue {
             let star = bufferTimeRange.start.seconds // The start time of the time range.
             let duration = bufferTimeRange.duration.seconds // The duration of the time range.
             let bufferTime = star + duration
             
-            if let itemDuration = playerItem?.duration.seconds {
-                delegate?.viuPlayer(self, bufferedDidChange: bufferTime, totalDuration: itemDuration)
-                displayView.bufferedDidChange(bufferTime, totalDuration: itemDuration)
-                totalDuration = itemDuration
-                if itemDuration == bufferTime {
-                    bufferState = .bufferFinished
-                }
-            }
-            if let currentTime = playerItem?.currentTime().seconds {
-                if (bufferTime - currentTime) >= bufferInterval && state != .paused {
-                    play()
-                }
-                
-                if (bufferTime - currentTime) < bufferInterval {
-                    bufferState = .buffering
-                    buffering = true
-                } else {
-                    buffering = false
-                    bufferState = .readyToPlay
-                }
+            delegate?.viuPlayer(self, bufferedDidChange: bufferTime, totalDuration: totalDuration)
+            
+            if totalDuration == bufferTime {
+                bufferState = .bufferFinished
             }
             
-        } else {
-            play()
+            let currentTime = playerItem.currentTime().seconds
+            if (bufferTime - currentTime) < bufferInterval {
+                bufferState = .buffering
+                buffering = true
+            } else {
+                buffering = false
+                bufferState = .readyToPlay
+            }
+            
         }
     }
 }
