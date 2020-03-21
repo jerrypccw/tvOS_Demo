@@ -21,6 +21,7 @@ open class ViuPlayerViewController: UIViewController {
     // 播放器
     private let playerView = ViuPlayer()
     
+    
     override open func viewDidLoad() {
         super.viewDidLoad()
         
@@ -34,6 +35,8 @@ open class ViuPlayerViewController: UIViewController {
         topView.frame = view.frame
         topView.backgroundColor = .clear
         view.addSubview(topView)
+        
+        setupPanelViewController()
     }
     
     deinit {
@@ -46,6 +49,17 @@ open class ViuPlayerViewController: UIViewController {
     
     open func setupPlayback() {
         setupGestureRecognizer()
+    }
+    
+    private var lastSelectedPanelTabIndex: Int = 0
+    private var displayedPanelViewController: ViuPanelViewController?
+    
+    private func setupPanelViewController() {
+        let panelVC = ViuPanelViewController()
+        panelVC.selectedIndex = lastSelectedPanelTabIndex
+        panelVC.transitioningDelegate = self
+        panelVC.modalPresentationStyle = .overCurrentContext
+        displayedPanelViewController = panelVC
     }
 }
 
@@ -69,6 +83,8 @@ extension ViuPlayerViewController: ViuPlaybackGestureManagerDelegate {
         switch swipe.direction {
         case .down:
             print("显示 InfoVC")
+            present(displayedPanelViewController!, animated: true, completion: nil)
+            
         default:
             break
         }
@@ -151,6 +167,25 @@ extension ViuPlayerViewController: ViuPlaybackGestureManagerDelegate {
         } else {
             playerView.player?.rate = 1
         }
+    }
+}
+
+extension ViuPlayerViewController: UIViewControllerTransitioningDelegate {
+    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return presented is ViuPanelViewController ? ViuSlideDownAnimatedTransitioner() : nil
+    }
+    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return dismissed is ViuPanelViewController ? ViuSlideUpAnimatedTransitioner() : nil
+    }
+}
+
+extension ViuPlayerViewController: ViuPanelViewControllerDelegate {
+    func panelViewController(_ panelViewController: ViuPanelViewController, didSelectTabAtIndex index: Int) {
+        lastSelectedPanelTabIndex = index
+    }
+
+    func panelViewControllerDidDismiss(_ panelViewController: ViuPanelViewController) {
+        displayedPanelViewController = nil
     }
 }
 

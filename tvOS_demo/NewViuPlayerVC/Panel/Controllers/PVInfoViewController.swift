@@ -17,7 +17,7 @@ class PVInfoViewController: UIViewController {
     lazy var descriptionLabel: ViuCustomLabel = ViuCustomLabel()
     lazy var playTimeLabel: UILabel = UILabel()
     
-    var model: TabbarIntroductionModel? {
+    var model: PVIntroductionModel? {
         didSet {
             guard let m = model else {
                 return

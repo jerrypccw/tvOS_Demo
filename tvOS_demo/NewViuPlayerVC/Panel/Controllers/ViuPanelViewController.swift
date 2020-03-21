@@ -71,7 +71,6 @@ class ViuPanelViewController: UIViewController {
         super.viewDidAppear(animated)
         tabBar.subviews[0].isHidden = true
     }
-    
 }
 
 // MARK: - TabBar delegate
@@ -168,7 +167,7 @@ extension ViuPanelViewController {
         
         let vc1 = PVInfoViewController()
         vc1.title = "Info"
-        let model = TabbarIntroductionModel()
+        let model = PVIntroductionModel()
         model.buttonName = "简介"
         model.imageUrl = ""
         model.dramaTitle = "第15集 测试的播放器"
@@ -177,14 +176,38 @@ extension ViuPanelViewController {
         
         let vc2 = PVSubtitleViewController()
         vc2.title = "Subtitle"
-        let model2 = TabbarSubtitleModel()
+        let model2 = PVSubtitleModel()
         model2.buttonName = "语言"
 //        model2.subtitles += ["中文", "繁体中文"]
         model2.subtitles += ["中文", "英文", "印度文", "日文", "韩文", "法文", "意大利文", "西班牙文", "繁体中文"]
+        model2.delegate = self
         vc2.model = model2
         
         let vc3 = PVAudioViewController()
         vc3.title = "Audio"
+        
+        let collection = PVAudioCollectionModel()
+        let table = PVAudioTableModel()
+        table.headTitle = "语言"
+        table.contents = ["英语", "中文", "英语", "中文", "英语", "中文", "英语", "中文", "英语"]
+        //        table.contents = ["英语"]
+        table.delegate = self
+        
+        let table2 = PVAudioTableModel()
+        table2.headTitle = "声音"
+        table2.contents = ["完整动态范围", "降低高音量"]
+        table2.delegate = self
+        
+        let table3 = PVAudioTableModel()
+        table3.headTitle = "扬声器"
+        table3.contents = ["客厅"]
+        table3.delegate = self 
+        
+        collection.collections.append(table)
+        collection.collections.append(table2)
+        collection.collections.append(table3)
+        
+        vc3.model = collection
         
         viewControllers = [vc1, vc2, vc3]
         contentView.layer.masksToBounds = true
@@ -291,5 +314,19 @@ private extension UIView {
 //        self.bottomAnchor.constraint(equalTo: superview.bottomAnchor, constant: 0).isActive = true
         self.leadingAnchor.constraint(equalTo: superview.leadingAnchor, constant: 0).isActive = true
         self.trailingAnchor.constraint(equalTo: superview.trailingAnchor, constant: 0).isActive = true
+    }
+}
+
+extension ViuPanelViewController: PVAudioTableModelDelegate {
+    
+    func pvAudioTableSelectValue(_ string: String) {
+        print(string)
+    }
+}
+
+extension ViuPanelViewController: PVSubtitleModelDelegate {
+    
+    func pvSubtitleSelectValue(_ string: String) {
+        print(string)
     }
 }

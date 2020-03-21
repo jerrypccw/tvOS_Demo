@@ -10,8 +10,7 @@ import UIKit
 import CoreGraphics
 import GameController
 
-
-class ViuFocusTabbar: UITabBar {
+class PVFocusTabbar: UITabBar {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,14 +44,14 @@ class ViuFocusTabbar: UITabBar {
     override func didMoveToSuperview() {
         super.didMoveToSuperview()
         addSubview(focusView)
-        addGestureRecognizer(activateFocusViewGesture)
+//        addGestureRecognizer(activateFocusViewGesture)
     }
     
     private lazy var focusView: FocusView = {
         FocusView(frame: self.bounds)
     }()
     
-    private lazy var activateFocusViewGesture = TouchGestureRecogniser(target: self, action: #selector(ViuFocusTabbar.touchesDidOccur))
+//    private lazy var activateFocusViewGesture = TouchGestureRecogniser(target: self, action: #selector(PVFocusTabbar.touchesDidOccur))
 }
 
 // MARK: - Focus View

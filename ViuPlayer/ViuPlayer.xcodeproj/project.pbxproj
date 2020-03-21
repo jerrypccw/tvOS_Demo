@@ -7,6 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CB05DA1E242608A900A50925 /* PVTabbarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB05DA10242608A900A50925 /* PVTabbarModel.swift */; };
+		CB05DA1F242608A900A50925 /* PVAudioModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB05DA11242608A900A50925 /* PVAudioModel.swift */; };
+		CB05DA20242608A900A50925 /* ViuPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB05DA13242608A900A50925 /* ViuPanelViewController.swift */; };
+		CB05DA21242608A900A50925 /* PVAudioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB05DA14242608A900A50925 /* PVAudioViewController.swift */; };
+		CB05DA22242608A900A50925 /* ViuSlideDownAnimatedTransitioner.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB05DA15242608A900A50925 /* ViuSlideDownAnimatedTransitioner.swift */; };
+		CB05DA23242608A900A50925 /* PVSubtitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB05DA16242608A900A50925 /* PVSubtitleViewController.swift */; };
+		CB05DA24242608A900A50925 /* PVInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB05DA17242608A900A50925 /* PVInfoViewController.swift */; };
+		CB05DA25242608A900A50925 /* PVCenterFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB05DA19242608A900A50925 /* PVCenterFlowLayout.swift */; };
+		CB05DA26242608A900A50925 /* PVSubtitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB05DA1A242608A900A50925 /* PVSubtitleCell.swift */; };
+		CB05DA27242608A900A50925 /* PVFocusTabbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB05DA1B242608A900A50925 /* PVFocusTabbar.swift */; };
+		CB05DA28242608A900A50925 /* PVAudioCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB05DA1C242608A900A50925 /* PVAudioCell.swift */; };
+		CB05DA29242608A900A50925 /* PVAudioTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB05DA1D242608A900A50925 /* PVAudioTableCell.swift */; };
+		CB05DA2B2426092300A50925 /* ViuCustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB05DA2A2426092300A50925 /* ViuCustomLabel.swift */; };
 		F2A17DB924231BF500074198 /* ViuPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = F2A17DB724231BF500074198 /* ViuPlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F2A17DDE242352F300074198 /* ViuPlayerContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A17DDD242352F300074198 /* ViuPlayerContainerView.swift */; };
 		F2A17DE324237EA200074198 /* ViuPlayerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A17DE024237EA200074198 /* ViuPlayerError.swift */; };
@@ -22,6 +35,19 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CB05DA10242608A900A50925 /* PVTabbarModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVTabbarModel.swift; sourceTree = "<group>"; };
+		CB05DA11242608A900A50925 /* PVAudioModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVAudioModel.swift; sourceTree = "<group>"; };
+		CB05DA13242608A900A50925 /* ViuPanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViuPanelViewController.swift; sourceTree = "<group>"; };
+		CB05DA14242608A900A50925 /* PVAudioViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVAudioViewController.swift; sourceTree = "<group>"; };
+		CB05DA15242608A900A50925 /* ViuSlideDownAnimatedTransitioner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViuSlideDownAnimatedTransitioner.swift; sourceTree = "<group>"; };
+		CB05DA16242608A900A50925 /* PVSubtitleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVSubtitleViewController.swift; sourceTree = "<group>"; };
+		CB05DA17242608A900A50925 /* PVInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVInfoViewController.swift; sourceTree = "<group>"; };
+		CB05DA19242608A900A50925 /* PVCenterFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVCenterFlowLayout.swift; sourceTree = "<group>"; };
+		CB05DA1A242608A900A50925 /* PVSubtitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVSubtitleCell.swift; sourceTree = "<group>"; };
+		CB05DA1B242608A900A50925 /* PVFocusTabbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVFocusTabbar.swift; sourceTree = "<group>"; };
+		CB05DA1C242608A900A50925 /* PVAudioCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVAudioCell.swift; sourceTree = "<group>"; };
+		CB05DA1D242608A900A50925 /* PVAudioTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVAudioTableCell.swift; sourceTree = "<group>"; };
+		CB05DA2A2426092300A50925 /* ViuCustomLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViuCustomLabel.swift; sourceTree = "<group>"; };
 		F2A17DB424231BF500074198 /* ViuPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ViuPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2A17DB724231BF500074198 /* ViuPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViuPlayer.h; sourceTree = "<group>"; };
 		F2A17DB824231BF500074198 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -49,6 +75,49 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CB05DA0E242608A900A50925 /* Panel */ = {
+			isa = PBXGroup;
+			children = (
+				CB05DA12242608A900A50925 /* Controllers */,
+				CB05DA0F242608A900A50925 /* Models */,
+				CB05DA18242608A900A50925 /* Views */,
+			);
+			path = Panel;
+			sourceTree = "<group>";
+		};
+		CB05DA0F242608A900A50925 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CB05DA10242608A900A50925 /* PVTabbarModel.swift */,
+				CB05DA11242608A900A50925 /* PVAudioModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		CB05DA12242608A900A50925 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				CB05DA13242608A900A50925 /* ViuPanelViewController.swift */,
+				CB05DA14242608A900A50925 /* PVAudioViewController.swift */,
+				CB05DA16242608A900A50925 /* PVSubtitleViewController.swift */,
+				CB05DA17242608A900A50925 /* PVInfoViewController.swift */,
+				CB05DA15242608A900A50925 /* ViuSlideDownAnimatedTransitioner.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		CB05DA18242608A900A50925 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CB05DA19242608A900A50925 /* PVCenterFlowLayout.swift */,
+				CB05DA1A242608A900A50925 /* PVSubtitleCell.swift */,
+				CB05DA1B242608A900A50925 /* PVFocusTabbar.swift */,
+				CB05DA1C242608A900A50925 /* PVAudioCell.swift */,
+				CB05DA1D242608A900A50925 /* PVAudioTableCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		F2A17DAA24231BF500074198 = {
 			isa = PBXGroup;
 			children = (
@@ -91,6 +160,7 @@
 		F2A17DD324231FA200074198 /* Container */ = {
 			isa = PBXGroup;
 			children = (
+				CB05DA0E242608A900A50925 /* Panel */,
 				F2A17DF02424662200074198 /* ViuPlayerTopView.swift */,
 				F2A17DDD242352F300074198 /* ViuPlayerContainerView.swift */,
 			);
@@ -134,6 +204,7 @@
 		F2A17DD824231FFE00074198 /* CustomView */ = {
 			isa = PBXGroup;
 			children = (
+				CB05DA2A2426092300A50925 /* ViuCustomLabel.swift */,
 				F2A17DF22424677B00074198 /* ViuPlayerLoadingIndicator.swift */,
 			);
 			path = CustomView;
@@ -229,16 +300,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB05DA25242608A900A50925 /* PVCenterFlowLayout.swift in Sources */,
+				CB05DA26242608A900A50925 /* PVSubtitleCell.swift in Sources */,
 				F2A17DF12424662200074198 /* ViuPlayerTopView.swift in Sources */,
+				CB05DA1F242608A900A50925 /* PVAudioModel.swift in Sources */,
 				F2A17DEF2424644100074198 /* ViuPlaybackView.swift in Sources */,
+				CB05DA22242608A900A50925 /* ViuSlideDownAnimatedTransitioner.swift in Sources */,
+				CB05DA21242608A900A50925 /* PVAudioViewController.swift in Sources */,
 				F2A17DE324237EA200074198 /* ViuPlayerError.swift in Sources */,
 				F2A17DE524237EA200074198 /* ViuPlayerUtils.swift in Sources */,
 				F2A17DF924246B5D00074198 /* ViuPlaybackTouchGestureRecognizer.swift in Sources */,
+				CB05DA24242608A900A50925 /* PVInfoViewController.swift in Sources */,
+				CB05DA1E242608A900A50925 /* PVTabbarModel.swift in Sources */,
 				F2A17DF824246B5D00074198 /* ViuPlaybackGestureManager.swift in Sources */,
 				F2A17DE424237EA200074198 /* ViuPlayer.swift in Sources */,
 				F2A17DDE242352F300074198 /* ViuPlayerContainerView.swift in Sources */,
+				CB05DA23242608A900A50925 /* PVSubtitleViewController.swift in Sources */,
+				CB05DA20242608A900A50925 /* ViuPanelViewController.swift in Sources */,
 				F2A17DF32424677B00074198 /* ViuPlayerLoadingIndicator.swift in Sources */,
+				CB05DA27242608A900A50925 /* PVFocusTabbar.swift in Sources */,
+				CB05DA29242608A900A50925 /* PVAudioTableCell.swift in Sources */,
 				F2A17DE724237EC400074198 /* ViuPlayerViewController.swift in Sources */,
+				CB05DA28242608A900A50925 /* PVAudioCell.swift in Sources */,
+				CB05DA2B2426092300A50925 /* ViuCustomLabel.swift in Sources */,
 				F2A17DF52424681A00074198 /* TimeInterval+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

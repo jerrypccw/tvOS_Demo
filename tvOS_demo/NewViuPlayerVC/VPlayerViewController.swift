@@ -158,7 +158,6 @@ class VPlayerViewController: UIViewController {
         panelVC.selectedIndex = lastSelectedPanelTabIndex
         panelVC.transitioningDelegate = self
         displayedPanelViewController = panelVC
-        
     }
     
     // GestureRecogniser

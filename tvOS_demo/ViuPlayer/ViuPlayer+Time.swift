@@ -18,5 +18,4 @@ extension Timer {
         let block: ()->() = timer.userInfo as! ()->()
         block()
     }
-    
 }

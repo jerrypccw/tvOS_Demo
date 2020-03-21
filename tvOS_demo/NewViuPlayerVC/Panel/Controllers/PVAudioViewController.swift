@@ -10,9 +10,13 @@ import UIKit
 
 let PVAUDIO_CELL = "PVAUDIOCELL"
 
-class PVAudioViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class PVAudioViewController: UIViewController {
     
-    let collection = PVAudioCollectionModel()
+    var model: PVAudioCollectionModel? {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
     lazy var tableContentHeights:[CGFloat] = []
     
@@ -21,7 +25,7 @@ class PVAudioViewController: UIViewController, UICollectionViewDelegate, UIColle
     override var preferredFocusEnvironments: [UIFocusEnvironment] {
         return [collectionView]
     }
-
+    
     lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: CGRect.zero, collectionViewLayout: collectionLayout)
         view.backgroundColor = UIColor.clear
@@ -31,6 +35,7 @@ class PVAudioViewController: UIViewController, UICollectionViewDelegate, UIColle
         if #available(tvOS 11.0, *) {
             view.contentInsetAdjustmentBehavior = .never /// 清除顶部留白
         }
+        view.isScrollEnabled = false
         return view
     }()
     
@@ -45,33 +50,11 @@ class PVAudioViewController: UIViewController, UICollectionViewDelegate, UIColle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addSubview(collectionView)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
-        collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
-        collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
-        collectionHeightConstraint = collectionView.heightAnchor.constraint(equalToConstant: 300)
-        collectionHeightConstraint.priority = .defaultLow
-        collectionHeightConstraint.isActive = true
-                
-        let table = PVAudioTableModel()
-        table.headTitle = "语言"
-//        table.contents = ["英语", "中文", "英语", "中文", "英语", "中文", "英语", "中文", "英语"]
-        table.contents = ["英语"]
-        
-        let table2 = PVAudioTableModel()
-        table2.headTitle = "声音"
-        table2.contents = ["完整动态范围", "降低高音量"]
-        
-        let table3 = PVAudioTableModel()
-        table3.headTitle = "扬声器"
-        table3.contents = ["客厅"]
-        
-        collection.collections.append(table)
-        collection.collections.append(table2)
-        collection.collections.append(table3)
-        
-        collectionView.reloadData()
+        addCollectionView()
+        refreshLayout()
+    }
+    
+    private func refreshLayout() {
         
         collectionView.layoutIfNeeded()
         let tableHeight = getArrayMaxOne(tableContentHeights)
@@ -84,25 +67,42 @@ class PVAudioViewController: UIViewController, UICollectionViewDelegate, UIColle
         }
     }
     
-    func getArrayMaxOne<T:Comparable>(_ seq:[T]) ->T{
+    private func getArrayMaxOne<T:Comparable>(_ seq:[T]) ->T{
         assert(seq.count > 0)
         return seq.reduce(seq[0]){ max($0, $1) }
     }
     
+    private func addCollectionView() {
+        view.addSubview(collectionView)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+        collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+        collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
+        collectionHeightConstraint = collectionView.heightAnchor.constraint(equalToConstant: 300)
+        collectionHeightConstraint.priority = .defaultLow
+        collectionHeightConstraint.isActive = true
+    }
+}
+
+extension PVAudioViewController: UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return collection.collections.count
+        return model?.collections.count ?? 0
     }
     
-    /// 返回UICollectionViewCell视图
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PVAUDIO_CELL, for: indexPath) as! PVAudioCell
-        cell.data = collection.collections[indexPath.row]
+        cell.data = model?.collections[indexPath.row]
         tableContentHeights.append(cell.tableView.contentSize.height)
         return cell
     }
     
+}
+
+extension PVAudioViewController: UICollectionViewDelegate {
+    
     func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
         return false
     }
-    
 }
+
