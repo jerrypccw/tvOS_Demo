@@ -384,7 +384,7 @@ extension VPlayerViewController: ViuPanelViewControllerDelegate {
 
     func panelViewControllerDidDismiss(_ panelViewController: ViuPanelViewController) {
         displayedPanelViewController = nil
-        setupPositionController()
-        handlePlaybackControlVisibility()
+//        setupPositionController()
+//        handlePlaybackControlVisibility()
     }
 }

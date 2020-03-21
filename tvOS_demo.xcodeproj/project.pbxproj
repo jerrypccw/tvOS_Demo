@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		01851DC59840B02F6E036996 /* Pods_tvOS_demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 444E4028BA38B8DACFB31BAE /* Pods_tvOS_demo.framework */; };
+		CB08625024235965002E37E5 /* PVAudioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB08624F24235965002E37E5 /* PVAudioViewController.swift */; };
+		CB08625524235996002E37E5 /* PVCenterFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB08625224235996002E37E5 /* PVCenterFlowLayout.swift */; };
+		CB08625624235996002E37E5 /* PVSubtitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB08625324235996002E37E5 /* PVSubtitleCell.swift */; };
+		CB08625724235996002E37E5 /* ViuFocusTabbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB08625424235996002E37E5 /* ViuFocusTabbar.swift */; };
+		CB0862592423633F002E37E5 /* PVAudioCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0862582423633F002E37E5 /* PVAudioCell.swift */; };
+		CB08625B24236D34002E37E5 /* PVAudioTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB08625A24236D34002E37E5 /* PVAudioTableCell.swift */; };
+		CB08625E242466CE002E37E5 /* PVAudioModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB08625D242466CE002E37E5 /* PVAudioModel.swift */; };
 		CB0B7212239F411600D90461 /* ViuPlayerTabbarAudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0B7211239F411600D90461 /* ViuPlayerTabbarAudioView.swift */; };
 		CB1FD06F2387968800A74369 /* ViuPlayerProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1FD06E2387968800A74369 /* ViuPlayerProgressView.swift */; };
 		CB25E53B23ACBE8D00C68D8E /* ViuRemoteGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB25E53A23ACBE8D00C68D8E /* ViuRemoteGestureRecognizer.swift */; };
@@ -61,6 +68,13 @@
 /* Begin PBXFileReference section */
 		00D7CD0CC39DF68E57E203F8 /* Pods-tvOS_demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tvOS_demo.debug.xcconfig"; path = "Target Support Files/Pods-tvOS_demo/Pods-tvOS_demo.debug.xcconfig"; sourceTree = "<group>"; };
 		444E4028BA38B8DACFB31BAE /* Pods_tvOS_demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_tvOS_demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB08624F24235965002E37E5 /* PVAudioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PVAudioViewController.swift; sourceTree = "<group>"; };
+		CB08625224235996002E37E5 /* PVCenterFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVCenterFlowLayout.swift; sourceTree = "<group>"; };
+		CB08625324235996002E37E5 /* PVSubtitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVSubtitleCell.swift; sourceTree = "<group>"; };
+		CB08625424235996002E37E5 /* ViuFocusTabbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViuFocusTabbar.swift; sourceTree = "<group>"; };
+		CB0862582423633F002E37E5 /* PVAudioCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PVAudioCell.swift; sourceTree = "<group>"; };
+		CB08625A24236D34002E37E5 /* PVAudioTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PVAudioTableCell.swift; sourceTree = "<group>"; };
+		CB08625D242466CE002E37E5 /* PVAudioModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PVAudioModel.swift; sourceTree = "<group>"; };
 		CB0B7211239F411600D90461 /* ViuPlayerTabbarAudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerTabbarAudioView.swift; sourceTree = "<group>"; };
 		CB1FD06E2387968800A74369 /* ViuPlayerProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerProgressView.swift; sourceTree = "<group>"; };
 		CB25E53A23ACBE8D00C68D8E /* ViuRemoteGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuRemoteGestureRecognizer.swift; sourceTree = "<group>"; };
@@ -139,6 +153,26 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		CB0862512423596E002E37E5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CB08625424235996002E37E5 /* ViuFocusTabbar.swift */,
+				CB08625324235996002E37E5 /* PVSubtitleCell.swift */,
+				CB0862582423633F002E37E5 /* PVAudioCell.swift */,
+				CB08625224235996002E37E5 /* PVCenterFlowLayout.swift */,
+				CB08625A24236D34002E37E5 /* PVAudioTableCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		CB08625C2424664E002E37E5 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CB08625D242466CE002E37E5 /* PVAudioModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		CB1FD06C238792B200A74369 /* TabbarModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -197,10 +231,13 @@
 		CB3C0FB724178360007B8A85 /* Panel */ = {
 			isa = PBXGroup;
 			children = (
+				CB08625C2424664E002E37E5 /* Models */,
+				CB0862512423596E002E37E5 /* Views */,
 				CB3C0FB824178386007B8A85 /* ViuPanelViewController.swift */,
 				CB3C0FBA241784D4007B8A85 /* ViuSlideDownAnimatedTransitioner.swift */,
 				CB3C0FC2241A1E1F007B8A85 /* PVInfoViewController.swift */,
 				CB3C0FC4241A285E007B8A85 /* PVSubtitleViewController.swift */,
+				CB08624F24235965002E37E5 /* PVAudioViewController.swift */,
 			);
 			path = Panel;
 			sourceTree = "<group>";
@@ -455,18 +492,23 @@
 				CB28A30F23FD1AF1006BECF0 /* Player.swift in Sources */,
 				CBF452B923811F76003C70F3 /* ViuPlayerTabbarSubtitleView.swift in Sources */,
 				CB70824923FBB957000B8C65 /* TouchGestureRecogniser.swift in Sources */,
+				CB08625E242466CE002E37E5 /* PVAudioModel.swift in Sources */,
 				CB3C0FBB241784D4007B8A85 /* ViuSlideDownAnimatedTransitioner.swift in Sources */,
 				CB4651AE238B8B3400078AF1 /* ViuPlayerUtils.swift in Sources */,
 				CBF08598237ACFB500D685D1 /* ViuPlayerTabbarModel.swift in Sources */,
 				CB70824123FB960F000B8C65 /* VPlayerViewController.swift in Sources */,
 				CB43AD05233E0F4E0000A7F1 /* ViewController.swift in Sources */,
+				CB08625724235996002E37E5 /* ViuFocusTabbar.swift in Sources */,
 				CB4651B4238B8B3400078AF1 /* ViuSubtitles.swift in Sources */,
 				CB3C0FB924178386007B8A85 /* ViuPanelViewController.swift in Sources */,
 				CB4651AF238B8B3400078AF1 /* ViuPlayer.swift in Sources */,
 				F2E002E423975D0B004370F6 /* ViuPlayerViewController+Gesture.swift in Sources */,
 				CB28A30C23FD19FD006BECF0 /* PlayerViewController.swift in Sources */,
+				CB08625524235996002E37E5 /* PVCenterFlowLayout.swift in Sources */,
 				F2E002E62397B443004370F6 /* TimeInterval+Extension.swift in Sources */,
+				CB08625624235996002E37E5 /* PVSubtitleCell.swift in Sources */,
 				F2AC2FBA241A08A300C89BAC /* ViuPlayerPlaybackTouchGestureRecognizer.swift in Sources */,
+				CB08625B24236D34002E37E5 /* PVAudioTableCell.swift in Sources */,
 				CB4651B1238B8B3400078AF1 /* ViuPlayerView.swift in Sources */,
 				CB28A31623FD6C67006BECF0 /* PlayerRenderingView.swift in Sources */,
 				CB70824B23FBB961000B8C65 /* LongPressGestureRecogniser.swift in Sources */,
@@ -478,7 +520,9 @@
 				CBF452B3237D8ED6003C70F3 /* ViuPlayerTabbarIntroductionView.swift in Sources */,
 				CB4651B2238B8B3400078AF1 /* ViuPlayer+Time.swift in Sources */,
 				CB4651B9238BAA2B00078AF1 /* ViuPlayerSubtitlesView.swift in Sources */,
+				CB0862592423633F002E37E5 /* PVAudioCell.swift in Sources */,
 				CB70825623FBE828000B8C65 /* PositionController.swift in Sources */,
+				CB08625024235965002E37E5 /* PVAudioViewController.swift in Sources */,
 				CB25E53B23ACBE8D00C68D8E /* ViuRemoteGestureRecognizer.swift in Sources */,
 				CBF08596237ACF6300D685D1 /* ViuPlayerTabbarView.swift in Sources */,
 				CB70825423FBE7F9000B8C65 /* RemoteActionPositionController.swift in Sources */,

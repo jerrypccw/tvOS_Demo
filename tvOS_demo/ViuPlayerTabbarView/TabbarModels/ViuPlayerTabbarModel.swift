@@ -35,7 +35,7 @@ class TabbarSubtitleModel: ViuPlayerTabbarModel {
     var subtitles: [String]
     
     override init() {
-        subtitles = ["关闭"]
+        subtitles = ["未知语言"]
     }
 }
 

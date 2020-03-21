@@ -17,6 +17,8 @@ protocol ViuPanelViewControllerDelegate: class {
 class ViuPanelViewController: UIViewController {
     
     private var contentHeightConstraint: NSLayoutConstraint!
+    
+    private var swipUp = UISwipeGestureRecognizer()
 
     private lazy var tabBar = UITabBar()
     
@@ -47,6 +49,8 @@ class ViuPanelViewController: UIViewController {
             self.delegate?.panelViewController(self, didSelectTabAtIndex: selectedIndex)
         }
     }
+    
+    var isCellFocus: Bool = false
     
     weak var delegate: ViuPanelViewControllerDelegate?
 
@@ -124,21 +128,13 @@ extension ViuPanelViewController {
     }
     
     private func setupGestureRecognizer() {
-        let swipUp = UISwipeGestureRecognizer.init(target: self, action: #selector(collapse(_ :)))
+        swipUp.addTarget(self, action: #selector(collapse(_ :)))
         swipUp.direction = .up
         view.addGestureRecognizer(swipUp)
         
-        let swipDown = UISwipeGestureRecognizer.init(target: self, action: #selector(focusOnContentView(_ :)))
-        swipDown.direction = .down
-        view.addGestureRecognizer(swipDown)
-        
-        let tapMenu = UITapGestureRecognizer(target: self, action: #selector(collapse(_ :)))
+        let tapMenu = UITapGestureRecognizer(target: self, action: #selector(tapMenuAction(_ :)))
         tapMenu.allowedPressTypes = [NSNumber(value: UIPress.PressType.menu.rawValue)]
         view.addGestureRecognizer(tapMenu)
-        
-//        let focusOnTabBar = UITapGestureRecognizer(target: self, action: #selector(focusOnTabBar(_ :)))
-//        focusOnTabBar.allowedPressTypes = [NSNumber(value: UIPress.PressType.menu.rawValue)]
-//        view.addGestureRecognizer(focusOnTabBar)
     }
     
     private func setupTabbar() {
@@ -146,7 +142,13 @@ extension ViuPanelViewController {
         tabBar.delegate = self
         filletView.addSubview(tabBar)
         tabBar.translatesAutoresizingMaskIntoConstraints = false
-        tabBar.topAnchor.constraint(equalTo: filletView.topAnchor, constant: 0).isActive = true
+        
+        if #available(tvOS 13.0, *) {
+            tabBar.topAnchor.constraint(equalTo: filletView.topAnchor, constant: 20).isActive = true
+        } else {
+            tabBar.topAnchor.constraint(equalTo: filletView.topAnchor, constant: 0).isActive = true
+        }
+        
         tabBar.leftAnchor.constraint(equalTo: filletView.leftAnchor).isActive = true
         tabBar.rightAnchor.constraint(equalTo: filletView.rightAnchor).isActive = true
         tabBar.heightAnchor.constraint(equalToConstant: 88).isActive = true
@@ -159,8 +161,7 @@ extension ViuPanelViewController {
         contentView.topAnchor.constraint(equalTo: tabBar.bottomAnchor, constant: 2).isActive = true
         contentView.leftAnchor.constraint(equalTo: filletView.leftAnchor).isActive = true
         contentView.rightAnchor.constraint(equalTo: filletView.rightAnchor).isActive = true
-        contentView.bottomAnchor.constraint(equalTo: filletView.bottomAnchor).isActive = true
-//        contentView.backgroundColor = .yellow        
+        contentView.bottomAnchor.constraint(equalTo: filletView.bottomAnchor).isActive = true       
     }
     
     private func setupViewControllers() {
@@ -178,12 +179,12 @@ extension ViuPanelViewController {
         vc2.title = "Subtitle"
         let model2 = TabbarSubtitleModel()
         model2.buttonName = "语言"
+//        model2.subtitles += ["中文", "繁体中文"]
         model2.subtitles += ["中文", "英文", "印度文", "日文", "韩文", "法文", "意大利文", "西班牙文", "繁体中文"]
-//        vc2.model = model2
+        vc2.model = model2
         
-        let vc3 = UIViewController()
+        let vc3 = PVAudioViewController()
         vc3.title = "Audio"
-        vc3.preferredContentSize.height = 320
         
         viewControllers = [vc1, vc2, vc3]
         contentView.layer.masksToBounds = true
@@ -240,7 +241,7 @@ extension ViuPanelViewController {
         }
         
         currentViewController = newViewController
-        preferredContentSize = CGSize(width: 1720, height: newViewController.preferredContentSize.height)
+        preferredContentSize = CGSize(width: 1720, height: newViewController.preferredContentSize.height + tabBar.frame.height)
     }
 }
 
@@ -248,24 +249,35 @@ extension ViuPanelViewController {
 extension ViuPanelViewController {
    
     @objc func collapse(_ sender: Any) {
-        dismiss(animated: true) {
-            self.delegate?.panelViewControllerDidDismiss(self)
+        
+        //焦点在Cell时，手势上滑焦点为tabBar
+        if isCellFocus {
+            focusEnvironments = [tabBar]
+            setNeedsFocusUpdate()
+        } else {
+            //焦点在Tabbar时，手势上滑触发退出
+            dismiss(animated: true) { self.delegate?.panelViewControllerDidDismiss(self) }
         }
     }
     
-    @objc func focusOnContentView(_ sender: Any) {
-        if let currentViewController = currentViewController {
-            focusEnvironments = currentViewController.preferredFocusEnvironments
-        } else {
-            focusEnvironments = []
-        }
-        setNeedsFocusUpdate()
+    @objc func tapMenuAction(_ sender: Any) {
+        dismiss(animated: true) { self.delegate?.panelViewControllerDidDismiss(self) }
     }
-
-//    @objc func focusOnTabBar(_ sender: Any) {
-//        focusEnvironments = [tabBar]
-//        setNeedsFocusUpdate()
-//    }
+    
+    override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
+        super.didUpdateFocus(in: context, with: coordinator)
+            
+        if (context.nextFocusedItem as? PVAudioTableCell) != nil {
+            // 焦点在PVAudioTableCell，上滑手势取消
+            swipUp.removeTarget(self, action: #selector(collapse(_ :)))
+        } else {
+            swipUp.addTarget(self, action: #selector(collapse(_ :)))
+        }
+        
+        // 判断焦点是否在Cell
+        isCellFocus = (context.nextFocusedItem as? PVSubtitleCell) != nil
+            || (context.nextFocusedItem as? PVAudioTableCell) != nil
+    }
 }
 
 // MARK: - UIView extension
@@ -275,7 +287,7 @@ private extension UIView {
             return
         }
         self.heightAnchor.constraint(equalToConstant: height).isActive = true
-        self.topAnchor.constraint(equalTo: superview.topAnchor, constant: 20).isActive = true
+        self.topAnchor.constraint(equalTo: superview.topAnchor, constant: 10).isActive = true
 //        self.bottomAnchor.constraint(equalTo: superview.bottomAnchor, constant: 0).isActive = true
         self.leadingAnchor.constraint(equalTo: superview.leadingAnchor, constant: 0).isActive = true
         self.trailingAnchor.constraint(equalTo: superview.trailingAnchor, constant: 0).isActive = true

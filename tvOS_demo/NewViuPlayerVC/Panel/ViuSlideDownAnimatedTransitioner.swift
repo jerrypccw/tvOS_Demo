@@ -8,7 +8,7 @@
 
 import UIKit
 
-private let animatonDuration = 0.3
+private let animatonDuration = 0.5
 
 // MARK: SlideDown
 class ViuSlideDownAnimatedTransitioner: NSObject, UIViewControllerAnimatedTransitioning {
