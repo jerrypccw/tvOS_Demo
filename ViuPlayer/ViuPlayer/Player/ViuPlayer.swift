@@ -91,7 +91,7 @@ open class ViuPlayer: UIView {
     private var timeObserver: Any?
     //
     open fileprivate(set) var mediaFormat : ViuPlayerMediaFormat?
-    open fileprivate(set) var totalDuration : TimeInterval = 0.0
+//    open fileprivate(set) var totalDuration : TimeInterval = 0.0
     open fileprivate(set) var currentDuration : TimeInterval = 0.0
     open fileprivate(set) var buffering : Bool = false
 //    open fileprivate(set) var playerAsset : AVURLAsset?
@@ -133,7 +133,7 @@ open class ViuPlayer: UIView {
             addPlayerItemObservers()
             addPlayerNotifications()
             player = AVPlayer(playerItem: item)
-            totalDuration = item.duration.seconds
+//            totalDuration = item.duration.seconds
         }
     }
 
@@ -222,7 +222,7 @@ extension ViuPlayer {
 
     open func reloadPlayer() {
         seeking = false
-        totalDuration = 0.0
+//        totalDuration = 0.0
         currentDuration = 0.0
         error = ViuPlayerError()
         state = .none
@@ -292,7 +292,6 @@ extension ViuPlayer {
 
 extension ViuPlayer {
     internal func startPlayerBuffering() {
-        pause()
         bufferState = .buffering
         buffering = true
     }
@@ -441,9 +440,11 @@ extension ViuPlayer {
             let duration = bufferTimeRange.duration.seconds // The duration of the time range.
             let bufferTime = star + duration
             
-            delegate?.viuPlayer(self, bufferedDidChange: bufferTime, totalDuration: totalDuration)
+            let totleDuration = playerItem.duration.seconds
             
-            if totalDuration == bufferTime {
+            delegate?.viuPlayer(self, bufferedDidChange: bufferTime, totalDuration: totleDuration)
+            
+            if totleDuration == bufferTime {
                 bufferState = .bufferFinished
             }
             
