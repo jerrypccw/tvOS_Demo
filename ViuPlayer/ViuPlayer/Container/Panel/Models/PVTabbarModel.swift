@@ -10,10 +10,10 @@ import Foundation
 
 public class PVPlayerTabbarModel: NSObject {
     
-    var buttonName: String
+    var titleName: String
     
     override init() {
-        buttonName = ""
+        titleName = ""
     }
 }
 
@@ -30,6 +30,14 @@ public class PVIntroductionModel: PVPlayerTabbarModel {
     }
 }
 
+public protocol PVSubtitleModelDelegate: NSObjectProtocol {
+    func pvSubtitleSelectValue(_ string: String)
+}
+
+public extension PVSubtitleModelDelegate {
+    func pvSubtitleSelectValue(_ string: String) {}
+}
+
 public class PVSubtitleModel: PVPlayerTabbarModel {
     
     var subtitles: [String]
@@ -41,13 +49,6 @@ public class PVSubtitleModel: PVPlayerTabbarModel {
     }
 }
 
-public protocol PVSubtitleModelDelegate: NSObjectProtocol {
-    func pvSubtitleSelectValue(_ string: String)
-}
-
-public extension PVSubtitleModelDelegate {
-    func pvSubtitleSelectValue(_ string: String) {}
-}
 
 public class PVCustomModel: PVPlayerTabbarModel {
     
@@ -71,5 +72,6 @@ public class PVAudioModel: PVPlayerTabbarModel {
         speaker = ["设备名称"]
     }
 }
+
 
 

@@ -8,8 +8,13 @@
 
 import Foundation
 
-public class PVAudioCollectionModel {    
-    var collections: [PVAudioTableModel] = []
+
+public protocol PVAudioTableModelDelegate: NSObjectProtocol {
+    func pvAudioTableSelectValue(_ string: String)
+}
+
+public extension PVAudioTableModelDelegate {
+    func pvAudioTableSelectValue(_ string: String) {}
 }
 
 public class PVAudioTableModel {
@@ -19,11 +24,10 @@ public class PVAudioTableModel {
     var contents: [String] = []
 }
 
-
-public protocol PVAudioTableModelDelegate: NSObjectProtocol {
-    func pvAudioTableSelectValue(_ string: String)
+public class PVAudioCollectionModel: PVPlayerTabbarModel {
+    
+    var collections: [PVAudioTableModel] = []
 }
 
-public extension PVAudioTableModelDelegate {
-    func pvAudioTableSelectValue(_ string: String) {}
-}
+
+

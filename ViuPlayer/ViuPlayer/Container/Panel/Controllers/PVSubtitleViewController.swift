@@ -14,6 +14,7 @@ class PVSubtitleViewController: UIViewController {
     
     var model: PVSubtitleModel? {
         didSet {
+            title = "语言"
             collectionView.reloadData()
         }
     }

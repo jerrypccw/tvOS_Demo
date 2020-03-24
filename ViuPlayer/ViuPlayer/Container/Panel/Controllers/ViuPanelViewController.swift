@@ -40,6 +40,8 @@ class ViuPanelViewController: UIViewController {
         }
     }
     
+    private(set) var isPanelPresentVC: Bool = false
+    
     var selectedIndex: Int = 0 {
         didSet {
             guard oldValue != selectedIndex else {
@@ -55,6 +57,12 @@ class ViuPanelViewController: UIViewController {
         return time
     }()
     
+    var tabbarModels: [PVPlayerTabbarModel]? {
+        didSet {
+            setupViewControllers()
+        }
+    }
+    
     private var isCellFocus: Bool = false
     
     private let controlViewDuration: TimeInterval = 10.0
@@ -66,14 +74,16 @@ class ViuPanelViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .clear
+        isPanelPresentVC = true
+        
         setupFilletView()
         setupTabbar()
         setupLineView(filletView)
         setupContentView()
-        setupViewControllers()
         setupGestureRecognizer()
         updateContentForSelection()
         setupTimer()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -82,8 +92,8 @@ class ViuPanelViewController: UIViewController {
     }
     
     deinit {
-        print(ViuPanelViewController.self)
         timer.invalidate()
+        isPanelPresentVC = false
     }
 }
 
@@ -179,58 +189,45 @@ extension ViuPanelViewController {
     
     private func setupViewControllers() {
         
-        let vc1 = PVInfoViewController()
-        vc1.title = "Info"
-        let model = PVIntroductionModel()
-        model.buttonName = "简介"
-        model.imageUrl = ""
-        model.dramaTitle = "第15集 测试的播放器"
-        model.dramaDescription = "测试的播放器导航栏的简介 测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介"
-        vc1.model = model
+        guard let models = tabbarModels else { return }
         
-        let vc2 = PVSubtitleViewController()
-        vc2.title = "Subtitle"
-        let model2 = PVSubtitleModel()
-        model2.buttonName = "语言"
-//        model2.subtitles += ["中文", "繁体中文"]
-        model2.subtitles += ["中文", "英文", "印度文", "日文", "韩文", "法文", "意大利文", "西班牙文", "繁体中文"]
-        model2.delegate = self
-        vc2.model = model2
+        var vcs: [UIViewController] = []
         
-        let vc3 = PVAudioViewController()
-        vc3.title = "Audio"
+        for model in models {
+            
+            switch model.titleName {
+            case "简介":
+                let vc1 = PVInfoViewController()
+                vc1.model = model as? PVIntroductionModel
+                vcs.append(vc1)
+                
+                break
+            case "语言":
+                let vc2 = PVSubtitleViewController()
+                vc2.model = model as? PVSubtitleModel
+                vcs.append(vc2)
+               
+                
+                break
+            case "音频":
+                let vc3 = PVAudioViewController()
+                vc3.model = model as? PVAudioCollectionModel
+                vcs.append(vc3)
+                
+                break
+            default:
+                break
+            }
+        }
         
-        let collection = PVAudioCollectionModel()
-        let table = PVAudioTableModel()
-        table.headTitle = "语言"
-        table.contents = ["英语", "中文", "英语", "中文", "英语", "中文", "英语", "中文", "英语"]
-        //        table.contents = ["英语"]
-        table.delegate = self
-        
-        let table2 = PVAudioTableModel()
-        table2.headTitle = "声音"
-        table2.contents = ["完整动态范围", "降低高音量"]
-        table2.delegate = self
-        
-        let table3 = PVAudioTableModel()
-        table3.headTitle = "扬声器"
-        table3.contents = ["客厅"]
-        table3.delegate = self 
-        
-        collection.collections.append(table)
-        collection.collections.append(table2)
-        collection.collections.append(table3)
-        
-        vc3.model = collection
-        
-        viewControllers = [vc1, vc2, vc3]
+        viewControllers = vcs
         contentView.layer.masksToBounds = true
     }
     
     private func updateTabBars() {
-        guard viewIfLoaded != nil else {
-            return
-        }
+//        guard viewIfLoaded != nil else {
+//            return
+//        }
         let items = viewControllers.enumerated().map {
             UITabBarItem(title: $1.title, image: nil, tag: $0)
         }
@@ -293,12 +290,19 @@ extension ViuPanelViewController {
             setNeedsFocusUpdate()
         } else {
             //焦点在Tabbar时，手势上滑触发退出
-            dismiss(animated: true) { self.delegate?.panelViewControllerDidDismiss(self) }
+            dismissVC()
         }
     }
     
     @objc func tapMenuAction(_ sender: Any) {
-        dismiss(animated: true) { self.delegate?.panelViewControllerDidDismiss(self) }
+        dismissVC()
+    }
+    
+    func dismissVC() {
+        dismiss(animated: true) {
+            self.delegate?.panelViewControllerDidDismiss(self)
+        }
+        isPanelPresentVC = false
     }
     
     override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
@@ -340,20 +344,6 @@ private extension UIView {
 //        self.bottomAnchor.constraint(equalTo: superview.bottomAnchor, constant: 0).isActive = true
         self.leadingAnchor.constraint(equalTo: superview.leadingAnchor, constant: 0).isActive = true
         self.trailingAnchor.constraint(equalTo: superview.trailingAnchor, constant: 0).isActive = true
-    }
-}
-
-extension ViuPanelViewController: PVAudioTableModelDelegate {
-    
-    func pvAudioTableSelectValue(_ string: String) {
-        print(string)
-    }
-}
-
-extension ViuPanelViewController: PVSubtitleModelDelegate {
-    
-    func pvSubtitleSelectValue(_ string: String) {
-        print(string)
     }
 }
 
