@@ -11,12 +11,12 @@ import UIKit
 class ViuPlayerTopView: UIView {
     // 播放器进度条
     let viuProgressView = ViuPlaybackView()
+    // 中间转圈圈
+    let loadingIndicator = ViuPlayerLoadingIndicator()
     
     private let controlViewDuration: TimeInterval = 6.0 /// default 5.0
     private let displayDuration: TimeInterval = 0.5
-    
-    private let loadingIndicator = ViuPlayerLoadingIndicator()
-    
+
     private var timer = Timer()
     
     // bottom view
@@ -64,6 +64,7 @@ class ViuPlayerTopView: UIView {
 extension ViuPlayerTopView {
     
     internal func displayControlAnimation() {
+        timer.invalidate()
         UIView.animate(withDuration: displayDuration, animations: { [weak self] in
             guard let strongSelf = self else { return }
             strongSelf.viuProgressView.alpha = 1
@@ -72,7 +73,6 @@ extension ViuPlayerTopView {
     }
     
     internal func hiddenControlAnimation() {
-        timer.invalidate()
         UIView.animate(withDuration: displayDuration, animations: { [weak self] in
             guard let strongSelf = self else { return }
             strongSelf.viuProgressView.alpha = 0
@@ -132,8 +132,8 @@ extension ViuPlayerTopView {
         viuProgressView.isHidden = true
         addSubview(viuProgressView)
         viuProgressView.translatesAutoresizingMaskIntoConstraints = false
-        viuProgressView.leftAnchor.constraint(equalTo: leftAnchor, constant: 100).isActive = true
-        viuProgressView.rightAnchor.constraint(equalTo: rightAnchor, constant: -100).isActive = true
+        viuProgressView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+        viuProgressView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         viuProgressView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         viuProgressView.heightAnchor.constraint(equalToConstant: 120).isActive = true
     }

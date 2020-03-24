@@ -53,6 +53,8 @@ open class ViuPlaybackTouchGestureRecognizer: UIGestureRecognizer {
         let ptPrevious = touch.precisePreviousLocation(in: view)
         let offset = (ptNew.x - ptPrevious.x) * 0.1
         touchesMovedX = offset
+        
+        state = .changed
     }
 
     open override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent) {
@@ -67,7 +69,9 @@ open class ViuPlaybackTouchGestureRecognizer: UIGestureRecognizer {
 
     open override func reset() {
         remoteTouchLocation = .center
+        touchesMovedX = 0.0
         super.reset()
+        state = .ended
     }
 }
 

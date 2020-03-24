@@ -26,6 +26,7 @@ open class ViuPlayerViewController: UIViewController {
         super.viewDidLoad()
         
         playerView.frame = view.frame
+        playerView.delegate = self
         view.addSubview(playerView)
         
         containerView.frame = view.frame
@@ -43,6 +44,8 @@ open class ViuPlayerViewController: UIViewController {
     }
     
     open func setupPlayerURL(_ url: URL) {
+        topView.loadingIndicator.isHidden = false
+        topView.loadingIndicator.startAnimating()
         playerView.setupPlayer(URL: url)
     }
     
@@ -148,7 +151,9 @@ extension ViuPlayerViewController: ViuPlaybackGestureManagerDelegate {
             
             if playerView.state == .paused {
                 // 如果是暂停，就可以滑动
-                topView.viuProgressView.setPorgressLineByUser(offset: gesture.touchesMovedX)
+                if abs(gesture.touchesMovedX) > 1 {
+                    topView.viuProgressView.setPorgressLineByUser(offset: gesture.touchesMovedX)
+                }
             } else {
                 // 播放中就快进/快退
                 switch gesture.remoteTouchLocation {
@@ -175,6 +180,7 @@ extension ViuPlayerViewController: ViuPlaybackGestureManagerDelegate {
         if playerView.state == .paused {
             // 滑动跳特定时间
             playerView.seekTime(topView.viuProgressView.seekTime)
+            topView.viuProgressView.hiddenThumbnail()
         } else if gesture.numberOfTapsRequired == 1 && gesture.state == .ended {
             switch gesture.remoteTouchLocation {
             case .left:// 快退10秒
@@ -200,16 +206,73 @@ extension ViuPlayerViewController: ViuPlaybackGestureManagerDelegate {
             switch gesture.remoteTouchLocation {
             case .left:// 快退
                 topView.viuProgressView.showLeftActionIndicator(isLongPress: true)
-                playerView.player?.rate = -4
+                playerView.player?.rate = -20
             case .right:// 快进
                 topView.viuProgressView.showRightActionIndicator(isLongPress: true)
-                playerView.player?.rate = 4
+                playerView.player?.rate = 20
             default:
                 break
             }
         } else {
             playerView.player?.rate = 1
         }
+    }
+}
+
+extension ViuPlayerViewController: ViuPlayerDelegate {
+    // play state
+    public func viuPlayer(_ player: ViuPlayer, stateDidChange state: ViuPlayerState) {
+        switch state {
+        case .playFinished:
+//            topView.loadingIndicator.isHidden = true
+//            topView.loadingIndicator.stopAnimating()
+//            navigationController?.popViewController(animated: true)
+            print("播放完成")
+        case .paused:
+//            topView.displayShadowView()
+//            topView.displayControlView(true)
+            topView.viuProgressView.duration = playerView.player?.currentItem?.duration.seconds ?? 0
+            break
+        case .playing:
+            topView.loadingIndicator.isHidden = true
+            topView.loadingIndicator.stopAnimating()
+        default:
+            break
+        }
+    }
+    
+    // playe Duration
+    public func viuPlayer(_ player: ViuPlayer, playerDurationDidChange currentDuration: TimeInterval, totalDuration: TimeInterval) {
+        
+        var current = currentDuration.formatToString()
+        if totalDuration.isNaN { // HLS
+            current = "00:00"
+        }
+
+        topView.viuProgressView.setPorgressLineX(percent: CGFloat(currentDuration / totalDuration))
+        topView.viuProgressView.startTimeString = current
+        topView.viuProgressView.endTimeString = (totalDuration - currentDuration).formatToString()
+    }
+    
+    // buffer state
+    public func viuPlayer(_ player: ViuPlayer, bufferStateDidChange state: ViuPlayerBufferState) {
+        if state == .buffering {
+            topView.loadingIndicator.isHidden = false
+            topView.loadingIndicator.startAnimating()
+        } else {
+            topView.loadingIndicator.isHidden = true
+            topView.loadingIndicator.stopAnimating()
+        }
+    }
+    
+    // buffered Duration
+    public func viuPlayer(_ player: ViuPlayer, bufferedDidChange bufferedDuration: TimeInterval, totalDuration: TimeInterval) {
+        topView.viuProgressView.progressBar.setProgress(Float(bufferedDuration / totalDuration), animated: true)
+    }
+    
+    // play error
+    public func viuPlayer(_ player: ViuPlayer, playerFailed error: ViuPlayerError) {
+        print(error)
     }
 }
 

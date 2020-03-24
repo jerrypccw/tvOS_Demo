@@ -9,6 +9,8 @@
 import UIKit
 
 class ViuPlaybackView: UIView {
+    let pedding: CGFloat = 100
+    
     /// 焦点View
     var focusView: UIView?
 
@@ -49,11 +51,11 @@ class ViuPlaybackView: UIView {
         return eTime
     }()
 
-    lazy var thumbnailImgView: UIImageView = {
-        let iv = UIImageView()
-        iv.backgroundColor = .clear
-        return iv
-    }()
+//    lazy var thumbnailImgView: UIImageView = {
+//        let iv = UIImageView()
+//        iv.backgroundColor = .clear
+//        return iv
+//    }()
     
     lazy var thumbnailTime: UILabel = {
         let t = UILabel()
@@ -110,7 +112,7 @@ class ViuPlaybackView: UIView {
     /// 用户选中快进的时间
     var seekTime: TimeInterval {
         get {
-            let percent = progressLineByUser.frame.origin.x / frame.size.width
+            let percent = convert(progressLineByUser.frame, to: progressBar).origin.x / progressBar.frame.width
             var time = TimeInterval(percent) * duration
             if time > duration {
                 time = duration
@@ -141,8 +143,8 @@ class ViuPlaybackView: UIView {
         // 进度条
         addSubview(progressBar)
         progressBar.translatesAutoresizingMaskIntoConstraints = false
-        progressBar.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        progressBar.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+        progressBar.leftAnchor.constraint(equalTo: leftAnchor, constant: pedding).isActive = true
+        progressBar.rightAnchor.constraint(equalTo: rightAnchor, constant: -pedding).isActive = true
         progressBar.heightAnchor.constraint(equalToConstant: 10).isActive = true
         progressBar.topAnchor.constraint(equalTo: topAnchor, constant: 20).isActive = true
         
@@ -187,36 +189,42 @@ class ViuPlaybackView: UIView {
         endTime.heightAnchor.constraint(equalToConstant: 30).isActive = true
 
         // 预览图
-        addSubview(thumbnailImgView)
-        thumbnailImgView.translatesAutoresizingMaskIntoConstraints = false
-        thumbnailImgView.leftAnchor.constraint(greaterThanOrEqualTo: progressBar.leftAnchor).isActive = true
-        thumbnailImgView.rightAnchor.constraint(lessThanOrEqualTo: progressBar.rightAnchor).isActive = true
-        thumbnailImgView.bottomAnchor.constraint(equalTo: progressLineByUser.topAnchor).isActive = true
-        thumbnailImgView.widthAnchor.constraint(equalToConstant: 320).isActive = true
-        thumbnailImgView.heightAnchor.constraint(equalToConstant: 240).isActive = true
-        let thuCenterCon = thumbnailImgView.centerXAnchor.constraint(equalTo: progressLineByUser.centerXAnchor)
-        thuCenterCon.priority = .defaultLow
-        thuCenterCon.isActive = true
+//        addSubview(thumbnailImgView)
+//        thumbnailImgView.translatesAutoresizingMaskIntoConstraints = false
+//        thumbnailImgView.leftAnchor.constraint(greaterThanOrEqualTo: progressBar.leftAnchor).isActive = true
+//        thumbnailImgView.rightAnchor.constraint(lessThanOrEqualTo: progressBar.rightAnchor).isActive = true
+//        thumbnailImgView.bottomAnchor.constraint(equalTo: progressLineByUser.topAnchor).isActive = true
+//        thumbnailImgView.widthAnchor.constraint(equalToConstant: 320).isActive = true
+//        thumbnailImgView.heightAnchor.constraint(equalToConstant: 240).isActive = true
+//        let thuCenterCon = thumbnailImgView.centerXAnchor.constraint(equalTo: progressLineByUser.centerXAnchor)
+//        thuCenterCon.priority = .defaultLow
+//        thuCenterCon.isActive = true
 
         // 预览图时间
-        thumbnailImgView.addSubview(thumbnailTime)
+//        thumbnailImgView.addSubview(thumbnailTime)
+//        thumbnailTime.translatesAutoresizingMaskIntoConstraints = false
+//        thumbnailTime.leftAnchor.constraint(equalTo: thumbnailImgView.leftAnchor).isActive = true
+//        thumbnailTime.rightAnchor.constraint(equalTo: thumbnailImgView.rightAnchor).isActive = true
+//        thumbnailTime.bottomAnchor.constraint(equalTo: thumbnailImgView.bottomAnchor).isActive = true
+        addSubview(thumbnailTime)
         thumbnailTime.translatesAutoresizingMaskIntoConstraints = false
-        thumbnailTime.leftAnchor.constraint(equalTo: thumbnailImgView.leftAnchor).isActive = true
-        thumbnailTime.rightAnchor.constraint(equalTo: thumbnailImgView.rightAnchor).isActive = true
-        thumbnailTime.bottomAnchor.constraint(equalTo: thumbnailImgView.bottomAnchor).isActive = true
-
-        hiddenThumbnail()
-        setBufferingIndicatorLayout()
-    }
-    
-    private func setBufferingIndicatorLayout() {
+//        thumbnailTime.leftAnchor.constraint(greaterThanOrEqualTo: progressBar.leftAnchor).isActive = true
+//        thumbnailTime.rightAnchor.constraint(lessThanOrEqualTo: progressBar.rightAnchor).isActive = true
+        thumbnailTime.bottomAnchor.constraint(equalTo: progressLineByUser.topAnchor).isActive = true
+        let thuCenterCon = thumbnailTime.centerXAnchor.constraint(equalTo: progressLineByUser.centerXAnchor)
+        thuCenterCon.priority = .defaultLow
+        thuCenterCon.isActive = true
         
+        // buffer 进度
         addSubview(bufferingIndicator)
         bufferingIndicator.translatesAutoresizingMaskIntoConstraints = false
         bufferingIndicator.leadingAnchor.constraint(equalTo: startTime.trailingAnchor, constant: 26).isActive = true
         bufferingIndicator.centerYAnchor.constraint(equalTo: startTime.centerYAnchor).isActive = true
         bufferingIndicator.widthAnchor.constraint(equalToConstant: 8).isActive = true
         bufferingIndicator.heightAnchor.constraint(equalToConstant: 8).isActive = true
+        
+        hiddenThumbnail()
+        hiddenFastForwordAndRewind()
     }
 
     /// 设置播放进度条
@@ -236,11 +244,9 @@ class ViuPlaybackView: UIView {
     }
 
     /// 显示预览图
-    func showThumbnail(duration: TimeInterval) {
-        self.duration = duration
-
+    func showThumbnail() {
         progressLineByUser.isHidden = false
-        thumbnailImgView.isHidden = false
+//        thumbnailImgView.isHidden = false
         thumbnailTime.isHidden = false
         
         setThumbnailTime()
@@ -249,7 +255,7 @@ class ViuPlaybackView: UIView {
     /// 隐藏预览图
     func hiddenThumbnail() {
         progressLineByUser.isHidden = true
-        thumbnailImgView.isHidden = true
+//        thumbnailImgView.isHidden = true
         thumbnailTime.isHidden = true
 
         // 设置预览图起始位置
@@ -259,11 +265,13 @@ class ViuPlaybackView: UIView {
 
     /// 滑动进度条
     func setPorgressLineByUser(offset: CGFloat) {
+        showThumbnail()
+        
         var newFrame = progressLineByUser.frame.offsetBy(dx: offset, dy: 0)
-        if newFrame.origin.x < 0 {
-            newFrame = CGRect(x: 0, y: newFrame.origin.y, width: newFrame.size.width, height: newFrame.size.height)
-        } else if newFrame.origin.x > frame.size.width {
-            newFrame = CGRect(x: frame.size.width, y: newFrame.origin.y, width: newFrame.size.width, height: newFrame.size.height)
+        if newFrame.origin.x < pedding {
+            newFrame = CGRect(x: pedding, y: newFrame.origin.y, width: newFrame.size.width, height: newFrame.size.height)
+        } else if newFrame.origin.x > frame.size.width - pedding {
+            newFrame = CGRect(x: frame.size.width - pedding, y: newFrame.origin.y, width: newFrame.size.width, height: newFrame.size.height)
         }
         progressLineByUser.frame = newFrame
 
