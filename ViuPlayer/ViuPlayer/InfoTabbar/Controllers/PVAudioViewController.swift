@@ -12,7 +12,7 @@ let PVAUDIO_CELL = "PVAUDIOCELL"
 
 class PVAudioViewController: UIViewController {
     
-    var model: PVAudioCollectionModel? {
+    var model: PVAudioModel? {
         didSet {
             title = "音频"
             collectionView.reloadData()
@@ -88,12 +88,12 @@ class PVAudioViewController: UIViewController {
 extension PVAudioViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return model?.collections.count ?? 0
+        return model?.audioModels.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PVAUDIO_CELL, for: indexPath) as! PVAudioCell
-        cell.data = model?.collections[indexPath.row]
+        cell.data = model?.audioModels[indexPath.row]
         tableContentHeights.append(cell.tableView.contentSize.height)
         return cell
     }

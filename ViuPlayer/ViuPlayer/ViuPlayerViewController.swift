@@ -54,59 +54,68 @@ open class ViuPlayerViewController: UIViewController {
     }
     
     private var lastSelectedPanelTabIndex: Int = 0
-    private var displayedPanelViewController: ViuPanelViewController?
+//    private var displayedPanelViewController: ViuPanelViewController?
+//
+//    private func setupPanelViewController() {
+//        let panelVC = ViuPanelViewController()
+//        panelVC.selectedIndex = lastSelectedPanelTabIndex
+//        panelVC.delegate = self
+//        panelVC.transitioningDelegate = self
+//        panelVC.modalPresentationStyle = .overCurrentContext
+//
+//        displayedPanelViewController = panelVC
+//        setupTabbarVC()
+//        present(displayedPanelViewController!, animated: true) { }
+//    }
     
-    private func setupPanelViewController() {
+    open lazy var panelViewController: ViuPanelViewController = {
         let panelVC = ViuPanelViewController()
         panelVC.selectedIndex = lastSelectedPanelTabIndex
         panelVC.delegate = self
         panelVC.transitioningDelegate = self
         panelVC.modalPresentationStyle = .overCurrentContext
+        return panelVC
+    }()
         
-        displayedPanelViewController = panelVC
-        setupTabbarVC()
-        present(displayedPanelViewController!, animated: true) { }
-    }
-    
-    private func setupTabbarVC() {
-        
-        let model = PVIntroductionModel()
-        model.titleName = "简介"
-        model.imageUrl = ""
-        model.dramaTitle = "第15集 测试的播放器"
-        model.dramaDescription = "测试的播放器导航栏的简介 测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介"
-        
-        let model2 = PVSubtitleModel()
-        model2.titleName = "语言"
-        //        model2.subtitles += ["中文", "繁体中文"]
-        model2.subtitles += ["中文", "英文", "印度文", "日文", "韩文", "法文", "意大利文", "西班牙文", "繁体中文"]
-        model2.delegate = self
-        
-        let model3 = PVAudioCollectionModel()
-        model3.titleName = "音频"
-        
-        let table = PVAudioTableModel()
-        table.headTitle = "语言"
-        table.contents = ["英语", "中文", "英语", "中文", "英语", "中文", "英语", "中文", "英语"]
-        //        table.contents = ["英语"]
-        table.delegate = self
-        
-        let table2 = PVAudioTableModel()
-        table2.headTitle = "声音"
-        table2.contents = ["完整动态范围", "降低高音量"]
-        table2.delegate = self
-        
-        let table3 = PVAudioTableModel()
-        table3.headTitle = "扬声器"
-        table3.contents = ["客厅"]
-        table3.delegate = self
-        
-        model3.collections.append(table)
-        model3.collections.append(table2)
-        model3.collections.append(table3)
-        
-        displayedPanelViewController?.tabbarModels = [model, model2, model3]
-    }
+//    private func setupTabbarVC() {
+//
+//        let model = PVIntroductionModel()
+//        model.titleName = "简介"
+//        model.imageUrl = ""
+//        model.dramaTitle = "第15集 测试的播放器"
+//        model.dramaDescription = "测试的播放器导航栏的简介 测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介"
+//
+//        let model2 = PVSubtitleModel()
+//        model2.titleName = "语言"
+//        //        model2.subtitles += ["中文", "繁体中文"]
+//        model2.subtitles += ["中文", "英文", "印度文", "日文", "韩文", "法文", "意大利文", "西班牙文", "繁体中文"]
+//        model2.delegate = self
+//
+//        let model3 = PVAudioCollectionModel()
+//        model3.titleName = "音频"
+//
+//        let table = PVAudioTableModel()
+//        table.headTitle = "语言"
+//        table.contents = ["英语", "中文", "英语", "中文", "英语", "中文", "英语", "中文", "英语"]
+//        //        table.contents = ["英语"]
+//        table.delegate = self
+//
+//        let table2 = PVAudioTableModel()
+//        table2.headTitle = "声音"
+//        table2.contents = ["完整动态范围", "降低高音量"]
+//        table2.delegate = self
+//
+//        let table3 = PVAudioTableModel()
+//        table3.headTitle = "扬声器"
+//        table3.contents = ["客厅"]
+//        table3.delegate = self
+//
+//        model3.collections.append(table)
+//        model3.collections.append(table2)
+//        model3.collections.append(table3)
+//
+//        displayedPanelViewController.tabbarModels = [model, model2, model3]
+//    }
 }
 
 extension ViuPlayerViewController: ViuPlaybackGestureManagerDelegate {
@@ -129,7 +138,8 @@ extension ViuPlayerViewController: ViuPlaybackGestureManagerDelegate {
         switch swipe.direction {
         case .down:
             print("显示 InfoVC")
-            setupPanelViewController()
+//            setupTabbarVC()
+            present(panelViewController, animated: true) { }
                     
         default:
             break
@@ -291,22 +301,9 @@ extension ViuPlayerViewController: ViuPanelViewControllerDelegate {
     }
 
     func panelViewControllerDidDismiss(_ panelViewController: ViuPanelViewController) {
-        displayedPanelViewController = nil
+//        displayedPanelViewController = nil
+        print("panelViewController -- \(panelViewController)")
     }
 }
 
 
-/// MARK:
-extension ViuPlayerViewController: PVAudioTableModelDelegate {
-    
-    public func pvAudioTableSelectValue(_ string: String) {
-        print(string)
-    }
-}
-
-extension ViuPlayerViewController: PVSubtitleModelDelegate {
-    
-    public func pvSubtitleSelectValue(_ string: String) {
-        print(string)
-    }
-}

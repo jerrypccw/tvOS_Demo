@@ -6,27 +6,35 @@
 //  Copyright © 2019 jerry. All rights reserved.
 //
 
+import UIKit
 import Foundation
 
-public class PVPlayerTabbarModel: NSObject {
+open class PVPlayerTabbarModel {
     
     var titleName: String
     
-    override init() {
-        titleName = ""
+    init(name: String) {
+        self.titleName = name
     }
 }
 
-public class PVIntroductionModel: PVPlayerTabbarModel {
+//extension PVPlayerTabbarModel {
+//    convenience init(title: String) {
+//        self.init(name: title)
+//    }
+//}
+
+open class PVIntroductionModel: PVPlayerTabbarModel {
     
     var imageUrl: String
     var dramaTitle: String
     var dramaDescription: String
     
-    override init() {
-        imageUrl = ""
-        dramaTitle = ""
-        dramaDescription = ""
+    public init(title:String, imageUrl: String, dramaTitle: String, dramaDescription: String) {
+        self.imageUrl = imageUrl
+        self.dramaTitle = dramaTitle
+        self.dramaDescription = dramaDescription
+        super.init(name: title)
     }
 }
 
@@ -38,40 +46,75 @@ public extension PVSubtitleModelDelegate {
     func pvSubtitleSelectValue(_ string: String) {}
 }
 
-public class PVSubtitleModel: PVPlayerTabbarModel {
+
+/// MARK
+open class PVSubtitleModel: PVPlayerTabbarModel {
     
     var subtitles: [String]
     
     weak var delegate: PVSubtitleModelDelegate?
     
-    override init() {
-        subtitles = ["未知语言"]
+    public init(title: String, subtitles: [String], delegate: UIViewController) {
+        self.subtitles = subtitles
+        self.delegate = delegate as? PVSubtitleModelDelegate
+        super.init(name: title)
     }
 }
 
 
-public class PVCustomModel: PVPlayerTabbarModel {
+open class PVCustomModel: PVPlayerTabbarModel {
     
     var customs: [String]
     
-    override init() {
-        customs = ["开关"]
+    public init(title: String, customs: [String]) {
+        self.customs = customs
+        super.init(name: title)
     }
 }
 
 
-public class PVAudioModel: PVPlayerTabbarModel {
+//open class PVAudioModel: PVPlayerTabbarModel {
+//
+//    var languages: [String] = []
+//    var sounds: [String] = []
+//    var speakers: [String] = []
+//
+//    public init(title: String, lang: [String], sound: [String], speaker: [String]) {
+//        languages = lang
+//        sounds = sound
+//        speakers = speaker
+//        super.init(name: title)
+//    }
+//}
+
+public protocol PVAudioTableModelDelegate: NSObjectProtocol {
+    func pvAudioTableSelectValue(_ string: String)
+}
+
+public extension PVAudioTableModelDelegate {
+    func pvAudioTableSelectValue(_ string: String) {}
+}
+
+open class PVAudioTableModel {
     
-    var languages: [String]
-    var sounds: [String]
-    var speaker: [String]
+    weak var delegate: PVAudioTableModelDelegate?
+    var headTitle: String = ""
+    var contents: [String] = []
     
-    override init() {
-        languages = ["未知"]
-        sounds = ["完整动态范围"]
-        speaker = ["设备名称"]
+    public init(headTitle: String, contents: [String], delegate: UIViewController) {
+        self.headTitle = headTitle
+        self.contents = contents
+        self.delegate = delegate as? PVAudioTableModelDelegate
     }
 }
 
-
+open class PVAudioModel: PVPlayerTabbarModel {
+    
+    var audioModels: [PVAudioTableModel] = []
+    
+    public init(title: String, audioModels: [PVAudioTableModel]) {
+        self.audioModels = audioModels
+        super.init(name: title)
+    }
+}
 

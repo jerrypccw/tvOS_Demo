@@ -14,7 +14,6 @@
 		F29B72E42428C58B007C0A1C /* PVSubtitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29B72D62428C58B007C0A1C /* PVSubtitleViewController.swift */; };
 		F29B72E52428C58B007C0A1C /* PVInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29B72D72428C58B007C0A1C /* PVInfoViewController.swift */; };
 		F29B72E62428C58B007C0A1C /* PVTabbarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29B72D92428C58B007C0A1C /* PVTabbarModel.swift */; };
-		F29B72E72428C58B007C0A1C /* PVAudioModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29B72DA2428C58B007C0A1C /* PVAudioModel.swift */; };
 		F29B72E82428C58B007C0A1C /* PVCenterFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29B72DC2428C58B007C0A1C /* PVCenterFlowLayout.swift */; };
 		F29B72E92428C58B007C0A1C /* PVSubtitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29B72DD2428C58B007C0A1C /* PVSubtitleCell.swift */; };
 		F29B72EA2428C58B007C0A1C /* PVFocusTabbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29B72DE2428C58B007C0A1C /* PVFocusTabbar.swift */; };
@@ -42,7 +41,6 @@
 		F29B72D62428C58B007C0A1C /* PVSubtitleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVSubtitleViewController.swift; sourceTree = "<group>"; };
 		F29B72D72428C58B007C0A1C /* PVInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVInfoViewController.swift; sourceTree = "<group>"; };
 		F29B72D92428C58B007C0A1C /* PVTabbarModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVTabbarModel.swift; sourceTree = "<group>"; };
-		F29B72DA2428C58B007C0A1C /* PVAudioModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVAudioModel.swift; sourceTree = "<group>"; };
 		F29B72DC2428C58B007C0A1C /* PVCenterFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVCenterFlowLayout.swift; sourceTree = "<group>"; };
 		F29B72DD2428C58B007C0A1C /* PVSubtitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVSubtitleCell.swift; sourceTree = "<group>"; };
 		F29B72DE2428C58B007C0A1C /* PVFocusTabbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVFocusTabbar.swift; sourceTree = "<group>"; };
@@ -91,7 +89,6 @@
 			isa = PBXGroup;
 			children = (
 				F29B72D92428C58B007C0A1C /* PVTabbarModel.swift */,
-				F29B72DA2428C58B007C0A1C /* PVAudioModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -309,7 +306,6 @@
 				F29B72E42428C58B007C0A1C /* PVSubtitleViewController.swift in Sources */,
 				F29B72E82428C58B007C0A1C /* PVCenterFlowLayout.swift in Sources */,
 				F29B72E32428C58B007C0A1C /* ViuSlideDownAnimatedTransitioner.swift in Sources */,
-				F29B72E72428C58B007C0A1C /* PVAudioModel.swift in Sources */,
 				F2A17DF32424677B00074198 /* ViuPlayerLoadingIndicator.swift in Sources */,
 				F29B72E52428C58B007C0A1C /* PVInfoViewController.swift in Sources */,
 				F2A17DE724237EC400074198 /* ViuPlayerViewController.swift in Sources */,

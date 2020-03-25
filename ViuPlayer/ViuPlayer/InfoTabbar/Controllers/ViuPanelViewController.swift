@@ -14,7 +14,7 @@ protocol ViuPanelViewControllerDelegate: class {
     func panelViewControllerDidDismiss(_ panelViewController: ViuPanelViewController)
 }
 
-class ViuPanelViewController: UIViewController {
+open class ViuPanelViewController: UIViewController {
     
     private var contentHeightConstraint: NSLayoutConstraint!
     
@@ -30,7 +30,7 @@ class ViuPanelViewController: UIViewController {
     
     private lazy var focusEnvironments: [UIFocusEnvironment] = [self.tabBar]
     
-    override var preferredFocusEnvironments: [UIFocusEnvironment] {
+    override open var preferredFocusEnvironments: [UIFocusEnvironment] {
         return focusEnvironments
     }
     
@@ -57,7 +57,7 @@ class ViuPanelViewController: UIViewController {
         return time
     }()
     
-    var tabbarModels: [PVPlayerTabbarModel]? {
+    open var tabbarModels: [PVPlayerTabbarModel]? {
         didSet {
             setupViewControllers()
         }
@@ -70,7 +70,7 @@ class ViuPanelViewController: UIViewController {
     weak var delegate: ViuPanelViewControllerDelegate?
 
     /// MARK: Life cycle
-    override func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .clear
@@ -86,7 +86,7 @@ class ViuPanelViewController: UIViewController {
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         tabBar.subviews[0].isHidden = true
     }
@@ -99,7 +99,7 @@ class ViuPanelViewController: UIViewController {
 
 // MARK: - TabBar delegate
 extension ViuPanelViewController: UITabBarDelegate {
-    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+    public func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         selectedIndex = item.tag
     }
 }
@@ -197,22 +197,22 @@ extension ViuPanelViewController {
             
             switch model.titleName {
             case "简介":
-                let vc1 = PVInfoViewController()
-                vc1.model = model as? PVIntroductionModel
-                vcs.append(vc1)
+                let infoVC = PVInfoViewController()
+                infoVC.model = model as? PVIntroductionModel
+                vcs.append(infoVC)
                 
                 break
             case "语言":
-                let vc2 = PVSubtitleViewController()
-                vc2.model = model as? PVSubtitleModel
-                vcs.append(vc2)
+                let languageVC = PVSubtitleViewController()
+                languageVC.model = model as? PVSubtitleModel
+                vcs.append(languageVC)
                
                 
                 break
             case "音频":
-                let vc3 = PVAudioViewController()
-                vc3.model = model as? PVAudioCollectionModel
-                vcs.append(vc3)
+                let audioVC = PVAudioViewController()
+                audioVC.model = model as? PVAudioModel
+                vcs.append(audioVC)
                 
                 break
             default:
@@ -305,7 +305,7 @@ extension ViuPanelViewController {
         isPanelPresentVC = false
     }
     
-    override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
+    override open func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
         super.didUpdateFocus(in: context, with: coordinator)
             
         if (context.nextFocusedItem as? PVAudioTableCell) != nil {
