@@ -10,10 +10,10 @@ import UIKit
 
 class ViuPlayerSubtitlesView: ViuPlayerView {
     
-    var firstSubtitles : ViuSubtitles?
+    var firstSubtitles : ViuSubtitlesOld?
     let firstSubtitlesLabel = ViuCustomLabel()
     
-    var secondSubtitles : ViuSubtitles?
+    var secondSubtitles : ViuSubtitlesOld?
     let secondSubtitlesLabel = ViuCustomLabel()
     
     override func configurationUI() {
@@ -54,7 +54,7 @@ class ViuPlayerSubtitlesView: ViuPlayerView {
         }
     }
     
-    open func setSubtitles(_ subtitles : ViuSubtitles) {
+    open func setSubtitles(_ subtitles : ViuSubtitlesOld) {
         self.firstSubtitles = subtitles
         self.secondSubtitles = subtitles
     }

@@ -31,17 +31,11 @@ class ViuPlayerTopView: UIView {
     public override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        
         configurationShadowView()
         configurationViuProgressView()
     }
     
-    public convenience init() {
-        self.init(frame: CGRect.zero)
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     

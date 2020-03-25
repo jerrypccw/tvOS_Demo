@@ -64,6 +64,15 @@ open class ViuPlayerViewController: UIViewController {
         panelVC.modalPresentationStyle = .overCurrentContext
         displayedPanelViewController = panelVC
     }
+    
+    open func setupSubTitle(subTitle: [ViuSubtitles]){
+        // Test
+        if subTitle.count > 1 {
+            containerView.subTitleManager.setSubtitles(first: subTitle[0], second: subTitle[1])
+        } else if subTitle.count > 0 {
+            containerView.subTitleManager.setSubtitles(first: subTitle[0], second: nil)
+        }
+    }
 }
 
 extension ViuPlayerViewController: ViuPlaybackGestureManagerDelegate {
@@ -159,6 +168,8 @@ extension ViuPlayerViewController: ViuPlaybackGestureManagerDelegate {
         
         topView.displayControlView(true)
         
+        print("能否快进（rate>2）:\(playerView.player?.currentItem?.canPlayFastForward)")
+        
         if (gesture.state == .began || gesture.state == .changed) && gesture.remoteTouchLocation != .center {
             switch gesture.remoteTouchLocation {
             case .left:// 快退
@@ -209,6 +220,10 @@ extension ViuPlayerViewController: ViuPlayerDelegate {
         topView.viuProgressView.setPorgressLineX(percent: CGFloat(currentDuration / totalDuration))
         topView.viuProgressView.startTimeString = current
         topView.viuProgressView.endTimeString = (totalDuration - currentDuration).formatToString()
+        
+        // 更新字幕
+        containerView.subTitleManager.secondSubtitlesPosition = (presentedViewController == nil) ? 0 : 1
+        containerView.subTitleManager.currentDuration = currentDuration
     }
     
     // buffer state

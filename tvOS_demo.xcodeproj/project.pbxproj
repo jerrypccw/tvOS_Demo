@@ -39,7 +39,7 @@
 		CB4651B0238B8B3400078AF1 /* ViuPlayerLoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651A7238B8B3400078AF1 /* ViuPlayerLoadingIndicator.swift */; };
 		CB4651B1238B8B3400078AF1 /* ViuPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651A8238B8B3400078AF1 /* ViuPlayerView.swift */; };
 		CB4651B2238B8B3400078AF1 /* ViuPlayer+Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651A9238B8B3400078AF1 /* ViuPlayer+Time.swift */; };
-		CB4651B4238B8B3400078AF1 /* ViuSubtitles.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651AB238B8B3400078AF1 /* ViuSubtitles.swift */; };
+		CB4651B4238B8B3400078AF1 /* ViuSubtitlesOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651AB238B8B3400078AF1 /* ViuSubtitlesOld.swift */; };
 		CB4651B5238B8B3400078AF1 /* ViiuPlayerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651AC238B8B3400078AF1 /* ViiuPlayerError.swift */; };
 		CB4651B9238BAA2B00078AF1 /* ViuPlayerSubtitlesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4651B8238BAA2B00078AF1 /* ViuPlayerSubtitlesView.swift */; };
 		CB4CE960238FA4AD0046552E /* ViuPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4CE95F238FA4AD0046552E /* ViuPlayerViewController.swift */; };
@@ -119,7 +119,7 @@
 		CB4651A7238B8B3400078AF1 /* ViuPlayerLoadingIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViuPlayerLoadingIndicator.swift; sourceTree = "<group>"; };
 		CB4651A8238B8B3400078AF1 /* ViuPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViuPlayerView.swift; sourceTree = "<group>"; };
 		CB4651A9238B8B3400078AF1 /* ViuPlayer+Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViuPlayer+Time.swift"; sourceTree = "<group>"; };
-		CB4651AB238B8B3400078AF1 /* ViuSubtitles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViuSubtitles.swift; sourceTree = "<group>"; };
+		CB4651AB238B8B3400078AF1 /* ViuSubtitlesOld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViuSubtitlesOld.swift; sourceTree = "<group>"; };
 		CB4651AC238B8B3400078AF1 /* ViiuPlayerError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViiuPlayerError.swift; sourceTree = "<group>"; };
 		CB4651B8238BAA2B00078AF1 /* ViuPlayerSubtitlesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViuPlayerSubtitlesView.swift; sourceTree = "<group>"; };
 		CB4CE95F238FA4AD0046552E /* ViuPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerViewController.swift; sourceTree = "<group>"; };
@@ -322,7 +322,7 @@
 				CB4651A7238B8B3400078AF1 /* ViuPlayerLoadingIndicator.swift */,
 				CB4651A8238B8B3400078AF1 /* ViuPlayerView.swift */,
 				CB4651A9238B8B3400078AF1 /* ViuPlayer+Time.swift */,
-				CB4651AB238B8B3400078AF1 /* ViuSubtitles.swift */,
+				CB4651AB238B8B3400078AF1 /* ViuSubtitlesOld.swift */,
 				CB4651AC238B8B3400078AF1 /* ViiuPlayerError.swift */,
 				CBA9AB762392AD9D00093F21 /* ViuThumbnail.swift */,
 			);
@@ -551,7 +551,7 @@
 				CB70824123FB960F000B8C65 /* VPlayerViewController.swift in Sources */,
 				CB43AD05233E0F4E0000A7F1 /* ViewController.swift in Sources */,
 				CB08625724235996002E37E5 /* PVFocusTabbar.swift in Sources */,
-				CB4651B4238B8B3400078AF1 /* ViuSubtitles.swift in Sources */,
+				CB4651B4238B8B3400078AF1 /* ViuSubtitlesOld.swift in Sources */,
 				CB05DA0C2426057600A50925 /* PVTabbarModel.swift in Sources */,
 				CB3C0FB924178386007B8A85 /* ViuPanelViewController.swift in Sources */,
 				CB4651AF238B8B3400078AF1 /* ViuPlayer.swift in Sources */,

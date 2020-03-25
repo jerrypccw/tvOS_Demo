@@ -20,6 +20,8 @@
 		F29B72EA2428C58B007C0A1C /* PVFocusTabbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29B72DE2428C58B007C0A1C /* PVFocusTabbar.swift */; };
 		F29B72EB2428C58B007C0A1C /* PVAudioCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29B72DF2428C58B007C0A1C /* PVAudioCell.swift */; };
 		F29B72EC2428C58B007C0A1C /* PVAudioTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29B72E02428C58B007C0A1C /* PVAudioTableCell.swift */; };
+		F29B72EE2428C607007C0A1C /* ViuPlayerSubtitlesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29B72ED2428C607007C0A1C /* ViuPlayerSubtitlesManager.swift */; };
+		F29B72F02428C64E007C0A1C /* ViuSubtitles.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29B72EF2428C64E007C0A1C /* ViuSubtitles.swift */; };
 		F2A17DB924231BF500074198 /* ViuPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = F2A17DB724231BF500074198 /* ViuPlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F2A17DDE242352F300074198 /* ViuPlayerContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A17DDD242352F300074198 /* ViuPlayerContainerView.swift */; };
 		F2A17DE324237EA200074198 /* ViuPlayerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A17DE024237EA200074198 /* ViuPlayerError.swift */; };
@@ -48,6 +50,8 @@
 		F29B72DE2428C58B007C0A1C /* PVFocusTabbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVFocusTabbar.swift; sourceTree = "<group>"; };
 		F29B72DF2428C58B007C0A1C /* PVAudioCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVAudioCell.swift; sourceTree = "<group>"; };
 		F29B72E02428C58B007C0A1C /* PVAudioTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVAudioTableCell.swift; sourceTree = "<group>"; };
+		F29B72ED2428C607007C0A1C /* ViuPlayerSubtitlesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerSubtitlesManager.swift; sourceTree = "<group>"; };
+		F29B72EF2428C64E007C0A1C /* ViuSubtitles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuSubtitles.swift; sourceTree = "<group>"; };
 		F2A17DB424231BF500074198 /* ViuPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ViuPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2A17DB724231BF500074198 /* ViuPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViuPlayer.h; sourceTree = "<group>"; };
 		F2A17DB824231BF500074198 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -181,6 +185,8 @@
 		F2A17DD624231FA200074198 /* Subtitles */ = {
 			isa = PBXGroup;
 			children = (
+				F29B72ED2428C607007C0A1C /* ViuPlayerSubtitlesManager.swift */,
+				F29B72EF2428C64E007C0A1C /* ViuSubtitles.swift */,
 			);
 			path = Subtitles;
 			sourceTree = "<group>";
@@ -300,7 +306,9 @@
 				F2A17DE524237EA200074198 /* ViuPlayerUtils.swift in Sources */,
 				F29B72E62428C58B007C0A1C /* PVTabbarModel.swift in Sources */,
 				F2A17DF924246B5D00074198 /* ViuPlaybackTouchGestureRecognizer.swift in Sources */,
+				F29B72EE2428C607007C0A1C /* ViuPlayerSubtitlesManager.swift in Sources */,
 				F2A17DF824246B5D00074198 /* ViuPlaybackGestureManager.swift in Sources */,
+				F29B72F02428C64E007C0A1C /* ViuSubtitles.swift in Sources */,
 				F29B72EC2428C58B007C0A1C /* PVAudioTableCell.swift in Sources */,
 				F29B72E22428C58B007C0A1C /* PVAudioViewController.swift in Sources */,
 				F2A17DE424237EA200074198 /* ViuPlayer.swift in Sources */,
