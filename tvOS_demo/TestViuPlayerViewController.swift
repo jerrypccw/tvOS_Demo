@@ -17,7 +17,7 @@ class TestViuPlayerViewController: ViuPlayerViewController {
         // Do any additional setup after loading the view.
 //        https://d1k2us671qcoau.cloudfront.net/distribute?area_id=1&ccs_product_id=9ab3e938b857337620e38577b9e59d1f&duration=0&language_flag_id=1&language_id=1&os=tvOS&platform_flag_label=tv&product_subtitle_language_id=1&ut=2
         
-        let url = URL(string: "https://stream-hk.viu.com/s/pHlfvBuT7ghzbo8csXCxig/1585046401/UD/9ab3e938b857337620e38577b9e59d1f/9ab3e938b857337620e38577b9e59d1f_Layer4_vod.m3u8")!
+        let url = URL(string: "https://stream-hk.viu.com/s/fSKjMDW1Kieu_wEJY3DEoA/1585122493/UD/9ab3e938b857337620e38577b9e59d1f/9ab3e938b857337620e38577b9e59d1f_Layer4_vod.m3u8")!
         setupPlayerURL(url)
         setupPlayback()
         

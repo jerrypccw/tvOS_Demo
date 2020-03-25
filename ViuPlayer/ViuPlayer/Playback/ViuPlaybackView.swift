@@ -95,27 +95,15 @@ class ViuPlaybackView: UIView {
         }
     }()
 
-    var duration = TimeInterval.zero
-
-    var startTimeString: String? {
-        didSet {
-            self.startTime.text = self.startTimeString
-        }
-    }
-
-    var endTimeString: String? {
-        didSet {
-            endTime.text = "-" + (endTimeString ?? "00:00")
-        }
-    }
+    var totalDuration = TimeInterval.zero
     
     /// 用户选中快进的时间
     var seekTime: TimeInterval {
         get {
             let percent = convert(progressLineByUser.frame, to: progressBar).origin.x / progressBar.frame.width
-            var time = TimeInterval(percent) * duration
-            if time > duration {
-                time = duration
+            var time = TimeInterval(percent) * totalDuration
+            if time > totalDuration {
+                time = totalDuration
             }
             return time
         }
@@ -228,7 +216,11 @@ class ViuPlaybackView: UIView {
     }
 
     /// 设置播放进度条
-    func setPorgressLineX(percent: CGFloat) {
+    func setPorgressLineX(currentDuration: TimeInterval, totalDuration: TimeInterval) {
+        self.totalDuration = totalDuration
+        
+        let percent = CGFloat(currentDuration / totalDuration)
+        
         var offset = progressBar.frame.width * percent
         if offset.isNaN {
             offset = 0
@@ -241,6 +233,24 @@ class ViuPlaybackView: UIView {
         // 设置预览图起始位置
         let paraFrame = progressBar.convert(progressLine.frame, to: self)
         progressLineByUser.frame = CGRect(x: paraFrame.origin.x, y: paraFrame.origin.y - progressLine.frame.size.height, width: paraFrame.size.width, height: 24)
+        
+        startTime.text = currentDuration.formatToString()
+        endTime.text = "-" + (totalDuration - currentDuration).formatToString()
+    }
+    
+    func setPorgress(offset: CGFloat) {
+        var newFrame = progressLine.frame.offsetBy(dx: offset, dy: 0)
+        if newFrame.origin.x < 0 {
+            newFrame = CGRect(x: pedding, y: newFrame.origin.y, width: newFrame.size.width, height: newFrame.size.height)
+        } else if newFrame.origin.x > frame.size.width {
+            newFrame = CGRect(x: frame.size.width - pedding, y: newFrame.origin.y, width: newFrame.size.width, height: newFrame.size.height)
+        }
+        progressLine.frame = newFrame
+        
+        let paraFrame = progressBar.convert(progressLine.frame, to: self)
+        progressLineByUser.frame = CGRect(x: paraFrame.origin.x, y: paraFrame.origin.y - progressLine.frame.size.height, width: paraFrame.size.width, height: 24)
+        
+        startTime.text = seekTime.formatToString()
     }
 
     /// 显示预览图

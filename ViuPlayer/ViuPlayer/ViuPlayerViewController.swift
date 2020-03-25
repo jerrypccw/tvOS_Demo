@@ -20,8 +20,10 @@ open class ViuPlayerViewController: UIViewController {
     
     // 播放器
     private let playerView = ViuPlayer()
-    
-    
+
+    // 长按快进
+    private var longPressTimer: Timer?
+
     override open func viewDidLoad() {
         super.viewDidLoad()
         
@@ -209,23 +211,54 @@ extension ViuPlayerViewController: ViuPlaybackGestureManagerDelegate {
         // 视频暂停时，就不执行
         if playerView.state == .paused { return }
         
+        guard let player = playerView.player, let playerItem = player.currentItem else {
+            return
+        }
+        
         topView.displayControlView(true)
         
-        print("能否快进（rate>2）:\(playerView.player?.currentItem?.canPlayFastForward)")
+        print("能否快进（rate>2）:\(playerItem.canPlayFastForward)")
         
         if (gesture.state == .began || gesture.state == .changed) && gesture.remoteTouchLocation != .center {
             switch gesture.remoteTouchLocation {
             case .left:// 快退
                 topView.viuProgressView.showLeftActionIndicator(isLongPress: true)
-                playerView.player?.rate = -20
+                
+                if playerItem.canPlayFastForward {
+                    player.rate = -20
+                } else {
+                    player.pause()
+                    longPressTimer?.invalidate()
+                    longPressTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { [weak self] (timer) in
+                        print("快退")
+                        self?.topView.viuProgressView.setPorgress(offset: -3)
+                    })
+                }
+                
             case .right:// 快进
                 topView.viuProgressView.showRightActionIndicator(isLongPress: true)
-                playerView.player?.rate = 20
+                
+                if playerItem.canPlayFastForward {
+                    player.rate = 20
+                } else {
+                    player.pause()
+                    longPressTimer?.invalidate()
+                    longPressTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { [weak self] (timer) in
+                        print("快进")
+                        self?.topView.viuProgressView.setPorgress(offset: 3)
+                    })
+                }
+                
             default:
                 break
             }
         } else {
-            playerView.player?.rate = 1
+            if playerItem.canPlayFastForward {
+                playerView.player?.rate = 1
+            } else {
+                longPressTimer?.invalidate()
+                playerView.seekTime(topView.viuProgressView.seekTime)
+            }
         }
     }
 }
@@ -242,7 +275,7 @@ extension ViuPlayerViewController: ViuPlayerDelegate {
         case .paused:
 //            topView.displayShadowView()
 //            topView.displayControlView(true)
-            topView.viuProgressView.duration = playerView.player?.currentItem?.duration.seconds ?? 0
+//            topView.viuProgressView.duration = playerView.player?.currentItem?.duration.seconds ?? 0
             break
         case .playing:
             topView.loadingIndicator.isHidden = true
@@ -254,15 +287,9 @@ extension ViuPlayerViewController: ViuPlayerDelegate {
     
     // playe Duration
     public func viuPlayer(_ player: ViuPlayer, playerDurationDidChange currentDuration: TimeInterval, totalDuration: TimeInterval) {
-        
-        var current = currentDuration.formatToString()
-        if totalDuration.isNaN { // HLS
-            current = "00:00"
-        }
 
-        topView.viuProgressView.setPorgressLineX(percent: CGFloat(currentDuration / totalDuration))
-        topView.viuProgressView.startTimeString = current
-        topView.viuProgressView.endTimeString = (totalDuration - currentDuration).formatToString()
+        // 设置进度条
+        topView.viuProgressView.setPorgressLineX(currentDuration: currentDuration, totalDuration: totalDuration)
         
         // 更新字幕
         containerView.subTitleManager.secondSubtitlesPosition = (presentedViewController == nil) ? 0 : 1
