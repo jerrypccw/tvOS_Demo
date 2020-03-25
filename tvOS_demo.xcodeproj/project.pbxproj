@@ -8,19 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		01851DC59840B02F6E036996 /* Pods_tvOS_demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 444E4028BA38B8DACFB31BAE /* Pods_tvOS_demo.framework */; };
-		CB25E53B23ACBE8D00C68D8E /* ViuRemoteGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB25E53A23ACBE8D00C68D8E /* ViuRemoteGestureRecognizer.swift */; };
 		CB43AD03233E0F4E0000A7F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB43AD02233E0F4E0000A7F1 /* AppDelegate.swift */; };
 		CB43AD05233E0F4E0000A7F1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB43AD04233E0F4E0000A7F1 /* ViewController.swift */; };
 		CB43AD08233E0F4E0000A7F1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB43AD06233E0F4E0000A7F1 /* Main.storyboard */; };
 		CB43AD0A233E0F510000A7F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB43AD09233E0F510000A7F1 /* Assets.xcassets */; };
-		CBF452AF237D5669003C70F3 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF452AE237D5669003C70F3 /* UIColor+Extension.swift */; };
 		F2A17DE92424631D00074198 /* TestViuPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A17DE82424631C00074198 /* TestViuPlayerViewController.swift */; };
 		F2A17DEB2424636900074198 /* ViuPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2A17DEA2424636900074198 /* ViuPlayer.framework */; };
 		F2A17DEC2424636900074198 /* ViuPlayer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F2A17DEA2424636900074198 /* ViuPlayer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F2AC2FB6241744CA00C89BAC /* BitmovinPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AC2FB5241744CA00C89BAC /* BitmovinPlayerViewController.swift */; };
-		F2AC2FB8241A082200C89BAC /* ViuPlayerPlaybackGestureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AC2FB7241A082200C89BAC /* ViuPlayerPlaybackGestureManager.swift */; };
-		F2AC2FBA241A08A300C89BAC /* ViuPlayerPlaybackTouchGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AC2FB9241A08A300C89BAC /* ViuPlayerPlaybackTouchGestureRecognizer.swift */; };
-		F2E002E62397B443004370F6 /* TimeInterval+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E002E52397B443004370F6 /* TimeInterval+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -40,24 +35,15 @@
 /* Begin PBXFileReference section */
 		00D7CD0CC39DF68E57E203F8 /* Pods-tvOS_demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tvOS_demo.debug.xcconfig"; path = "Target Support Files/Pods-tvOS_demo/Pods-tvOS_demo.debug.xcconfig"; sourceTree = "<group>"; };
 		444E4028BA38B8DACFB31BAE /* Pods_tvOS_demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_tvOS_demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CB25E53A23ACBE8D00C68D8E /* ViuRemoteGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuRemoteGestureRecognizer.swift; sourceTree = "<group>"; };
 		CB43ACFF233E0F4E0000A7F1 /* tvOS_demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tvOS_demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB43AD02233E0F4E0000A7F1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CB43AD04233E0F4E0000A7F1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		CB43AD07233E0F4E0000A7F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CB43AD09233E0F510000A7F1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CB43AD0B233E0F510000A7F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CBF452AE237D5669003C70F3 /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
-		CBFB8DFD239A50F2007D1686 /* hubblecast.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = hubblecast.m4v; sourceTree = "<group>"; };
-		CBFB8DFE239A50F2007D1686 /* apple_tv_app_universal_search_part_01_sd.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = apple_tv_app_universal_search_part_01_sd.mp4; sourceTree = "<group>"; };
-		CBFB8DFF239A50F2007D1686 /* test.srt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.srt; sourceTree = "<group>"; };
-		CBFB8E00239A50F2007D1686 /* Despacito Remix Luis Fonsi ft.Daddy Yankee Justin Bieber Lyrics [Spanish].srt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Despacito Remix Luis Fonsi ft.Daddy Yankee Justin Bieber Lyrics [Spanish].srt"; sourceTree = "<group>"; };
 		F2A17DE82424631C00074198 /* TestViuPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViuPlayerViewController.swift; sourceTree = "<group>"; };
 		F2A17DEA2424636900074198 /* ViuPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ViuPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2AC2FB5241744CA00C89BAC /* BitmovinPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitmovinPlayerViewController.swift; sourceTree = "<group>"; };
-		F2AC2FB7241A082200C89BAC /* ViuPlayerPlaybackGestureManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerPlaybackGestureManager.swift; sourceTree = "<group>"; };
-		F2AC2FB9241A08A300C89BAC /* ViuPlayerPlaybackTouchGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViuPlayerPlaybackTouchGestureRecognizer.swift; sourceTree = "<group>"; };
-		F2E002E52397B443004370F6 /* TimeInterval+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Extension.swift"; sourceTree = "<group>"; };
 		F6807A08B93F6917F69A525B /* Pods-tvOS_demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tvOS_demo.release.xcconfig"; path = "Target Support Files/Pods-tvOS_demo/Pods-tvOS_demo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -104,8 +90,6 @@
 		CB43AD01233E0F4E0000A7F1 /* tvOS_demo */ = {
 			isa = PBXGroup;
 			children = (
-				CBFB8DFC239A50F2007D1686 /* Resource */,
-				CBF452AD237D564F003C70F3 /* Common */,
 				CB43AD02233E0F4E0000A7F1 /* AppDelegate.swift */,
 				CB43AD04233E0F4E0000A7F1 /* ViewController.swift */,
 				CB43AD06233E0F4E0000A7F1 /* Main.storyboard */,
@@ -115,29 +99,6 @@
 				F2A17DE82424631C00074198 /* TestViuPlayerViewController.swift */,
 			);
 			path = tvOS_demo;
-			sourceTree = "<group>";
-		};
-		CBF452AD237D564F003C70F3 /* Common */ = {
-			isa = PBXGroup;
-			children = (
-				CBF452AE237D5669003C70F3 /* UIColor+Extension.swift */,
-				F2E002E52397B443004370F6 /* TimeInterval+Extension.swift */,
-				CB25E53A23ACBE8D00C68D8E /* ViuRemoteGestureRecognizer.swift */,
-				F2AC2FB7241A082200C89BAC /* ViuPlayerPlaybackGestureManager.swift */,
-				F2AC2FB9241A08A300C89BAC /* ViuPlayerPlaybackTouchGestureRecognizer.swift */,
-			);
-			path = Common;
-			sourceTree = "<group>";
-		};
-		CBFB8DFC239A50F2007D1686 /* Resource */ = {
-			isa = PBXGroup;
-			children = (
-				CBFB8DFD239A50F2007D1686 /* hubblecast.m4v */,
-				CBFB8DFE239A50F2007D1686 /* apple_tv_app_universal_search_part_01_sd.mp4 */,
-				CBFB8DFF239A50F2007D1686 /* test.srt */,
-				CBFB8E00239A50F2007D1686 /* Despacito Remix Luis Fonsi ft.Daddy Yankee Justin Bieber Lyrics [Spanish].srt */,
-			);
-			path = Resource;
 			sourceTree = "<group>";
 		};
 		D573DAD9501BB8E46A571B7E /* Frameworks */ = {
@@ -265,13 +226,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB43AD05233E0F4E0000A7F1 /* ViewController.swift in Sources */,
-				F2E002E62397B443004370F6 /* TimeInterval+Extension.swift in Sources */,
-				F2AC2FBA241A08A300C89BAC /* ViuPlayerPlaybackTouchGestureRecognizer.swift in Sources */,
 				CB43AD03233E0F4E0000A7F1 /* AppDelegate.swift in Sources */,
-				CB25E53B23ACBE8D00C68D8E /* ViuRemoteGestureRecognizer.swift in Sources */,
 				F2AC2FB6241744CA00C89BAC /* BitmovinPlayerViewController.swift in Sources */,
-				F2AC2FB8241A082200C89BAC /* ViuPlayerPlaybackGestureManager.swift in Sources */,
-				CBF452AF237D5669003C70F3 /* UIColor+Extension.swift in Sources */,
 				F2A17DE92424631D00074198 /* TestViuPlayerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -54,7 +54,7 @@ open class ViuPlaybackTouchGestureRecognizer: UIGestureRecognizer {
         let offset = (ptNew.x - ptPrevious.x) * 0.1
         touchesMovedX = offset
         
-        state = .changed
+//        state = .changed
     }
 
     open override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent) {
