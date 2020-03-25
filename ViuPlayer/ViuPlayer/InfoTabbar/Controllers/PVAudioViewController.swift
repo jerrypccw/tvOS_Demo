@@ -14,6 +14,7 @@ class PVAudioViewController: UIViewController {
     
     var model: PVAudioCollectionModel? {
         didSet {
+            title = "音频"
             collectionView.reloadData()
         }
     }

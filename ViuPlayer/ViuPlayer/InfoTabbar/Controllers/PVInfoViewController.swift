@@ -25,6 +25,7 @@ class PVInfoViewController: UIViewController {
             titleLabel.text = m.dramaTitle
             descriptionLabel.text = m.dramaDescription
             playTimeLabel.text = "1小时40分"
+            title = "简介"
         }
     }
     
