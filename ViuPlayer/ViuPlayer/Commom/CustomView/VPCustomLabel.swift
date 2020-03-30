@@ -8,22 +8,22 @@
 
 import UIKit
 
-enum VerticalAlignment {
-    case VerticalAlignmentTop
-    case VerticalAlignmentMiddle
-    case VerticalAlignmentBottom
+enum VPVerticalAlignment {
+    case top
+    case middle
+    case bottom
 }
 
-class ViuCustomLabel: UILabel {
+class VPCustomLabel: UILabel {
 
-    var verticalAlignment: VerticalAlignment {
+    var verticalAlignment: VPVerticalAlignment {
         didSet {
             setNeedsDisplay()
         }
     }
     
     override init(frame: CGRect) {
-        verticalAlignment = .VerticalAlignmentMiddle
+        verticalAlignment = .middle
         super.init(frame: frame)
     }
     
@@ -39,11 +39,11 @@ class ViuCustomLabel: UILabel {
     override func textRect(forBounds bounds: CGRect, limitedToNumberOfLines numberOfLines: Int) -> CGRect {
         var textRect = super.textRect(forBounds: bounds, limitedToNumberOfLines: numberOfLines)
         switch self.verticalAlignment {
-        case .VerticalAlignmentTop:
+        case .top:
             textRect.origin.y = bounds.origin.y
-        case .VerticalAlignmentBottom:
+        case .bottom:
             textRect.origin.y = bounds.origin.y + bounds.size.height - textRect.size.height
-        case .VerticalAlignmentMiddle:
+        case .middle:
             textRect.origin.y = bounds.origin.y + (bounds.size.height - textRect.size.height) / 2.0
         }
         return textRect

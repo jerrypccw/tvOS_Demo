@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PVCenterFlowLayout: UICollectionViewFlowLayout {
+class VPCenterFlowLayout: UICollectionViewFlowLayout {
     
     /// 是否垂直滚动（默认为false）
     var isVerticalStyle = false

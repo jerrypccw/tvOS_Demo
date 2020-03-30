@@ -11,7 +11,7 @@ import Foundation
 
 fileprivate let kRotationAnimationKey = "kRotationAnimationKey.rotation"
 
-open class ViuPlayerLoadingIndicator: UIView {
+open class VPLoadingIndicator: UIView {
     
     fileprivate let indicatorLayer = CAShapeLayer()
     var timingFunction : CAMediaTimingFunction!

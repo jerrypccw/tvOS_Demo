@@ -8,18 +8,18 @@
 
 import AVKit
 
-open class ViuPlayerViewController: UIViewController {
+open class VPViewController: UIViewController {
 
     // 最顶层View，包括：InfoVC 和 Playback
-    private let topView = ViuPlayerTopView()
+    private let topView = VPTopView()
     // 手势
-    private let playbackGestureManager = ViuPlaybackGestureManager()
+    private let playbackGestureManager = VPPlaybackGestureManager()
     
     // 中间层View，包括字幕 和 自定义
-    private let containerView = ViuPlayerContainerView()
+    private let containerView = VPContainerView()
     
     // 播放器
-    private let playerView = ViuPlayer()
+    private let playerView = VPManager()
 
     // 长按快进
     private var longPressTimer: Timer?
@@ -70,8 +70,8 @@ open class ViuPlayerViewController: UIViewController {
 //        present(displayedPanelViewController!, animated: true) { }
 //    }
     
-    open lazy var panelViewController: ViuPanelViewController = {
-        let panelVC = ViuPanelViewController()
+    open lazy var panelViewController: VPPanelViewController = {
+        let panelVC = VPPanelViewController()
         panelVC.selectedIndex = lastSelectedPanelTabIndex
         panelVC.delegate = self
         panelVC.transitioningDelegate = self
@@ -79,7 +79,7 @@ open class ViuPlayerViewController: UIViewController {
         return panelVC
     }()
     
-    open func setupSubTitle(subTitle: [ViuSubtitles]){
+    open func setupSubTitle(subTitle: [VPSubtitles]){
         // Test
         if subTitle.count > 1 {
             containerView.subTitleManager.setSubtitles(first: subTitle[0], second: subTitle[1])
@@ -89,7 +89,7 @@ open class ViuPlayerViewController: UIViewController {
     }
 }
 
-extension ViuPlayerViewController: ViuPlaybackGestureManagerDelegate {
+extension VPViewController: ViuPlaybackGestureManagerDelegate {
     private func setupGestureRecognizer() {
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(onSwipeAction(swipe:)))
         swipeDown.direction = .down
@@ -121,7 +121,7 @@ extension ViuPlayerViewController: ViuPlaybackGestureManagerDelegate {
         playerView.playPauseAction()
     }
     
-    public func onTouch(_ gesture: ViuPlaybackTouchGestureRecognizer) {
+    public func onTouch(_ gesture: VPPlaybackTouchGestureRecognizer) {
         // 信息栏显示，就不执行
 //        if viuPlayer.displayView.viuPlayerTabbar.isTabbarShow == true { return }
         // 快进过程中忽略Touch
@@ -233,9 +233,9 @@ extension ViuPlayerViewController: ViuPlaybackGestureManagerDelegate {
     }
 }
 
-extension ViuPlayerViewController: ViuPlayerDelegate {
+extension VPViewController: VPManagerDelegate {
     // play state
-    public func viuPlayer(_ player: ViuPlayer, stateDidChange state: ViuPlayerState) {
+    public func viuPlayer(_ player: VPManager, stateDidChange state: VPState) {
         switch state {
         case .playFinished:
 //            topView.loadingIndicator.isHidden = true
@@ -256,7 +256,7 @@ extension ViuPlayerViewController: ViuPlayerDelegate {
     }
     
     // playe Duration
-    public func viuPlayer(_ player: ViuPlayer, playerDurationDidChange currentDuration: TimeInterval, totalDuration: TimeInterval) {
+    public func viuPlayer(_ player: VPManager, playerDurationDidChange currentDuration: TimeInterval, totalDuration: TimeInterval) {
 
         // 设置进度条
         topView.viuProgressView.setPorgressLineX(currentDuration: currentDuration, totalDuration: totalDuration)
@@ -267,7 +267,7 @@ extension ViuPlayerViewController: ViuPlayerDelegate {
     }
     
     // buffer state
-    public func viuPlayer(_ player: ViuPlayer, bufferStateDidChange state: ViuPlayerBufferState) {
+    public func viuPlayer(_ player: VPManager, bufferStateDidChange state: VPBufferState) {
         if state == .buffering {
             topView.loadingIndicator.isHidden = false
             topView.loadingIndicator.startAnimating()
@@ -278,31 +278,31 @@ extension ViuPlayerViewController: ViuPlayerDelegate {
     }
     
     // buffered Duration
-    public func viuPlayer(_ player: ViuPlayer, bufferedDidChange bufferedDuration: TimeInterval, totalDuration: TimeInterval) {
+    public func viuPlayer(_ player: VPManager, bufferedDidChange bufferedDuration: TimeInterval, totalDuration: TimeInterval) {
         topView.viuProgressView.progressBar.setProgress(Float(bufferedDuration / totalDuration), animated: true)
     }
     
     // play error
-    public func viuPlayer(_ player: ViuPlayer, playerFailed error: ViuPlayerError) {
+    public func viuPlayer(_ player: VPManager, playerFailed error: VPError) {
         print(error)
     }
 }
 
-extension ViuPlayerViewController: UIViewControllerTransitioningDelegate {
+extension VPViewController: UIViewControllerTransitioningDelegate {
     public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return presented is ViuPanelViewController ? ViuSlideDownAnimatedTransitioner() : nil
+        return presented is VPPanelViewController ? VPSlideDownAnimatedTransitioner() : nil
     }
     public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return dismissed is ViuPanelViewController ? ViuSlideUpAnimatedTransitioner() : nil
+        return dismissed is VPPanelViewController ? VPSlideUpAnimatedTransitioner() : nil
     }
 }
 
-extension ViuPlayerViewController: ViuPanelViewControllerDelegate {
-    func panelViewController(_ panelViewController: ViuPanelViewController, didSelectTabAtIndex index: Int) {
+extension VPViewController: VPPanelViewControllerDelegate {
+    func panelViewController(_ panelViewController: VPPanelViewController, didSelectTabAtIndex index: Int) {
         lastSelectedPanelTabIndex = index
     }
 
-    func panelViewControllerDidDismiss(_ panelViewController: ViuPanelViewController) {
+    func panelViewControllerDidDismiss(_ panelViewController: VPPanelViewController) {
 //        displayedPanelViewController = nil
         print("panelViewController -- \(panelViewController)")
     }

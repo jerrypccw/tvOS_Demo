@@ -9,7 +9,7 @@
 import UIKit
 import ViuPlayer
 
-class TestViuPlayerViewController: ViuPlayerViewController {
+class TestViuPlayerViewController: VPViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,25 +23,25 @@ class TestViuPlayerViewController: ViuPlayerViewController {
     private func setupTabbarVC() {
         
         let decString = "测试的播放器导航栏的简介 测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介测试的播放器导航栏的简介"
-        let model = PVIntroductionModel.init(title: "简介",
+        let model = VPIntroductionModel.init(title: "简介",
                                              imageUrl: "",
                                              dramaTitle: "第15集 测试的播放器",
                                              dramaDescription: decString)
         
         let subtitles = ["中文", "英文", "印度文", "日文", "韩文", "法文", "意大利文", "西班牙文", "繁体中文"]
-        let model2 = PVSubtitleModel.init(title: "语言", subtitles: subtitles, delegate: self)
+        let model2 = VPSubtitleModel.init(title: "语言", subtitles: subtitles, delegate: self)
         
         let contents = ["英语", "中文", "英语", "中文", "英语", "中文", "英语", "中文", "英语"]
-        let table = PVAudioTableModel.init(headTitle: "语言", contents: contents, delegate: self)
+        let table = VPAudioTableModel.init(headTitle: "语言", contents: contents, delegate: self)
         
         let contents2 = ["完整动态范围", "降低高音量"]
-        let table2 = PVAudioTableModel.init(headTitle: "声音", contents: contents2, delegate: self)
+        let table2 = VPAudioTableModel.init(headTitle: "声音", contents: contents2, delegate: self)
         
         let contents3 = ["客厅"]
-        let table3 = PVAudioTableModel.init(headTitle: "扬声器", contents: contents3, delegate: self)
+        let table3 = VPAudioTableModel.init(headTitle: "扬声器", contents: contents3, delegate: self)
         
         let collections = [table, table2, table3]
-        let model3 = PVAudioModel.init(title: "音频", audioModels: collections)
+        let model3 = VPAudioModel.init(title: "音频", audioModels: collections)
         
         panelViewController.tabbarModels = [model, model2, model3]
         
@@ -49,14 +49,14 @@ class TestViuPlayerViewController: ViuPlayerViewController {
 }
 
 /// MARK:
-extension TestViuPlayerViewController: PVAudioTableModelDelegate {
+extension TestViuPlayerViewController: VPAudioTableModelDelegate {
     
     public func pvAudioTableSelectValue(_ string: String) {
         print(string)
     }
 }
 
-extension ViuPlayerViewController: PVSubtitleModelDelegate {
+extension VPViewController: VPSubtitleModelDelegate {
     
     public func pvSubtitleSelectValue(_ string: String) {
         print(string)
@@ -70,8 +70,8 @@ extension ViuPlayerViewController: PVSubtitleModelDelegate {
         
 //    https://dfp6rglgjqszk.cloudfront.net/index.php?r=v1/series/detail&area_id=1&language_flag_id=1&language_id=1&os=tvOS&os_flag_id=103&platform_flag_label=tv&product_id=255335&ut=2
         setupSubTitle(subTitle: [
-            ViuSubtitles(urlPath: URL(string: "https://d2anahhhmp1ffz.cloudfront.net/883089942/f667d321f94647192c9666f6c3051cfb7a5d8b6a")!, format: .srt),
-            ViuSubtitles(urlPath: URL(string: "https://d2anahhhmp1ffz.cloudfront.net/3107204754/6e234068e1279c3cdb771ca0a7369d65bc921b8e")!, format: .srt),
+            VPSubtitles(urlPath: URL(string: "https://d2anahhhmp1ffz.cloudfront.net/883089942/f667d321f94647192c9666f6c3051cfb7a5d8b6a")!, format: .srt),
+            VPSubtitles(urlPath: URL(string: "https://d2anahhhmp1ffz.cloudfront.net/3107204754/6e234068e1279c3cdb771ca0a7369d65bc921b8e")!, format: .srt),
         ])
     }
 }

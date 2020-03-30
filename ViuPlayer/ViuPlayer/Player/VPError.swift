@@ -9,7 +9,7 @@
 import Foundation
 import AVFoundation
 
-public struct ViuPlayerError: CustomStringConvertible {
+public struct VPError: CustomStringConvertible {
     var error : Error?
     var playerItemErrorLogEvent : [AVPlayerItemErrorLogEvent]?
     var extendedLogData : Data?

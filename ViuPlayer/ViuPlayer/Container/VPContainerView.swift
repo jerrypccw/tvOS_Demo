@@ -8,8 +8,8 @@
 
 import UIKit
 
-class ViuPlayerContainerView: UIView {
-    let subTitleManager = ViuPlayerSubtitlesManager()
+class VPContainerView: UIView {
+    let subTitleManager = VPSubtitlesManager()
     
     public override init(frame: CGRect) {
         super.init(frame: frame)

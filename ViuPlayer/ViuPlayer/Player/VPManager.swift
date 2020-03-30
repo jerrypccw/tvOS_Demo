@@ -16,7 +16,7 @@ import UIKit
 /// - paused//暂停:
 /// - playFinished//播放完成:
 /// - error//异常:
-public enum ViuPlayerState: Int {
+public enum VPState: Int {
     case none               // default
     case playing            // 播放
     case paused             // 暂停
@@ -31,7 +31,7 @@ public enum ViuPlayerState: Int {
 /// - buffering//正在缓冲:
 /// - stop//停止:
 /// - bufferFinished//缓冲完成:
-public enum ViuPlayerBufferState: Int {
+public enum VPBufferState: Int {
     case none           // default
     case readyToPlay    // 准备播放
     case buffering      // 正在缓冲
@@ -44,7 +44,7 @@ public enum ViuPlayerBufferState: Int {
 /// - suspend//禁止:
 /// - autoPlayAndPaused//自动播放和暂停:
 /// - proceed//继续进行:
-public enum ViuPlayerBackgroundMode: Int {
+public enum VPBackgroundMode: Int {
     case suspend                // 禁止
     case autoPlayAndPaused      // 自动播放和暂停
     case proceed                // 继续进行
@@ -56,47 +56,47 @@ public enum ViuPlayerBackgroundMode: Int {
 //    case resizeAspectFill
 //}
 
-public protocol ViuPlayerDelegate: NSObjectProtocol {
+public protocol VPManagerDelegate: NSObjectProtocol {
     // play state
-    func viuPlayer(_ player: ViuPlayer, stateDidChange state: ViuPlayerState)
+    func viuPlayer(_ player: VPManager, stateDidChange state: VPState)
     // playe Duration
-    func viuPlayer(_ player: ViuPlayer, playerDurationDidChange currentDuration: TimeInterval, totalDuration: TimeInterval)
+    func viuPlayer(_ player: VPManager, playerDurationDidChange currentDuration: TimeInterval, totalDuration: TimeInterval)
     // buffer state
-    func viuPlayer(_ player: ViuPlayer, bufferStateDidChange state: ViuPlayerBufferState)
+    func viuPlayer(_ player: VPManager, bufferStateDidChange state: VPBufferState)
     // buffered Duration
-    func viuPlayer(_ player: ViuPlayer, bufferedDidChange bufferedDuration: TimeInterval, totalDuration: TimeInterval)
+    func viuPlayer(_ player: VPManager, bufferedDidChange bufferedDuration: TimeInterval, totalDuration: TimeInterval)
     // play error
-    func viuPlayer(_ player: ViuPlayer, playerFailed error: ViuPlayerError)
+    func viuPlayer(_ player: VPManager, playerFailed error: VPError)
 }
 
 // MARK: - delegate methods optional
 
-public extension ViuPlayerDelegate {
-    func viuPlayer(_ player: ViuPlayer, stateDidChange state: ViuPlayerState) {}
-    func viuPlayer(_ player: ViuPlayer, playerDurationDidChange currentDuration: TimeInterval, totalDuration: TimeInterval) {}
-    func viuPlayer(_ player: ViuPlayer, bufferStateDidChange state: ViuPlayerBufferState) {}
-    func viuPlayer(_ player: ViuPlayer, bufferedDidChange bufferedDuration: TimeInterval, totalDuration: TimeInterval) {}
-    func viuPlayer(_ player: ViuPlayer, playerFailed error: ViuPlayerError) {}
+public extension VPManagerDelegate {
+    func viuPlayer(_ player: VPManager, stateDidChange state: VPState) {}
+    func viuPlayer(_ player: VPManager, playerDurationDidChange currentDuration: TimeInterval, totalDuration: TimeInterval) {}
+    func viuPlayer(_ player: VPManager, bufferStateDidChange state: VPBufferState) {}
+    func viuPlayer(_ player: VPManager, bufferedDidChange bufferedDuration: TimeInterval, totalDuration: TimeInterval) {}
+    func viuPlayer(_ player: VPManager, playerFailed error: VPError) {}
 }
 
-open class ViuPlayer: UIView {
+open class VPManager: UIView {
     
     //
-    weak var delegate : ViuPlayerDelegate?
+    weak var delegate : VPManagerDelegate?
     //
 //    var gravityMode : ViuVideoGravityMode = .resizeAspect
-    var backgroundMode : ViuPlayerBackgroundMode = .autoPlayAndPaused
+    var backgroundMode : VPBackgroundMode = .autoPlayAndPaused
     var bufferInterval : TimeInterval = 2.0
     //
     private var timeObserver: Any?
     //
-    open fileprivate(set) var mediaFormat : ViuPlayerMediaFormat?
+    open fileprivate(set) var mediaFormat : VPMediaFormat?
 //    open fileprivate(set) var totalDuration : TimeInterval = 0.0
     open fileprivate(set) var currentDuration : TimeInterval = 0.0
     open fileprivate(set) var buffering : Bool = false
 //    open fileprivate(set) var playerAsset : AVURLAsset?
     open fileprivate(set) var contentURL : URL?
-    open fileprivate(set) var error = ViuPlayerError()
+    open fileprivate(set) var error = VPError()
 //    fileprivate var resourceLoaderManager = ViuPlayerResourceLoaderManager()
     fileprivate var seeking : Bool = false
     fileprivate var isUserPaused : Bool = false
@@ -137,7 +137,7 @@ open class ViuPlayer: UIView {
         }
     }
 
-    open var state: ViuPlayerState = .none {
+    open var state: VPState = .none {
         didSet {
             if state != oldValue {
                 delegate?.viuPlayer(self, stateDidChange: state)
@@ -145,7 +145,7 @@ open class ViuPlayer: UIView {
         }
     }
 
-    open var bufferState: ViuPlayerBufferState = .none {
+    open var bufferState: VPBufferState = .none {
         didSet {
             if bufferState != oldValue {
                 delegate?.viuPlayer(self, bufferStateDidChange: bufferState)
@@ -160,7 +160,7 @@ open class ViuPlayer: UIView {
     }
     
     public func setupPlayer(URL: URL) {
-        mediaFormat = ViuPlayerUtils.decoderVideoFormat(URL)
+        mediaFormat = VPUtils.decoderVideoFormat(URL)
         contentURL = URL
 
         configurationPlayer(contentURL!)
@@ -196,7 +196,7 @@ open class ViuPlayer: UIView {
 
 // MARK: - public
 
-extension ViuPlayer {
+extension VPManager {
     open func playPauseAction() {
         switch state {
         case .playing:
@@ -215,7 +215,7 @@ extension ViuPlayer {
     
     open func replaceVideo(_ URL: URL) {
         reloadPlayer()
-        mediaFormat = ViuPlayerUtils.decoderVideoFormat(URL)
+        mediaFormat = VPUtils.decoderVideoFormat(URL)
         contentURL = URL
         configurationPlayer(URL)
     }
@@ -224,7 +224,7 @@ extension ViuPlayer {
         seeking = false
 //        totalDuration = 0.0
         currentDuration = 0.0
-        error = ViuPlayerError()
+        error = VPError()
         state = .none
         buffering = false
         bufferState = .none
@@ -290,7 +290,7 @@ extension ViuPlayer {
 
 // MARK: - private
 
-extension ViuPlayer {
+extension VPManager {
     internal func startPlayerBuffering() {
         bufferState = .buffering
         buffering = true
@@ -313,7 +313,7 @@ extension ViuPlayer {
 
 private var playerItemContext = 0
 
-extension ViuPlayer {
+extension VPManager {
     internal func addPlayerItemObservers() {
         let options = NSKeyValueObservingOptions([.new, .initial])
         playerItem?.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.status), options: options, context: &playerItemContext)
@@ -374,12 +374,12 @@ extension ViuPlayer {
 
 // MARK: - Selecter
 extension Selector {
-    static let playerItemDidPlayToEndTime = #selector(ViuPlayer.playerItemDidPlayToEnd(_:))
-    static let applicationWillEnterForeground = #selector(ViuPlayer.applicationWillEnterForeground(_:))
-    static let applicationDidEnterBackground = #selector(ViuPlayer.applicationDidEnterBackground(_:))
+    static let playerItemDidPlayToEndTime = #selector(VPManager.playerItemDidPlayToEnd(_:))
+    static let applicationWillEnterForeground = #selector(VPManager.applicationWillEnterForeground(_:))
+    static let applicationDidEnterBackground = #selector(VPManager.applicationDidEnterBackground(_:))
 }
 
-extension ViuPlayer {
+extension VPManager {
     open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
         if context == &playerItemContext {
             

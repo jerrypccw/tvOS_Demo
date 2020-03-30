@@ -10,7 +10,7 @@ import UIKit
 import CoreGraphics
 import GameController
 
-class PVFocusTabbar: UITabBar {
+class VPFocusTabbar: UITabBar {
 
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -11,7 +11,7 @@ import UIKit
 private let animatonDuration = 0.5
 
 // MARK: SlideDown
-class ViuSlideDownAnimatedTransitioner: NSObject, UIViewControllerAnimatedTransitioning {
+class VPSlideDownAnimatedTransitioner: NSObject, UIViewControllerAnimatedTransitioning {
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return animatonDuration
     }
@@ -38,7 +38,7 @@ class ViuSlideDownAnimatedTransitioner: NSObject, UIViewControllerAnimatedTransi
 }
 
 // MARK: SlideUp
-class ViuSlideUpAnimatedTransitioner: NSObject, UIViewControllerAnimatedTransitioning {
+class VPSlideUpAnimatedTransitioner: NSObject, UIViewControllerAnimatedTransitioning {
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return animatonDuration
     }

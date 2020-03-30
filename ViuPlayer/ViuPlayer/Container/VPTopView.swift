@@ -8,11 +8,11 @@
 
 import UIKit
 
-class ViuPlayerTopView: UIView {
+class VPTopView: UIView {
     // 播放器进度条
-    let viuProgressView = ViuPlaybackView()
+    let viuProgressView = VPPlaybackView()
     // 中间转圈圈
-    let loadingIndicator = ViuPlayerLoadingIndicator()
+    let loadingIndicator = VPLoadingIndicator()
     
     private let controlViewDuration: TimeInterval = 6.0 /// default 5.0
     private let displayDuration: TimeInterval = 0.5
@@ -55,7 +55,7 @@ class ViuPlayerTopView: UIView {
 }
 
 // MARK: - private
-extension ViuPlayerTopView {
+extension VPTopView {
     
     internal func displayControlAnimation() {
         timer.invalidate()
@@ -100,7 +100,7 @@ extension ViuPlayerTopView {
 }
 
 // MARK: - UI autoLayout
-extension ViuPlayerTopView {
+extension VPTopView {
     internal func configurationShadowView() {
         addSubview(shadowView)
         

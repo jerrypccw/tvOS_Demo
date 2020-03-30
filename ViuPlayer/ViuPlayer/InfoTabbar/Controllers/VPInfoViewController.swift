@@ -8,16 +8,16 @@
 
 import UIKit
 
-class PVInfoViewController: UIViewController {
+class VPInfoViewController: UIViewController {
     
     let mainView = UIView()
     
     lazy var imageView: UIImageView = UIImageView()
     lazy var titleLabel: UILabel = UILabel()
-    lazy var descriptionLabel: ViuCustomLabel = ViuCustomLabel()
+    lazy var descriptionLabel: VPCustomLabel = VPCustomLabel()
     lazy var playTimeLabel: UILabel = UILabel()
     
-    var model: PVIntroductionModel? {
+    var model: VPIntroductionModel? {
         didSet {
             guard let m = model else {
                 return
@@ -58,7 +58,7 @@ class PVInfoViewController: UIViewController {
         descriptionLabel.font = UIFont.boldSystemFont(ofSize: 30)
         descriptionLabel.lineBreakMode = .byTruncatingTail
         descriptionLabel.numberOfLines = 3
-        descriptionLabel.verticalAlignment = .VerticalAlignmentTop
+        descriptionLabel.verticalAlignment = .top
         
         playTimeLabel.font = UIFont.boldSystemFont(ofSize: 30)
         

@@ -8,12 +8,12 @@
 
 import UIKit
 
-class ViuPlaybackGestureManager: NSObject, UIGestureRecognizerDelegate {
+class VPPlaybackGestureManager: NSObject, UIGestureRecognizerDelegate {
     weak open var delegate: ViuPlaybackGestureManagerDelegate? // the gesture recognizer's delegate
-    var touchLocation: TouchRemoteLocation = .center
+    var touchLocation: VPTouchRemoteLocation = .center
     
     func addGesture(_ target: UIView) {
-        let touch = ViuPlaybackTouchGestureRecognizer(target: self, action: #selector(touchGesture(_:)))
+        let touch = VPPlaybackTouchGestureRecognizer(target: self, action: #selector(touchGesture(_:)))
         touch.delegate = self
         target.addGestureRecognizer(touch)
 
@@ -28,7 +28,7 @@ class ViuPlaybackGestureManager: NSObject, UIGestureRecognizerDelegate {
         target.addGestureRecognizer(long)
     }
     
-    @objc func touchGesture(_ gesture: ViuPlaybackTouchGestureRecognizer) {
+    @objc func touchGesture(_ gesture: VPPlaybackTouchGestureRecognizer) {
         touchLocation = gesture.remoteTouchLocation
         
         if let delegate = delegate {
@@ -56,7 +56,7 @@ class ViuPlaybackGestureManager: NSObject, UIGestureRecognizerDelegate {
 }
 
 public protocol ViuPlaybackGestureManagerDelegate : NSObjectProtocol {
-    func onTouch(_ gesture: ViuPlaybackTouchGestureRecognizer)
+    func onTouch(_ gesture: VPPlaybackTouchGestureRecognizer)
     
     func onTap(_ gesture: UITapGestureRecognizer)
 

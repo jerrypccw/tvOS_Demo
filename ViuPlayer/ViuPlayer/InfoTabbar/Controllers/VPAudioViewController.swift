@@ -8,11 +8,11 @@
 
 import UIKit
 
-let PVAUDIO_CELL = "PVAUDIOCELL"
+let VPAUDIO_CELL = "VPAUDIOCELL"
 
-class PVAudioViewController: UIViewController {
+class VPAudioViewController: UIViewController {
     
-    var model: PVAudioModel? {
+    var model: VPAudioModel? {
         didSet {
             title = "音频"
             collectionView.reloadData()
@@ -30,7 +30,7 @@ class PVAudioViewController: UIViewController {
     lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: CGRect.zero, collectionViewLayout: collectionLayout)
         view.backgroundColor = UIColor.clear
-        view.register(PVAudioCell.self, forCellWithReuseIdentifier: PVAUDIO_CELL)
+        view.register(VPAudioCell.self, forCellWithReuseIdentifier: VPAUDIO_CELL)
         view.delegate = self
         view.dataSource = self
         if #available(tvOS 11.0, *) {
@@ -85,14 +85,14 @@ class PVAudioViewController: UIViewController {
     }
 }
 
-extension PVAudioViewController: UICollectionViewDataSource {
+extension VPAudioViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return model?.audioModels.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PVAUDIO_CELL, for: indexPath) as! PVAudioCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: VPAUDIO_CELL, for: indexPath) as! VPAudioCell
         cell.data = model?.audioModels[indexPath.row]
         tableContentHeights.append(cell.tableView.contentSize.height)
         return cell
@@ -100,7 +100,7 @@ extension PVAudioViewController: UICollectionViewDataSource {
     
 }
 
-extension PVAudioViewController: UICollectionViewDelegate {
+extension VPAudioViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
         return false

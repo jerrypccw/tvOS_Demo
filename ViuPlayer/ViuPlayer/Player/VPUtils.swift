@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public enum ViuPlayerMediaFormat : String{
+public enum VPMediaFormat : String{
     case unknown
     case mpeg4
     case m3u8
@@ -18,9 +18,9 @@ public enum ViuPlayerMediaFormat : String{
     case error
 }
 
-class ViuPlayerUtils: NSObject {
+class VPUtils: NSObject {
     static public func playerBundle() -> Bundle {
-        return Bundle(for: ViuPlayer.self)
+        return Bundle(for: VPManager.self)
     }
     
     static public func fileResource(_ fileName: String, fileType: String) -> String? {
@@ -42,7 +42,7 @@ class ViuPlayerUtils: NSObject {
         return newImage;
     }
     
-    static func decoderVideoFormat(_ URL: URL?) -> ViuPlayerMediaFormat {
+    static func decoderVideoFormat(_ URL: URL?) -> VPMediaFormat {
         if URL == nil {
             return .error
         }

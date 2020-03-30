@@ -9,12 +9,12 @@
 import UIKit
 import Foundation
 
-protocol ViuPanelViewControllerDelegate: class {
-    func panelViewController(_ panelViewController: ViuPanelViewController, didSelectTabAtIndex: Int)
-    func panelViewControllerDidDismiss(_ panelViewController: ViuPanelViewController)
+protocol VPPanelViewControllerDelegate: class {
+    func panelViewController(_ panelViewController: VPPanelViewController, didSelectTabAtIndex: Int)
+    func panelViewControllerDidDismiss(_ panelViewController: VPPanelViewController)
 }
 
-open class ViuPanelViewController: UIViewController {
+open class VPPanelViewController: UIViewController {
     
     private var contentHeightConstraint: NSLayoutConstraint!
     
@@ -57,7 +57,7 @@ open class ViuPanelViewController: UIViewController {
         return time
     }()
     
-    open var tabbarModels: [PVPlayerTabbarModel]? {
+    open var tabbarModels: [VPPlayerTabbarModel]? {
         didSet {
             setupViewControllers()
         }
@@ -67,7 +67,7 @@ open class ViuPanelViewController: UIViewController {
     
     private let controlViewDuration: TimeInterval = 10.0
     
-    weak var delegate: ViuPanelViewControllerDelegate?
+    weak var delegate: VPPanelViewControllerDelegate?
 
     /// MARK: Life cycle
     override open func viewDidLoad() {
@@ -98,14 +98,14 @@ open class ViuPanelViewController: UIViewController {
 }
 
 // MARK: - TabBar delegate
-extension ViuPanelViewController: UITabBarDelegate {
+extension VPPanelViewController: UITabBarDelegate {
     public func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         selectedIndex = item.tag
     }
 }
 
 // MARK: - Setup Views
-extension ViuPanelViewController {
+extension VPPanelViewController {
     
     private func setupFilletView() {
         
@@ -197,21 +197,21 @@ extension ViuPanelViewController {
             
             switch model.titleName {
             case "简介":
-                let infoVC = PVInfoViewController()
-                infoVC.model = model as? PVIntroductionModel
+                let infoVC = VPInfoViewController()
+                infoVC.model = model as? VPIntroductionModel
                 vcs.append(infoVC)
                 
                 break
             case "语言":
-                let languageVC = PVSubtitleViewController()
-                languageVC.model = model as? PVSubtitleModel
+                let languageVC = VPSubtitleViewController()
+                languageVC.model = model as? VPSubtitleModel
                 vcs.append(languageVC)
                
                 
                 break
             case "音频":
-                let audioVC = PVAudioViewController()
-                audioVC.model = model as? PVAudioModel
+                let audioVC = VPAudioViewController()
+                audioVC.model = model as? VPAudioModel
                 vcs.append(audioVC)
                 
                 break
@@ -280,7 +280,7 @@ extension ViuPanelViewController {
 }
 
 // MARK: - Actions
-extension ViuPanelViewController {
+extension VPPanelViewController {
    
     @objc func collapse(_ sender: Any) {
         
@@ -308,7 +308,7 @@ extension ViuPanelViewController {
     override open func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
         super.didUpdateFocus(in: context, with: coordinator)
             
-        if (context.nextFocusedItem as? PVAudioTableCell) != nil {
+        if (context.nextFocusedItem as? VPAudioTableCell) != nil {
             // 焦点在PVAudioTableCell，上滑手势取消
             swipUp.removeTarget(self, action: #selector(collapse(_ :)))
         } else {
@@ -316,8 +316,8 @@ extension ViuPanelViewController {
         }
         
         // 判断焦点是否在Cell
-        isCellFocus = (context.nextFocusedItem as? PVSubtitleCell) != nil
-            || (context.nextFocusedItem as? PVAudioTableCell) != nil
+        isCellFocus = (context.nextFocusedItem as? VPSubtitleCell) != nil
+            || (context.nextFocusedItem as? VPAudioTableCell) != nil
         
         setupTimer()
     }

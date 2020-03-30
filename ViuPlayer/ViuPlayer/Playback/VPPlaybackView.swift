@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViuPlaybackView: UIView {
+class VPPlaybackView: UIView {
     let pedding: CGFloat = 100
     
     /// 焦点View
@@ -317,7 +317,7 @@ class ViuPlaybackView: UIView {
     }
 }
 
-extension ViuPlaybackView {
+extension VPPlaybackView {
     
     override var canBecomeFocused: Bool {
          return true

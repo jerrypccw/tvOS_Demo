@@ -9,7 +9,7 @@
 import UIKit
 import Foundation
 
-open class PVPlayerTabbarModel {
+open class VPPlayerTabbarModel {
     
     var titleName: String
     
@@ -24,7 +24,7 @@ open class PVPlayerTabbarModel {
 //    }
 //}
 
-open class PVIntroductionModel: PVPlayerTabbarModel {
+open class VPIntroductionModel: VPPlayerTabbarModel {
     
     var imageUrl: String
     var dramaTitle: String
@@ -38,31 +38,31 @@ open class PVIntroductionModel: PVPlayerTabbarModel {
     }
 }
 
-public protocol PVSubtitleModelDelegate: NSObjectProtocol {
+public protocol VPSubtitleModelDelegate: NSObjectProtocol {
     func pvSubtitleSelectValue(_ string: String)
 }
 
-public extension PVSubtitleModelDelegate {
+public extension VPSubtitleModelDelegate {
     func pvSubtitleSelectValue(_ string: String) {}
 }
 
 
 /// MARK
-open class PVSubtitleModel: PVPlayerTabbarModel {
+open class VPSubtitleModel: VPPlayerTabbarModel {
     
     var subtitles: [String]
     
-    weak var delegate: PVSubtitleModelDelegate?
+    weak var delegate: VPSubtitleModelDelegate?
     
     public init(title: String, subtitles: [String], delegate: UIViewController) {
         self.subtitles = subtitles
-        self.delegate = delegate as? PVSubtitleModelDelegate
+        self.delegate = delegate as? VPSubtitleModelDelegate
         super.init(name: title)
     }
 }
 
 
-open class PVCustomModel: PVPlayerTabbarModel {
+open class VPCustomModel: VPPlayerTabbarModel {
     
     var customs: [String]
     
@@ -87,32 +87,32 @@ open class PVCustomModel: PVPlayerTabbarModel {
 //    }
 //}
 
-public protocol PVAudioTableModelDelegate: NSObjectProtocol {
+public protocol VPAudioTableModelDelegate: NSObjectProtocol {
     func pvAudioTableSelectValue(_ string: String)
 }
 
-public extension PVAudioTableModelDelegate {
+public extension VPAudioTableModelDelegate {
     func pvAudioTableSelectValue(_ string: String) {}
 }
 
-open class PVAudioTableModel {
+open class VPAudioTableModel {
     
-    weak var delegate: PVAudioTableModelDelegate?
+    weak var delegate: VPAudioTableModelDelegate?
     var headTitle: String = ""
     var contents: [String] = []
     
     public init(headTitle: String, contents: [String], delegate: UIViewController) {
         self.headTitle = headTitle
         self.contents = contents
-        self.delegate = delegate as? PVAudioTableModelDelegate
+        self.delegate = delegate as? VPAudioTableModelDelegate
     }
 }
 
-open class PVAudioModel: PVPlayerTabbarModel {
+open class VPAudioModel: VPPlayerTabbarModel {
     
-    var audioModels: [PVAudioTableModel] = []
+    var audioModels: [VPAudioTableModel] = []
     
-    public init(title: String, audioModels: [PVAudioTableModel]) {
+    public init(title: String, audioModels: [VPAudioTableModel]) {
         self.audioModels = audioModels
         super.init(name: title)
     }

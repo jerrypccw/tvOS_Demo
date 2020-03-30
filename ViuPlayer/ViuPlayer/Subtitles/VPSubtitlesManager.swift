@@ -8,13 +8,13 @@
 
 import UIKit
 
-class ViuPlayerSubtitlesManager {
+class VPSubtitlesManager {
 
-    var firstSubtitles: ViuSubtitles?
-    let firstSubtitlesLabel = ViuCustomLabel()
+    var firstSubtitles: VPSubtitles?
+    let firstSubtitlesLabel = VPCustomLabel()
     
-    var secondSubtitles: ViuSubtitles?
-    let secondSubtitlesLabel = ViuCustomLabel()
+    var secondSubtitles: VPSubtitles?
+    let secondSubtitlesLabel = VPCustomLabel()
     var secondSubtitlesTopAnchor: NSLayoutConstraint?
     var secondSubtitlesBottonAnchor: NSLayoutConstraint?
     
@@ -73,7 +73,7 @@ class ViuPlayerSubtitlesManager {
         setupSecondSubtitle(view)
     }
     
-    open func setSubtitles(first: ViuSubtitles, second: ViuSubtitles?) {
+    open func setSubtitles(first: VPSubtitles, second: VPSubtitles?) {
         self.firstSubtitles = first
         
         guard let second = second else {
@@ -84,7 +84,7 @@ class ViuPlayerSubtitlesManager {
     
     private func setupFirstSubtitle(_ view: UIView) {
         firstSubtitlesLabel.font = UIFont.boldSystemFont(ofSize: 48.0)
-        firstSubtitlesLabel.verticalAlignment = .VerticalAlignmentBottom
+        firstSubtitlesLabel.verticalAlignment = .bottom
         firstSubtitlesLabel.numberOfLines = 0
         firstSubtitlesLabel.textAlignment = .center
         firstSubtitlesLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
@@ -101,7 +101,7 @@ class ViuPlayerSubtitlesManager {
     
     private func setupSecondSubtitle(_ view: UIView) {
         secondSubtitlesLabel.font = UIFont.boldSystemFont(ofSize: 48.0)
-        secondSubtitlesLabel.verticalAlignment = .VerticalAlignmentTop
+        secondSubtitlesLabel.verticalAlignment = .top
         secondSubtitlesLabel.numberOfLines = 0
         secondSubtitlesLabel.textAlignment = .center
         secondSubtitlesLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)

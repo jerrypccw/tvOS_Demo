@@ -8,13 +8,13 @@
 
 import UIKit
 
-enum TouchRemoteLocation {
+enum VPTouchRemoteLocation {
     case center
     case left
     case right
 }
 
-open class ViuPlaybackTouchGestureRecognizer: UIGestureRecognizer {
+open class VPPlaybackTouchGestureRecognizer: UIGestureRecognizer {
     private(set) var touchesMovedX: CGFloat = 0.0
 
     override init(target: Any?, action: Selector?) {
@@ -80,9 +80,9 @@ extension UIGestureRecognizer {
         static var managerKey = "UIGestureRecognizer.remoteTouchLocation"
     }
 
-    var remoteTouchLocation: TouchRemoteLocation {
+    var remoteTouchLocation: VPTouchRemoteLocation {
         get {
-            if let temp = objc_getAssociatedObject(self, &AssociatedKeys.managerKey) as? TouchRemoteLocation {
+            if let temp = objc_getAssociatedObject(self, &AssociatedKeys.managerKey) as? VPTouchRemoteLocation {
                 return temp
             }
 

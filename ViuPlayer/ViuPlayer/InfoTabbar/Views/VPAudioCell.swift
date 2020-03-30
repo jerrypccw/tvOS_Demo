@@ -8,9 +8,9 @@
 
 import UIKit
 
-let PVAVDIO_TABLECELL = "PVAVDIOTABLECELL"
+let VPAVDIO_TABLECELL = "VPAVDIOTABLECELL"
 
-class PVAudioCell: UICollectionViewCell {
+class VPAudioCell: UICollectionViewCell {
     
     override var preferredFocusEnvironments: [UIFocusEnvironment] {
         return [tableView]
@@ -18,14 +18,14 @@ class PVAudioCell: UICollectionViewCell {
     
     lazy var tableView: UITableView = {
         let view = UITableView.init(frame: CGRect.zero, style: .plain)
-        view.register(PVAudioTableCell.self, forCellReuseIdentifier: PVAVDIO_TABLECELL)
+        view.register(VPAudioTableCell.self, forCellReuseIdentifier: VPAVDIO_TABLECELL)
         view.delegate = self
         view.dataSource = self
         view.estimatedRowHeight = 50
         return view
     }()
     
-    var data: PVAudioTableModel? {
+    var data: VPAudioTableModel? {
         didSet {
             tableView.reloadData()
         }
@@ -50,20 +50,20 @@ class PVAudioCell: UICollectionViewCell {
     }
 }
 
-extension PVAudioCell: UITableViewDataSource {
+extension VPAudioCell: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data?.contents.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: PVAVDIO_TABLECELL) as! PVAudioTableCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: VPAVDIO_TABLECELL) as! VPAudioTableCell
         cell.subtitleLabel.text = data?.contents[indexPath.row]
         return cell
     }
 }
 
-extension PVAudioCell: UITableViewDelegate {
+extension VPAudioCell: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView()

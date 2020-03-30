@@ -1,15 +1,15 @@
 //
-//  PVSubtitleCell.swift
+//  PVAudioTableCell.swift
 //  tvOS_demo
 //
-//  Created by Jerry He on 2020/3/13.
+//  Created by Jerry He on 2020/3/19.
 //  Copyright © 2020 jerry. All rights reserved.
 //
 
 import UIKit
 
-class PVSubtitleCell: UICollectionViewCell {
-        
+class VPAudioTableCell: UITableViewCell {
+    
     lazy var subtitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 30.0)
@@ -17,13 +17,15 @@ class PVSubtitleCell: UICollectionViewCell {
         return label
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-            
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
         addSubview(subtitleLabel)
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        subtitleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        subtitleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+        subtitleLabel.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        subtitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        subtitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20).isActive = true
+        subtitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -33,7 +35,7 @@ class PVSubtitleCell: UICollectionViewCell {
     
     open override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
         super.didUpdateFocus(in: context, with: coordinator)
-    
+        
         if self == context.nextFocusedView {
             subtitleLabel.textColor = .white
         } else if self == context.previouslyFocusedView {

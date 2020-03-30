@@ -10,9 +10,9 @@ import UIKit
 /// 定义重用标识
 let PVSUBTITLE_CELL = "PVSUBTITLE_CELL"
 
-class PVSubtitleViewController: UIViewController {
+class VPSubtitleViewController: UIViewController {
     
-    var model: PVSubtitleModel? {
+    var model: VPSubtitleModel? {
         didSet {
             title = "语言"
             collectionView.reloadData()
@@ -26,7 +26,7 @@ class PVSubtitleViewController: UIViewController {
     lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: CGRect.zero, collectionViewLayout: collectionLayout)
         view.backgroundColor = UIColor.clear
-        view.register(PVSubtitleCell.self, forCellWithReuseIdentifier: PVSUBTITLE_CELL)
+        view.register(VPSubtitleCell.self, forCellWithReuseIdentifier: PVSUBTITLE_CELL)
         view.delegate = self
         view.dataSource = self
         if #available(tvOS 11.0, *) {
@@ -35,8 +35,8 @@ class PVSubtitleViewController: UIViewController {
         return view
     }()
     
-    lazy var collectionLayout: PVCenterFlowLayout = {
-        let layout = PVCenterFlowLayout()
+    lazy var collectionLayout: VPCenterFlowLayout = {
+        let layout = VPCenterFlowLayout()
         layout.itemWidth = 100.0
         layout.itemHeight = 60.0
         return layout
@@ -60,7 +60,7 @@ class PVSubtitleViewController: UIViewController {
     }
 }
 
-extension PVSubtitleViewController: UICollectionViewDataSource {
+extension VPSubtitleViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
           return model?.subtitles.count ?? 0
@@ -68,13 +68,13 @@ extension PVSubtitleViewController: UICollectionViewDataSource {
       
       /// 返回UICollectionViewCell视图
       func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-          let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PVSUBTITLE_CELL, for: indexPath) as! PVSubtitleCell
+          let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PVSUBTITLE_CELL, for: indexPath) as! VPSubtitleCell
           cell.subtitleLabel.text = model?.subtitles[indexPath.row]
           return cell
       }
 }
 
-extension PVSubtitleViewController: UICollectionViewDelegate {
+extension VPSubtitleViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if ((model?.delegate) != nil) {
